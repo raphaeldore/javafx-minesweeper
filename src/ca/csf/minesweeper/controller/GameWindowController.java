@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
-import ca.csf.minesweeper.model.Observable;
+import ca.csf.minesweeper.model.Observer;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
@@ -16,7 +16,7 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
-public class GameWindowController extends SimpleFXController implements Initializable, Observable {
+public class GameWindowController extends SimpleFXController implements Initializable, Observer {
 
   private SimpleFXStage parentStage;
 

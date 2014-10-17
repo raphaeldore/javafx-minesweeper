@@ -1,5 +1,5 @@
 package ca.csf.minesweeper.model;
 
-public class Observable {
+public interface Observer {
 
 }
