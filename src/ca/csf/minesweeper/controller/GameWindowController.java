@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
+import ca.csf.minesweeper.model.Observable;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
@@ -48,5 +49,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {}
+
+  @Override
+  public void update(Observable o, Object arg) {
+    // TODO Auto-generated method stub
+    
+  }
 
 }
