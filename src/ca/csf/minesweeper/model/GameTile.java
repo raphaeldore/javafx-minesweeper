@@ -1,15 +1,24 @@
 package ca.csf.minesweeper.model;
 
-import java.util.Iterator;
 
-public class GameTile implements Iterable {
+public class GameTile<T> extends Observer<T> {
+
+  public GameTile() {}
+
+  public GameTile(Subject<T> subject) {
+    this.subject = subject;
+    this.subject.addObserver(this);
+  }
 
   @Override
-  public Iterator iterator() {
-    // TODO Auto-generated method stub
-    return null;
+  public void update() {
+    // TODO: Implement this empty method
   }
-  /*
-   * TODO: enum des states du gametile
-   */
+
+  @Override
+  public void update(Subject<T> sender, T argument) {
+    System.out.print(argument.toString());
+
+  }
+
 }
