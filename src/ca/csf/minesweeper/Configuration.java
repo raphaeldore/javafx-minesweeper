@@ -11,7 +11,7 @@ public class Configuration {
   public static GameDifficulty selectedGameDifficulty;
 
   public static enum GameDifficulty {
-    Beginner("Débutant", 9, 9, 10), Intermediate("Intermédiaire", 16, 16, 40), Expert("Expert", 30,
+    BEGINNER("Débutant", 9, 9, 10), INTERMEDIATE("Intermédiaire", 16, 16, 40), EXPERT("Expert", 30,
         16, 99);
 
     public final String difficultyName;
