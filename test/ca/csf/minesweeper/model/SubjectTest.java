@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ca.csf.minesweeper.model;
 
 import static org.junit.Assert.assertEquals;
@@ -18,13 +15,12 @@ import org.junit.Test;
  *
  */
 
-// extends Observable<String> implements Observer<String>
 public class SubjectTest {
 
-  // TODO: TEMP. This is a placeholder. Source: http://stackoverflow.com/a/1119559 
-  private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); //TODO
-  private final ByteArrayOutputStream errContent = new ByteArrayOutputStream(); //TODO
-  
+  // TODO: TEMP. This is a placeholder. Source: http://stackoverflow.com/a/1119559
+  private final ByteArrayOutputStream outContent = new ByteArrayOutputStream(); // TODO
+  private final ByteArrayOutputStream errContent = new ByteArrayOutputStream(); // TODO
+
   private Subject<String> subject;
 
   @Before
@@ -72,14 +68,14 @@ public class SubjectTest {
     new GameTile<String>(subject);
     subject.notifyObservers("Hello".toString());
     String output = outContent.toString();
-    assertEquals("Hello".toString(), output);    
+    assertEquals("Hello".toString(), output);
   }
-  
+
   // TODO: TEMP
   @After
   public void cleanUpStreams() {
-      System.setOut(null);
-      System.setErr(null);
+    System.setOut(null);
+    System.setErr(null);
   }
 
 }

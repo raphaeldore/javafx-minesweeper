@@ -15,7 +15,7 @@ public class Subject<T> {
     if (observer == null) {
       throw new NullPointerException();
     }
-    
+
     // We do not want to be adding the same observer twice
     if (!observers.contains(observer)) {
       observers.add(observer);
@@ -26,7 +26,7 @@ public class Subject<T> {
     if (!observers.contains(observer)) {
       throw new NoSuchElementException();
     }
-    
+
     observers.remove(observer);
   }
 

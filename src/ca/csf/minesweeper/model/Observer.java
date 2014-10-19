@@ -9,6 +9,8 @@ package ca.csf.minesweeper.model;
  */
 public abstract class Observer<T> {
   protected Subject<T> subject;
+
   public abstract void update();
+
   public abstract void update(Subject<T> sender, T argument);
 }
