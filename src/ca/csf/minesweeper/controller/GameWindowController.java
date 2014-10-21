@@ -27,7 +27,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private SimpleFXStage parentStage;
   private Timer timer;
   private GameState gameState;
-  private Integer timePlayed = new Integer(0);
+  private Integer timePlayed = new Integer(980);
   private Timeline timeline;
   private ToggleButton toggleButton = new ToggleButton();
 
