@@ -13,6 +13,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnPatate" onAction="#patate" text="Button" />
+            <Label text="Label" fx:id="lblLabel1" />
          </children>
       </HBox>
    </top>
