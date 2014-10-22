@@ -8,7 +8,7 @@ public class GameState {
    */
 
   private int flagCount;
-  private AtomicInteger timePlayed; // TODO: When the game starts, the JavaFX timer starts (In the GameWindow Controller).
+  private int timePlayed; // TODO: When the game starts, the JavaFX timer starts (In the GameWindow Controller).
 
   public static enum GameStates {
     START, PAUSE, PLAYING, WON;
@@ -17,7 +17,7 @@ public class GameState {
   /**
    * @return the timePlayed
    */
-  public AtomicInteger getTimePlayed() {
+  public int getTimePlayed() {
     return timePlayed;
   }
 
@@ -25,8 +25,7 @@ public class GameState {
    * @param timePlayed the timePlayed to set
    */
   public void incrementTimePlayedByOneSecond() {
-    //timePlayed++;
-    timePlayed.addAndGet(1);
+    timePlayed++;
   }
   
   
