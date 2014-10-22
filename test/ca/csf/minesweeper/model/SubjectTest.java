@@ -1,4 +1,4 @@
-package ca.csf.minesweeper.model;
+/*package ca.csf.minesweeper.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,10 +10,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
+*//**
  * @author Raphaël Doré
  *
- */
+ *//*
 
 public class SubjectTest {
 
@@ -79,3 +79,4 @@ public class SubjectTest {
   }
 
 }
+*/
