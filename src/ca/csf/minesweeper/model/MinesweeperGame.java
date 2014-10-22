@@ -8,7 +8,7 @@ package ca.csf.minesweeper.model;
 
 public class MinesweeperGame {
   public static void main(String[] args) {
-    GameBoard gameBoard = new GameBoard<GameTile>();
+   // GameBoard gameBoard = new GameBoard<GameTile>();
 
   }
 }
