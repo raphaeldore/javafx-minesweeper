@@ -1,15 +1,19 @@
 package ca.csf.minesweeper.model;
 
+import java.util.ArrayList;
+
 /*
  * 
  * Represents a grid of GameTile instances.
  * 
  */
 
-public class GameBoard<T> extends Subject<T> {
+public class GameBoard extends Subject<GameBoard> {
+  
+  ArrayList<GameTile> tiles;
   
   public GameBoard() {
-    // TODO Auto-generated constructor stub
+    tiles = new ArrayList<GameTile>();
   }
 
 }
