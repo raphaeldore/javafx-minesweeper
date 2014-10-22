@@ -8,7 +8,7 @@ public class Configuration {
   // TODO: Enum TileState {Normal, Flag, QuestionMark}
   // public static final nbrOfTiles
 
-  public static GameDifficulty selectedGameDifficulty;
+  public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER;
 
   public static enum GameDifficulty {
     BEGINNER("Débutant", 9, 9, 10), INTERMEDIATE("Intermédiaire", 16, 16, 40), EXPERT("Expert", 30,
@@ -27,4 +27,5 @@ public class Configuration {
       this.nbrOfMines = nbrOfMines;
     }
   }
+  
 }
