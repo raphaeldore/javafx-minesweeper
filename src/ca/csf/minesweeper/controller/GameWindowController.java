@@ -11,23 +11,27 @@ import javafx.beans.property.BooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.util.Duration;
+import ca.csf.minesweeper.model.GameBoard;
 import ca.csf.minesweeper.model.GameState;
+import ca.csf.minesweeper.model.GameTile;
+import ca.csf.minesweeper.model.Observer;
+import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
-import javafx.scene.control.Label;
 
-public class GameWindowController extends SimpleFXController implements Initializable {
+public class GameWindowController extends SimpleFXController implements Initializable, Observer<GameTile> {
 
   private SimpleFXStage parentStage;
   private Timer timer;
   private GameState gameState;
-  private Integer timePlayed = new Integer(980);
+  private Integer timePlayed = new Integer(0);
   private Timeline timeline;
   private ToggleButton toggleButton = new ToggleButton();
 
@@ -81,5 +85,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public void initialize(URL location, ResourceBundle resources) {
     // gameState = new GameState();
     timer();
+  }
+
+  @Override
+  public void update(Subject<GameTile> sender, GameTile argument) {
+    // TODO Auto-generated method stub
+    argument.revealGameTile(); // TODO: TEMP    
   }
 }
