@@ -34,7 +34,12 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private Integer timePlayed = new Integer(0);
   private Timeline timeline;
   private ToggleButton toggleButton = new ToggleButton();
-
+  
+  /* How to add a custom EventHandler:
+   * ToggleButton toggleButton = new ToggleButton();
+   * toggleButton.setOnMouseReleased(new ToggleButtonEventHandler(0,0));
+   */
+  
   public void initialize(SimpleFXStage stage) {
     this.parentStage = stage;
   }
@@ -89,7 +94,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    // TODO Auto-generated method stub
     argument.revealGameTile(); // TODO: TEMP    
   }
 }
