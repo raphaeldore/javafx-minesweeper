@@ -15,15 +15,15 @@ public class Configuration {
         16, 99);
 
     public final String difficultyName;
-    public final int gameBoardWidth;
-    public final int gameBoardHeight;
+    public final int nbrOfColumns;
+    public final int nbrOfRows;
     public final int nbrOfMines;
 
-    private GameDifficulty(String difficultyName, int gameBoardWidth, int gameBoardHeight,
+    private GameDifficulty(String difficultyName, int nbrOfColumns, int nbrOfRows,
         int nbrOfMines) {
       this.difficultyName = difficultyName;
-      this.gameBoardWidth = gameBoardWidth;
-      this.gameBoardHeight = gameBoardHeight;
+      this.nbrOfColumns = nbrOfColumns;
+      this.nbrOfRows = nbrOfRows;
       this.nbrOfMines = nbrOfMines;
     }
   }
