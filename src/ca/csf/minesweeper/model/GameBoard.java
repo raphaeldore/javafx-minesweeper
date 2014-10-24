@@ -22,18 +22,18 @@ public class GameBoard extends Subject<GameBoard> {
 
     while (mineCount > 0) {
       Random random = new Random();
-      int x = random.nextInt(rowSize - 1);
-      int y = random.nextInt(columnSize - 1);
+      int row = random.nextInt(rowSize - 1);
+      int column = random.nextInt(columnSize - 1);
 
-      if (tiles[x][y].setAsMine()) {
-        incrementExistingTile(x - 1, y - 1);
-        incrementExistingTile(x - 1, y);
-        incrementExistingTile(x, y - 1);
-        incrementExistingTile(x + 1, y - 1);
-        incrementExistingTile(x + 1, y + 1);
-        incrementExistingTile(x - 1, y + 1);
-        incrementExistingTile(x + 1, y);
-        incrementExistingTile(x, y + 1);
+      if (tiles[row][column].setAsMine()) {
+        incrementExistingTile(row - 1, column - 1);
+        incrementExistingTile(row - 1, column);
+        incrementExistingTile(row, column - 1);
+        incrementExistingTile(row + 1, column - 1);
+        incrementExistingTile(row + 1, column + 1);
+        incrementExistingTile(row - 1, column + 1);
+        incrementExistingTile(row + 1, column);
+        incrementExistingTile(row, column + 1);
         mineCount--;
       }
     }
