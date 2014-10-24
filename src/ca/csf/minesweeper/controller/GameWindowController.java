@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.util.Duration;
+import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameBoard;
 import ca.csf.minesweeper.model.GameState;
 import ca.csf.minesweeper.model.GameTile;
@@ -26,7 +27,8 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
-public class GameWindowController extends SimpleFXController implements Initializable, Observer<GameTile> {
+public class GameWindowController extends SimpleFXController implements Initializable,
+    Observer<GameTile> {
 
   private SimpleFXStage parentStage;
   private Timer timer;
@@ -34,12 +36,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private Integer timePlayed = new Integer(0);
   private Timeline timeline;
   private ToggleButton toggleButton = new ToggleButton();
-  
-  /* How to add a custom EventHandler:
-   * ToggleButton toggleButton = new ToggleButton();
+  private ToggleButton[][] gameTiles;
+
+  /*
+   * How to add a custom EventHandler: ToggleButton toggleButton = new ToggleButton();
    * toggleButton.setOnMouseReleased(new ToggleButtonEventHandler(0,0));
    */
-  
+
   public void initialize(SimpleFXStage stage) {
     this.parentStage = stage;
   }
@@ -90,10 +93,26 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public void initialize(URL location, ResourceBundle resources) {
     // gameState = new GameState();
     timer();
+    startGame();
+  }
+
+  public void startGame() {
+    int nbrOfRows = Configuration.selectedGameDifficulty.nbrOfRows;
+    int nbrOfColumns = Configuration.selectedGameDifficulty.nbrOfColumns;
+
+    gameTiles = new ToggleButton[nbrOfRows][nbrOfColumns];
+
+    for (int i = 0; i < nbrOfColumns - 1; i++) {
+      for (int j = 0; j < nbrOfRows - 1; j++) {
+        ToggleButton gameTile = new ToggleButton();
+        gameTile.setOnMouseReleased(new ToggleButtonEventHandler(i, j));
+        gameTiles[i][j] = gameTile;
+      }
+    }    
   }
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    argument.revealGameTile(); // TODO: TEMP    
+    argument.revealGameTile(); // TODO: TEMP
   }
 }
