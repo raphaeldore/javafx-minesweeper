@@ -11,6 +11,7 @@ public class GameBoard extends Subject<GameBoard> {
 
   private GameTile[][] tiles;
 
+  // TODO: Accept Configuration.GameDifficulty enum
   public GameBoard(int rowSize, int columnSize, int mineCount) {
     tiles = new GameTile[rowSize][columnSize];
     for (int i = 0; i < columnSize; i++) {
