@@ -7,14 +7,52 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.csf.minesweeper.controller.GameWindowController">
-   <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnPatate" onAction="#patate" text="Button" />
-            <Label text="Label" fx:id="lblLabel1" />
-         </children>
-      </HBox>
-   </top>
+<BorderPane prefHeight="206.0" prefWidth="295.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="ca.csf.minesweeper.controller.GameWindowController">
+	<top>
+		<fx:define>
+        	<ToggleGroup fx:id="difficultyToggleGroup"/>
+    	</fx:define>
+		<MenuBar>
+			<menus>
+				<Menu mnemonicParsing="false" text="Partie">
+					<MenuItem mnemonicParsing="false" text="Nouveau" accelerator="F2" onAction="#newGameMedium" />
+					<RadioMenuItem fx:id="beginnerDifficulty" mnemonicParsing="false" text="Débutant" selected="true"/>
+					<RadioMenuItem fx:id="intermediateDifficulty" mnemonicParsing="false" text="Intermédiaire" />
+					<RadioMenuItem fx:id="hardDifficulty" mnemonicParsing="false" text="Expert" />
+				</Menu>
+				<Menu mnemonicParsing="false" text="?">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Delete" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+	<center>
+		<GridPane BorderPane.alignment="CENTER">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+					prefWidth="100.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+					prefWidth="100.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+					prefWidth="100.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints />
+				<RowConstraints minHeight="10.0" prefHeight="30.0"
+					vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0"
+					vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0"
+					vgrow="SOMETIMES" />
+			</rowConstraints>
+		</GridPane>
+	</center>
 </BorderPane>

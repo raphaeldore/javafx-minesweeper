@@ -22,6 +22,8 @@ public class Main extends SimpleFXApplication {
       SimpleFXStage simpleFXStage =
           new SimpleFXStage("Démineur", StageStyle.DECORATED, simpleFXScene, this);
       simpleFXStage.centerOnScreen();
+      simpleFXStage.setResizable(false);
+      simpleFXStage.setTitle("Démineur");
       simpleFXStage.show();
     } catch (Exception ex) {
       ex.printStackTrace();
