@@ -35,6 +35,7 @@ import static ca.csf.minesweeper.controller.ControllerConsts.*;
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
 
+  /* @formatter:off */
   public final Image IMAGE_ONE_MINE = new Image(getClass().getResourceAsStream(resourcesPath + "1.png"));
   public final Image IMAGE_TWO_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "2.png"));
   public final Image IMAGE_TREE_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "3.png"));
@@ -52,7 +53,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public final Image IMAGE_SMILE_HAPPY = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Happy.png"));
   public final Image IMAGE_SMILE_NORMAL = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Normal.png"));
   public final Image IMAGE_SMILE_WORRY = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Worry.png"));
-  
+  /* @formatter:on */
+
   private SimpleFXStage parentStage;
   private Timer timer;
   private GameState gameState;
