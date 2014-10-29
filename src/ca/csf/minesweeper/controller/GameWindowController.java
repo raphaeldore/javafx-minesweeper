@@ -73,11 +73,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Label lblLabel1;
 
 
-  /*
-   * How to add a custom EventHandler: ToggleButton toggleButton = new ToggleButton();
-   * toggleButton.setOnMouseReleased(new ToggleButtonEventHandler(0,0));
-   */
-
   public void setStage(SimpleFXStage stage) {
     this.parentStage = stage;
   }
