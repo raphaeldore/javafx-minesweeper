@@ -32,6 +32,7 @@ import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameBoard;
 import ca.csf.minesweeper.model.GameState;
+import ca.csf.minesweeper.model.GameState.GameStates;
 import ca.csf.minesweeper.model.GameTile;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
@@ -113,7 +114,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
       timeline.stop();
     }
 
-    timePlayed++;
+    if (Configuration.currentGameState != GameStates.PAUSE) {
+      timePlayed++;
+    }
+
     return timePlayed.toString();
   }
 
