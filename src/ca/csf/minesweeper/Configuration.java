@@ -13,7 +13,8 @@ public class Configuration {
 
   public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER; // Default
                                                                                  // GameDifficulty
-  public static GameStates currentGameState = GameState.GameStates.START;
+  
+  public static GameStates currentGameState = GameState.GameStates.START;        // Initial GameState
 
   public static enum GameDifficulty {
     BEGINNER("Débutant", 9, 9, 10), INTERMEDIATE("Intermédiaire", 16, 16, 40), EXPERT("Expert", 30,
