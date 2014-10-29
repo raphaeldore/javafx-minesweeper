@@ -141,7 +141,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
-        ToggleButton gameTile = new ToggleButton();
         gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setPrefSize(16, 16);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
