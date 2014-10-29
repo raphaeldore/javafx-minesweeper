@@ -8,13 +8,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.csf.minesweeper.controller.GameWindowController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="gameWindow" fx:controller="ca.csf.minesweeper.controller.GameWindowController">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnPatate" onAction="#patate" text="Button" />
-            <Label text="Label" fx:id="lblLabel1" />
+             <Button fx:id="btnPotatoIsland" onAction="#havok" text="Start Game" />
+            <Label fx:id="lblLabel1" text="Label" />
          </children>
       </HBox>
    </top>
+   <center>
+    <GridPane fx:id="gameBoard" layoutX="0.0" layoutY="0.0">
+    </GridPane>
+   </center>
 </BorderPane>
