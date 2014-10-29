@@ -1,6 +1,5 @@
 package ca.csf.minesweeper.controller;
 
-import java.io.Console;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -9,28 +8,17 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
-import ca.csf.minesweeper.model.GameBoard;
 import ca.csf.minesweeper.model.GameState;
 import ca.csf.minesweeper.model.GameState.GameStates;
 import ca.csf.minesweeper.model.GameTile;
@@ -42,13 +30,29 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
-import ca.csf.simpleFx.events.WindowFocusEvent;
+import static ca.csf.minesweeper.controller.ControllerConsts.*;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
 
-  private final String resourcesPath = "../../../../resources/";
-
+  public final Image IMAGE_ONE_MINE = new Image(getClass().getResourceAsStream(resourcesPath + "1.png"));
+  public final Image IMAGE_TWO_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "2.png"));
+  public final Image IMAGE_TREE_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "3.png"));
+  public final Image IMAGE_FOUR_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "4.png"));
+  public final Image IMAGE_FIVE_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "5.png"));
+  public final Image IMAGE_SIX_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "6.png"));
+  public final Image IMAGE_SEVEN_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "7.png"));
+  public final Image IMAGE_EIGHT_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "8.png"));
+  public final Image IMAGE_FLAG = new Image(getClass().getResourceAsStream(resourcesPath + "Flag.png"));
+  public final Image IMAGE_MINE = new Image(getClass().getResourceAsStream(resourcesPath + "Mine.png"));
+  public final Image IMAGE_MINE_CROSS = new Image(getClass().getResourceAsStream(resourcesPath + "MineCross.png"));
+  public final Image IMAGE_MINE_RED = new Image(getClass().getResourceAsStream(resourcesPath + "MineRed.png"));
+  public final Image IMAGE_QUESTION_MARK = new Image(getClass().getResourceAsStream(resourcesPath + "QuestionMark.png"));
+  public final Image IMAGE_SMILE_DEAD = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Dead.png"));
+  public final Image IMAGE_SMILE_HAPPY = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Happy.png"));
+  public final Image IMAGE_SMILE_NORMAL = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Normal.png"));
+  public final Image IMAGE_SMILE_WORRY = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Worry.png"));
+  
   private SimpleFXStage parentStage;
   private Timer timer;
   private GameState gameState;
@@ -141,19 +145,14 @@ public class GameWindowController extends SimpleFXController implements Initiali
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         ToggleButton gameTile = new ToggleButton();
-        gameTiles[i][j] = new ToggleButton("x"); // TODO: TEMP
+        gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setPrefSize(16, 16);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j));
-        // gameTiles[i][j].setGraphic(new
-        // ImageView(ClassLoader.getSystemResource("/src/resources/QuestionMark.png").toExternalForm()));
+        gameTiles[i][j].setGraphic(new ImageView(IMAGE_FLAG)); // TODO: TEMP
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
-
-    // this.getSimpleFxStage().sizeToScene();
-
-
   }
 
   @Override
