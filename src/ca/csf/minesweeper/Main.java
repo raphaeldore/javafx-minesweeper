@@ -40,6 +40,8 @@ public class Main extends SimpleFXApplication {
           }
         }
       });
+      simpleFXStage.setResizable(false);
+      simpleFXStage.setTitle("Démineur");
       simpleFXStage.show();
     } catch (Exception ex) {
       ex.printStackTrace();

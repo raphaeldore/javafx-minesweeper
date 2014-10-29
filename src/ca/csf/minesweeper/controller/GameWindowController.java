@@ -38,6 +38,8 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.RadioMenuItem;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -82,6 +84,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Button btnAboutWindow;
   @FXML
   Button btnHelpWindow;
+  @FXML ToggleGroup difficultyToggleGroup;
+  @FXML RadioMenuItem beginnerDifficulty;
+  @FXML RadioMenuItem intermediateDifficulty;
+  @FXML RadioMenuItem hardDifficulty;
 
 
   public void setStage(SimpleFXStage stage) {
@@ -135,6 +141,9 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
+    intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
+    hardDifficulty.setToggleGroup(difficultyToggleGroup);
     btnAboutWindow.setOnAction(this::openAboutWindow);
     btnHelpWindow.setOnAction(this::openHelpWindow);
     timer();
@@ -220,4 +229,5 @@ public class GameWindowController extends SimpleFXController implements Initiali
     argument.revealGameTile(); // TODO: TEMP
   }
 
+  @FXML public void newGameMedium() {}
 }
