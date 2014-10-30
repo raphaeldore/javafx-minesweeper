@@ -139,9 +139,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
     ToggleButton[][] gameTiles =
         new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
 
-    System.out.println(Configuration.selectedGameDifficulty.nbrOfRows);
-    System.out.println(Configuration.selectedGameDifficulty.nbrOfColumns);
-
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j] = new ToggleButton();
