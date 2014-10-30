@@ -1,5 +1,7 @@
 package ca.csf.minesweeper.controller;
 
+import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -8,6 +10,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -30,7 +34,6 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
-import static ca.csf.minesweeper.controller.ControllerConsts.*;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -145,10 +148,17 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameTiles[i][j].setPrefSize(16, 16);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j));
+        gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
         gameTiles[i][j].setGraphic(new ImageView(IMAGE_FLAG)); // TODO: TEMP
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
+  }
+  
+  public void disableToggleButtonOnAction(ActionEvent event) {
+    ToggleButton toggleButton = (ToggleButton) event.getSource();
+    toggleButton.setDisable(true); // Once the button has been clicked, we don't want the user to be
+                                   // able to click it again
   }
 
   @Override
