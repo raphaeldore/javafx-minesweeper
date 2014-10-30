@@ -14,6 +14,7 @@
          <children>
             <Button fx:id="btnPatate" onAction="#patate" text="Button" />
              <Button fx:id="btnPotatoIsland" onAction="#havok" text="Start Game" />
+             <Button fx:id="btnAboutWindow" text="AboutWindow" />
             <Label fx:id="lblLabel1" text="Label" />
          </children>
       </HBox>
