@@ -2,6 +2,7 @@ package ca.csf.minesweeper.controller;
 
 import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -11,7 +12,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameState;
@@ -29,6 +30,7 @@ import ca.csf.minesweeper.model.GameTile;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
+import ca.csf.simpleFx.SimpleFXScene;
 import ca.csf.simpleFx.SimpleFXStage;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
@@ -74,6 +76,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public Button btnPatate;
   @FXML
   Label lblLabel1;
+  @FXML
+  Button btnAboutWindow;
 
 
   public void setStage(SimpleFXStage stage) {
@@ -127,6 +131,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    btnAboutWindow.setOnAction(this::openAboutWindow);
     timer();
     startGame();
   }
@@ -151,11 +156,30 @@ public class GameWindowController extends SimpleFXController implements Initiali
       }
     }
   }
-  
+
   public void disableToggleButtonOnAction(ActionEvent event) {
     ToggleButton toggleButton = (ToggleButton) event.getSource();
     toggleButton.setDisable(true); // Once the button has been clicked, we don't want the user to be
                                    // able to click it again
+  }
+  
+  @FXML
+  public void openAboutWindow(ActionEvent event) {
+    try {
+      SimpleFXScene scene =
+          new SimpleFXScene(AboutWindowController.class.getResource("../view/AboutWindow.fxml"),
+              AboutWindowController.class.getResource("../view/application.css"),
+              new AboutWindowController());
+
+      SimpleFXStage stage =
+          new SimpleFXStage("About", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
+              this.parentStage);
+
+      stage.centerOnScreen();
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
