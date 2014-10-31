@@ -27,9 +27,11 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
+import ca.csf.minesweeper.model.GameDifficulty;
 import ca.csf.minesweeper.model.GameState;
 import ca.csf.minesweeper.model.GameState.GameStates;
 import ca.csf.minesweeper.model.GameTile;
+import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
@@ -68,7 +70,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   private SimpleFXStage parentStage;
   private Timer timer;
-  private GameState gameState;
+  private MinesweeperGame game;
   private Integer timePlayed = new Integer(0);
   private Timeline timeline;
   private ToggleButton[][] gameTiles;
@@ -195,6 +197,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @FXML public void startNewGame() {
     populateGameBoard();
-    timer(); // TODO: change it to start on first click
+    game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
+    timer(); // TODO: change it to start on first click, also change the difficulty in a proper way
   }
 }

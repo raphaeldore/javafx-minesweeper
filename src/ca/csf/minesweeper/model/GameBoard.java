@@ -7,15 +7,15 @@ import java.util.Random;
  * Represents a grid of GameTile instances.
  */
 
-public class GameBoard extends Subject<GameBoard> {
+public class GameBoard {
 
   private GameTile[][] tiles;
   // TODO: Accept Configuration.GameDifficulty enum
-  public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game) {
+  public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game, Observer observer) {
     tiles = new GameTile[rowSize][columnSize];
     for (int i = 0; i < columnSize; i++) {
       for (int j = 0; j < rowSize; j++) {
-        tiles[j][i] = new GameTile(game);
+        tiles[j][i] = new GameTile(game, observer);
       }
     }
     

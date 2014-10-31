@@ -7,8 +7,9 @@ public class GameTile extends Subject<GameTile> {
   private int neighboringMineCount = 0;
   private MinesweeperGame game;
 
-  public GameTile(MinesweeperGame game) {
+  public GameTile(MinesweeperGame game, Observer observer) {
     this.game = game;
+    addObserver(observer);
   }
 
   public int getNeighboringMineCount() {
