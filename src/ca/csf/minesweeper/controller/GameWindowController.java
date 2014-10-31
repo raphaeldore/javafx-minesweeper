@@ -12,6 +12,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameState;
@@ -176,7 +178,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
       SimpleFXStage stage =
           new SimpleFXStage("About", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
               this.getSimpleFxStage());
-
+      
+      stage.setOnCloseRequest(new preventStageFromClosing());
       stage.setResizable(false);
       stage.centerOnScreen();
       stage.show();
@@ -193,14 +196,23 @@ public class GameWindowController extends SimpleFXController implements Initiali
               new HelpWindowController());
 
       SimpleFXStage stage =
-          new SimpleFXStage("Help!", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
+          new SimpleFXStage("Help!", StageStyle.UNIFIED, scene, this.getSimpleFXApplication(),
               this.getSimpleFxStage());
+      stage.setOnCloseRequest(new preventStageFromClosing());
       stage.centerOnScreen();
       stage.showAndWait();
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
+
+  // Prevents user from closing dialog boxes
+  private class preventStageFromClosing implements EventHandler<WindowEvent> {
+    @Override
+    public void handle(WindowEvent event) {
+      event.consume();
+    }
+  };
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
