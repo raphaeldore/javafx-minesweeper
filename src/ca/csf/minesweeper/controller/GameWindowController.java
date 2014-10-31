@@ -40,6 +40,7 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioMenuItem;
+<<<<<<< HEAD
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -120,7 +121,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     // Basic timer template
     timeline =
         new Timeline(new KeyFrame(Duration.millis(1000),
-            actionEvent -> lblLabel1.setText(updateTimer()))); // TODO: Placeholder. Eventually
+            actionEvent -> lblTimer.setText(updateTimer()))); // TODO: Placeholder. Eventually
                                                                // replace with
                                                                // gameState.incrementTimePlayedByOneSecond()
     timeline.setCycleCount(Animation.INDEFINITE);
@@ -230,4 +231,24 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   @FXML public void newGameMedium() {}
+  
+  @FXML public void openAbout() {
+    
+  }
+
+  @FXML public void openHelp() {
+    
+  }
+
+  @FXML public void openHighScores() {
+    
+  }
+
+  @FXML public void changeGodModeState() {
+    
+  }
+
+  @FXML public void newGame() {
+    //lots of stuff happens here
+  }
 }
