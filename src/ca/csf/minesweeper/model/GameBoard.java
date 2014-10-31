@@ -11,11 +11,11 @@ public class GameBoard extends Subject<GameBoard> {
 
   private GameTile[][] tiles;
   // TODO: Accept Configuration.GameDifficulty enum
-  public GameBoard(int rowSize, int columnSize, int mineCount) {
+  public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game) {
     tiles = new GameTile[rowSize][columnSize];
     for (int i = 0; i < columnSize; i++) {
       for (int j = 0; j < rowSize; j++) {
-        tiles[j][i] = new GameTile();
+        tiles[j][i] = new GameTile(game);
       }
     }
     
@@ -39,7 +39,7 @@ public class GameBoard extends Subject<GameBoard> {
 
   }
 
-  public void incrementExistingTile(int row, int column) {
+  private void incrementExistingTile(int row, int column) {
     if (row >= 0 && column >= 0) {
       tiles[row][column].incrementNeighboringMineCount();
     }
@@ -47,6 +47,10 @@ public class GameBoard extends Subject<GameBoard> {
 
   public void revealTile(int row, int column) {
     tiles[row][column].revealGameTile();
+  }
+
+  public void toggleTileState(int row, int column) {
+    tiles[row][column].toggleState();
   }
   
 }
