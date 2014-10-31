@@ -1,7 +1,5 @@
 package ca.csf.minesweeper.model;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class GameState extends Subject<MinesweeperGame>{
   /*
    * TODO: -Timer -Flags -nbrOfRevealedTiles
@@ -12,8 +10,9 @@ public class GameState extends Subject<MinesweeperGame>{
                           // Controller).
   private GameDifficulty difficulty;
 
-  GameState(GameDifficulty difficulty) {
+  GameState(GameDifficulty difficulty, Observer observer) {
     this.difficulty = difficulty;
+    addObserver(observer);
   }
 
   public int getFlagCount() {

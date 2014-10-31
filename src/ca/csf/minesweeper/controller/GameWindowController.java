@@ -27,8 +27,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
+import ca.csf.minesweeper.model.GameDifficulty;
+import ca.csf.minesweeper.model.GameState;
 import ca.csf.minesweeper.model.GameState.GameStates;
 import ca.csf.minesweeper.model.GameTile;
+import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
@@ -172,6 +175,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     timeline.playFromStart();
+    game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
+    
   }
 
 }
