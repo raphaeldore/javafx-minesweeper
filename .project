@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1413570776477</id>
+			<id>1414718001697</id>
 			<name>src/resources</name>
 			<type>5</type>
 			<matcher>
@@ -31,12 +31,21 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1413570776480</id>
+			<id>1414718001701</id>
 			<name>src/resources</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-*.png</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1414718001705</id>
+			<name>src/resources</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.ttf</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
