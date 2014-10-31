@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -8,12 +9,12 @@
 
 <BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.csf.minesweeper.controller.HelpWindowController">
    <center>
-      <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="58.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="true" prefHeight="41.0" prefWidth="85.0" text="J'ai compris!" fx:id="btnOk"/>
+            <Button fx:id="btnOk" alignment="CENTER" mnemonicParsing="true" prefHeight="41.0" prefWidth="85.0" text="J'ai compris!" />
          </children>
       </HBox>
    </bottom>
