@@ -6,7 +6,7 @@
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/SimpleFX.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Demineur/lib/SimpleFX.jar!/doc"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/demineur/lib/SimpleFX.jar!/doc"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
