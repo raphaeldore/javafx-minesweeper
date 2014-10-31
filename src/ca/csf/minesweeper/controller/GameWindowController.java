@@ -78,6 +78,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Label lblLabel1;
   @FXML
   Button btnAboutWindow;
+  @FXML
+  Button btnHelpWindow;
 
 
   public void setStage(SimpleFXStage stage) {
@@ -132,6 +134,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     btnAboutWindow.setOnAction(this::openAboutWindow);
+    btnHelpWindow.setOnAction(this::openHelpWindow);
     timer();
     startGame();
   }
@@ -162,8 +165,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     toggleButton.setDisable(true); // Once the button has been clicked, we don't want the user to be
                                    // able to click it again
   }
-  
-  @FXML
+
   public void openAboutWindow(ActionEvent event) {
     try {
       SimpleFXScene scene =
@@ -173,10 +175,28 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
       SimpleFXStage stage =
           new SimpleFXStage("About", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
-              this.parentStage);
+              this.getSimpleFxStage());
 
+      stage.setResizable(false);
       stage.centerOnScreen();
       stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void openHelpWindow(ActionEvent event) {
+    try {
+      SimpleFXScene scene =
+          new SimpleFXScene(HelpWindowController.class.getResource("../view/HelpWindow.fxml"),
+              HelpWindowController.class.getResource("../view/application.css"),
+              new HelpWindowController());
+
+      SimpleFXStage stage =
+          new SimpleFXStage("Help!", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
+              this.getSimpleFxStage());
+      stage.centerOnScreen();
+      stage.showAndWait();
     } catch (IOException e) {
       e.printStackTrace();
     }
