@@ -5,13 +5,18 @@ public class GameTile extends Subject<GameTile> {
 
   private boolean isMine = false;
   private int neighboringMineCount = 0;
+  private MinesweeperGame game;
 
-  public GameTile() {
+  public GameTile(MinesweeperGame game) {
+    this.game = game;
+  }
 
+  public int getNeighboringMineCount() {
+    return neighboringMineCount;
   }
 
   public void revealGameTile() {
-
+    
   }
 
   public boolean setAsMine() {
@@ -26,4 +31,23 @@ public class GameTile extends Subject<GameTile> {
   public void incrementNeighboringMineCount() {
     neighboringMineCount++;
   }
+
+  private void incrementFlagCount() {
+    game.incrementFlagCount();
+  }
+
+  private void decrementFlagCount() {
+    game.decrementFlagCount();
+  }
+
+  public void toggleState() {
+    if(true){
+      
+    } else if(true) {
+      
+    } else {
+      
+    }
+  }
+
 }
