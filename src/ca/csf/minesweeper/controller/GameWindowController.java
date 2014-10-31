@@ -196,7 +196,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
               new HelpWindowController());
 
       SimpleFXStage stage =
-          new SimpleFXStage("Help!", StageStyle.UNIFIED, scene, this.getSimpleFXApplication(),
+          new SimpleFXStage("Help!", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
               this.getSimpleFxStage());
       stage.setOnCloseRequest(new preventStageFromClosing());
       stage.centerOnScreen();
