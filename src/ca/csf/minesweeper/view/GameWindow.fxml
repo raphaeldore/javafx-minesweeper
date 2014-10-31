@@ -21,7 +21,6 @@
 		<fx:define>
 			<ToggleGroup fx:id="difficultyToggleGroup" />
 		</fx:define>
-		<VBox>
 			<MenuBar>
 				<menus>
 					<Menu mnemonicParsing="false" text="Partie">
@@ -41,20 +40,19 @@
 					</Menu>
 				</menus>
 			</MenuBar>
-			<HBox>
+	</top>
+	
+	<center>
+		<HBox>
 				<Label fx:id="lblremainingMines" text="Yo mama" />
 				<Button fx:id="btnNewGame" onAction="#startNewGame" text="Start Game" />
 				<Label fx:id="lblTimer" text="Label" />
 			</HBox>
-		</VBox>
-	</top>
-	
-	<center>
-		<GridPane fx:id="gameBoard" layoutX="0.0" layoutY="0.0">
-		</GridPane>
 	</center>
 
 	<bottom>
+		<GridPane fx:id="gameBoard" layoutX="0.0" layoutY="0.0">
+		</GridPane>
 	</bottom>
 	
 </BorderPane>
