@@ -19,38 +19,49 @@
 	fx:controller="ca.csf.minesweeper.controller.GameWindowController">
 	<top>
 		<fx:define>
-        	<ToggleGroup fx:id="difficultyToggleGroup"/>
-    	</fx:define>
+			<ToggleGroup fx:id="difficultyToggleGroup" />
+		</fx:define>
 		<MenuBar>
 			<menus>
 				<Menu mnemonicParsing="false" text="Partie">
-					<MenuItem mnemonicParsing="false" text="Nouveau" accelerator="F2" onAction="#newGame" />
-					<RadioMenuItem fx:id="beginnerDifficulty" mnemonicParsing="false" text="Débutant" selected="true"/>
-					<RadioMenuItem fx:id="intermediateDifficulty" mnemonicParsing="false" text="Intermédiaire" />
-					<RadioMenuItem fx:id="hardDifficulty" mnemonicParsing="false" text="Expert" />
-					<CheckMenuItem onAction="#changeGodModeState" fx:id="godMode" mnemonicParsing="false" text="Tricher"/>
-					<MenuItem onAction="#openHighScores" mnemonicParsing="false" text="Meilleurs temps..." />
+					<MenuItem mnemonicParsing="false" text="Nouveau"
+						accelerator="F2" onAction="#newGame" />
+					<RadioMenuItem fx:id="beginnerDifficulty"
+						mnemonicParsing="false" text="Débutant" selected="true" />
+					<RadioMenuItem fx:id="intermediateDifficulty"
+						mnemonicParsing="false" text="Intermédiaire" />
+					<RadioMenuItem fx:id="hardDifficulty"
+						mnemonicParsing="false" text="Expert" />
+					<CheckMenuItem onAction="#changeGodModeState" fx:id="godMode"
+						mnemonicParsing="false" text="Tricher" />
+					<MenuItem onAction="#openHighScores" mnemonicParsing="false"
+						text="Meilleurs temps..." />
 				</Menu>
 				<Menu mnemonicParsing="false" text="?">
 					<items>
-						<MenuItem mnemonicParsing="false" text="Aide" accelerator="F1" onAction="#openHelp"/>
-						<MenuItem mnemonicParsing="false" text="À propos..." onAction="#openAbout"/>
+						<MenuItem mnemonicParsing="false" text="Aide"
+							accelerator="F1" onAction="#openHelp" />
+						<MenuItem mnemonicParsing="false" text="À propos..."
+							onAction="#openAbout" />
 					</items>
 				</Menu>
 			</menus>
 		</MenuBar>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnPatate" onAction="#patate" text="Button" />
-             <Button fx:id="btnPotatoIsland" onAction="#havok" text="Start Game" />
-             <Button fx:id="btnAboutWindow" text="AboutWindow" />
-             <Button fx:id="btnHelpWindow" text="Help!" />
-            <Label fx:id="lblLabel1" text="Label" />
-         </children>
-      </HBox>
 	</top>
 	<center>
-    <GridPane fx:id="gameBoard" layoutX="0.0" layoutY="0.0">
-    </GridPane>
+		<GridPane fx:id="gameBoard" layoutX="0.0" layoutY="0.0">
+		</GridPane>
 	</center>
+
+	<bottom>
+		<HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<Button fx:id="btnPatate" onAction="#patate" text="Button" />
+				<Button fx:id="btnPotatoIsland" onAction="#havok" text="Start Game" />
+				<Button fx:id="btnAboutWindow" text="AboutWindow" />
+				<Button fx:id="btnHelpWindow" text="Help!" />
+				<Label fx:id="lblLabel1" text="Label" />
+			</children>
+		</HBox>
+	</bottom>
 </BorderPane>
