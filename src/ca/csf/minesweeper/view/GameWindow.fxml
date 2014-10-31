@@ -10,6 +10,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 
 <BorderPane prefHeight="206.0" prefWidth="295.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
@@ -21,18 +24,24 @@
 		<MenuBar>
 			<menus>
 				<Menu mnemonicParsing="false" text="Partie">
-					<MenuItem mnemonicParsing="false" text="Nouveau" accelerator="F2" onAction="#newGameMedium" />
+					<MenuItem mnemonicParsing="false" text="Nouveau" accelerator="F2" onAction="#newGame" />
 					<RadioMenuItem fx:id="beginnerDifficulty" mnemonicParsing="false" text="Débutant" selected="true"/>
 					<RadioMenuItem fx:id="intermediateDifficulty" mnemonicParsing="false" text="Intermédiaire" />
 					<RadioMenuItem fx:id="hardDifficulty" mnemonicParsing="false" text="Expert" />
+					<CheckMenuItem onAction="#changeGodModeState" fx:id="godMode" mnemonicParsing="false" text="Tricher"/>
+					<MenuItem onAction="#openHighScores" mnemonicParsing="false" text="Meilleurs temps..." />
 				</Menu>
 				<Menu mnemonicParsing="false" text="?">
 					<items>
-						<MenuItem mnemonicParsing="false" text="Delete" />
+						<MenuItem mnemonicParsing="false" text="Aide" accelerator="F1" onAction="#openHelp"/>
+						<MenuItem mnemonicParsing="false" text="À propos..." onAction="#openAbout"/>
 					</items>
 				</Menu>
 			</menus>
 		</MenuBar>
+		<Label fx:id="lblRemainingMines" text="placeholder" />
+		<Button onAction="#newGame" mnemonicParsing="false" text="placeholder" />
+		<Label fx:id="lblTimer"/>
 	</top>
 	<center>
 		<GridPane BorderPane.alignment="CENTER">

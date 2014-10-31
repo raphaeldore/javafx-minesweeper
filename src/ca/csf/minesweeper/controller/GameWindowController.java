@@ -44,11 +44,17 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public Button btnPatate;
   @FXML
-  Label lblLabel1;
-  @FXML ToggleGroup difficultyToggleGroup;
-  @FXML RadioMenuItem beginnerDifficulty;
-  @FXML RadioMenuItem intermediateDifficulty;
-  @FXML RadioMenuItem hardDifficulty;
+  ToggleGroup difficultyToggleGroup;
+  @FXML
+  RadioMenuItem beginnerDifficulty;
+  @FXML
+  RadioMenuItem intermediateDifficulty;
+  @FXML
+  RadioMenuItem hardDifficulty;
+  @FXML
+  Label lblTimer;
+  @FXML
+  Label lblRemainingMines;
 
   @FXML
   public void patate() {
@@ -71,7 +77,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     // Basic timer template
     timeline =
         new Timeline(new KeyFrame(Duration.millis(1000),
-            actionEvent -> lblLabel1.setText(updateTimer()))); // TODO: Placeholder. Eventually
+            actionEvent -> lblTimer.setText(updateTimer()))); // TODO: Placeholder. Eventually
                                                                // replace with
                                                                // gameState.incrementTimePlayedByOneSecond()
     timeline.setCycleCount(Animation.INDEFINITE);
@@ -90,7 +96,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     //gameState = new GameState();
-    //timer();
+    timer();
     beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
     intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
     hardDifficulty.setToggleGroup(difficultyToggleGroup);
@@ -102,5 +108,23 @@ public class GameWindowController extends SimpleFXController implements Initiali
     argument.revealGameTile(); // TODO: TEMP    
   }
 
-  @FXML public void newGameMedium() {}
+  @FXML public void openAbout() {
+    
+  }
+
+  @FXML public void openHelp() {
+    
+  }
+
+  @FXML public void openHighScores() {
+    
+  }
+
+  @FXML public void changeGodModeState() {
+    
+  }
+
+  @FXML public void newGame() {
+    //lots of stuff happens here
+  }
 }
