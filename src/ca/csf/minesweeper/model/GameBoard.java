@@ -10,7 +10,6 @@ import java.util.Random;
 public class GameBoard extends Subject<GameBoard> {
 
   private GameTile[][] tiles;
-
   // TODO: Accept Configuration.GameDifficulty enum
   public GameBoard(int rowSize, int columnSize, int mineCount) {
     tiles = new GameTile[rowSize][columnSize];
@@ -19,8 +18,7 @@ public class GameBoard extends Subject<GameBoard> {
         tiles[j][i] = new GameTile();
       }
     }
-
-
+    
     while (mineCount > 0) {
       Random random = new Random();
       int row = random.nextInt(rowSize - 1);
@@ -47,4 +45,8 @@ public class GameBoard extends Subject<GameBoard> {
     }
   }
 
+  public void revealTile(int row, int column) {
+    tiles[row][column].revealGameTile();
+  }
+  
 }
