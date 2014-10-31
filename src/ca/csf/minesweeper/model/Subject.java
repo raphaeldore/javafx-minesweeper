@@ -21,6 +21,11 @@ public class Subject<T> {
       observers.add(observer);
     }
   }
+  
+  public void clearObservers()
+  {
+    observers.clear();
+  }
 
   public void removeObserver(Observer<T> observer) {
     if (!observers.contains(observer)) {

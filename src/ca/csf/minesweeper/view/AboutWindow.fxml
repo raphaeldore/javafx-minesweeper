@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.csf.minesweeper.controller.AboutWindowController">
-	<!-- TODO Add Nodes -->
+<BorderPane prefHeight="400" prefWidth="300" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ca.csf.minesweeper.controller.AboutWindowController">
+	<bottom>
+		<HBox alignment="CENTER">
+         <children>
+            <Button fx:id="btnOk" alignment="CENTER" mnemonicParsing="true" prefHeight="30.0" prefWidth="80.0" text="_OK" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+		</HBox>
+	</bottom>
 </BorderPane>
-
