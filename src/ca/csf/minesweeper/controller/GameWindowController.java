@@ -1,25 +1,27 @@
 package ca.csf.minesweeper.controller;
 
-import static ca.csf.minesweeper.controller.ControllerConsts.*;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -35,13 +37,6 @@ import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXScene;
 import ca.csf.simpleFx.SimpleFXStage;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.CheckMenuItem;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -129,12 +124,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j] = new ToggleButton();
-        gameTiles[i][j].setPrefSize(16, 16);
+        gameTiles[i][j].setMinSize(36, 36);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j));
         gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
-        gameTiles[i][j].setGraphic(new ImageView(IMAGE_NORMAL)); // TODO:
-        // TEMP
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
@@ -142,9 +135,15 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   public void disableToggleButtonOnAction(ActionEvent event) {
     ToggleButton toggleButton = (ToggleButton) event.getSource();
-    toggleButton.setDisable(true); // Once the button has been clicked, we
+    // toggleButton.setDisable(true); // Once the button has been clicked, we
+
     // don't want the user to be
     // able to click it again
+    // ToggleButton toggleButton = (ToggleButton) event.getSource();
+    toggleButton.setSelected(true);
+
+    // toggleButton.setStyle("-fx-background-color: black");
+    toggleButton.setGraphic(new ImageView(IMAGE_MINE)); // TODO: TEMP
   }
 
   public void openAboutWindow(ActionEvent event) {
@@ -196,6 +195,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void startNewGame() {
     populateGameBoard();
+    timePlayed = 0;
     timer(); // TODO: change it to start on first click
   }
 }
