@@ -23,6 +23,7 @@ public final class ControllerConsts {
 	public static final Image IMAGE_MINE_CROSS = loadImage("MineCross.png");
 	public static final Image IMAGE_MINE_RED = loadImage("MineRed.png");
 	public static final Image IMAGE_QUESTION_MARK = loadImage("QuestionMark.png");
+	public static final Image IMAGE_NORMAL = loadImage("normal.png");
 	public static final Image IMAGE_SMILE_DEAD = loadImage("Smile_Dead.png");
 	public static final Image IMAGE_SMILE_HAPPY = loadImage("Smile_Happy.png");
 	public static final Image IMAGE_SMILE_NORMAL = loadImage("Smile_Normal.png");
