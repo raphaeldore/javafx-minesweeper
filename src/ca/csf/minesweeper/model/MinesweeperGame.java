@@ -12,7 +12,7 @@ public class MinesweeperGame {
   
 public MinesweeperGame (GameDifficulty difficulty, Observer observer) {
     gameState = new GameState(difficulty, observer);
-    gameBoard = new GameBoard(difficulty.nbrOfRows, difficulty.nbrOfColumns, difficulty.nbrOfMines, this, observer);
+    gameBoard = new GameBoard(difficulty.nbrOfRows, difficulty.nbrOfColumns, difficulty.nbrOfMines, this, observer );
   }
   
   public void revealTile(int row, int column) {

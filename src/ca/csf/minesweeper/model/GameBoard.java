@@ -1,5 +1,6 @@
 package ca.csf.minesweeper.model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /*
@@ -44,13 +45,32 @@ public class GameBoard {
       tiles[row][column].incrementNeighboringMineCount();
     }
   }
-
+  
   public void revealTile(int row, int column) {
-    tiles[row][column].revealGameTile();
+    tiles[row][column].revealedGameTileAreaIsClean();
   }
 
   public void toggleTileState(int row, int column) {
     tiles[row][column].toggleState();
   }
+  
+//  private ArrayList<GameTile> listSurroundingTiles(int row, int column) {
+//    ArrayList<GameTile> list = new ArrayList<GameTile>();
+//    if (row - 1 >= 0) {
+//      
+//    }
+//    
+//    
+//    
+//    
+//    incrementExistingTile(row - 1, column - 1);
+//    incrementExistingTile(row - 1, column);
+//    incrementExistingTile(row, column - 1);
+//    incrementExistingTile(row + 1, column - 1);
+//    incrementExistingTile(row + 1, column + 1);
+//    incrementExistingTile(row - 1, column + 1);
+//    incrementExistingTile(row + 1, column);
+//    incrementExistingTile(row, column + 1);
+//  }
   
 }

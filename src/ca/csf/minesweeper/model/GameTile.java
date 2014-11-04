@@ -6,18 +6,33 @@ public class GameTile extends Subject<GameTile> {
   private boolean isMine = false;
   private int neighboringMineCount = 0;
   private MinesweeperGame game;
-
+  private TileState state;
+  
   public GameTile(MinesweeperGame game, Observer observer) {
     this.game = game;
     addObserver(observer);
+    state = TileState.HIDDEN;
   }
 
   public int getNeighboringMineCount() {
     return neighboringMineCount;
   }
 
-  public void revealGameTile() {
-    
+  public boolean revealedGameTileAreaIsClean() {
+    boolean isClean = false;
+    if (state == TileState.HIDDEN) {
+      if (isMine) {
+        //TODO: changer le game state à "perdu": game.lose();
+        state = TileState.REVEALED;
+      } else {
+        if(neighboringMineCount == 0) {
+          isClean = true;
+          state = TileState.REVEALED;
+        }
+      }
+      notifyObservers(this);
+    }
+    return isClean;
   }
 
   public boolean setAsMine() {
@@ -42,13 +57,17 @@ public class GameTile extends Subject<GameTile> {
   }
 
   public void toggleState() {
-    if(true){
-      
-    } else if(true) {
-      
+    if(state == TileState.FLAGGED){
+      decrementFlagCount();
+      state = TileState.QUESTIONNED;
+    } else if(state == TileState.QUESTIONNED) {
+      state = TileState.HIDDEN;
     } else {
-      
+      incrementFlagCount();
+      state = TileState.FLAGGED;
     }
+    notifyObservers(this);
   }
 
+  //TODO: mettre les fonctions en ordre selon leur public/private
 }
