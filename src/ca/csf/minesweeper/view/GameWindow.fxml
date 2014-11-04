@@ -29,7 +29,7 @@
 						<RadioMenuItem fx:id="intermediateDifficulty" mnemonicParsing="false" text="Intermédiaire" />
 						<RadioMenuItem fx:id="hardDifficulty" mnemonicParsing="false" text="Expert" />
 						<CheckMenuItem onAction="#changeGodModeState" fx:id="godMode" mnemonicParsing="false" text="Tricher" />
-						<MenuItem mnemonicParsing="false" text="Meilleurs temps..." />
+						<MenuItem fx:id="bestTimes" mnemonicParsing="false" text="Meilleurs temps..." />
 					</Menu>
 					<Menu mnemonicParsing="false" text="?">
 						<items>
