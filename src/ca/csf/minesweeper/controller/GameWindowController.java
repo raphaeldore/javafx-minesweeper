@@ -146,12 +146,34 @@ public class GameWindowController extends SimpleFXController implements Initiali
     toggleButton.setGraphic(new ImageView(IMAGE_MINE)); // TODO: TEMP
   }
 
+  public void openBestTimesWindow(ActionEvent event) {
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/HighScoresWindow.fxml").windowName("Meilleurs Temps")
+            .simpleFXController(new HighScoresWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication())
+            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+    
+    stage.setResizable(false);
+    stage.show();
+  }
+
   public void openAboutWindow(ActionEvent event) {
-    createDialog("../view/AboutWindow.fxml", "À propos", new AboutWindowController());
+    SimpleFXStage stage = new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
+        .simpleFXController(new AboutWindowController())
+        .simpleFXApplication(this.getSimpleFXApplication())
+        .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+    
+    stage.setResizable(false);
+    stage.show();
   }
 
   public void openHelpWindow(ActionEvent event) {
-    createDialog("../view/HelpWindow.fxml", "Aide", new HelpWindowController());
+    SimpleFXStage stage = new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
+    .simpleFXController(new HelpWindowController())
+    .simpleFXApplication(this.getSimpleFXApplication())
+    .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+    
+    stage.show();
   }
 
   private void createDialog(String fxmlPath, String windowName, SimpleFXController controller) {
