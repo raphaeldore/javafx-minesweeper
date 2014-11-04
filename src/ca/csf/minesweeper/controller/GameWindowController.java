@@ -76,6 +76,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Button btnNewGame;
   @FXML
   Label lblremainingMines;
+  @FXML
+  MenuItem bestTimes;
 
   public void setStage(SimpleFXStage stage) {
     this.parentStage = stage;
@@ -114,6 +116,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     hardDifficulty.setToggleGroup(difficultyToggleGroup);
     btnAboutWindow.setOnAction(this::openAboutWindow);
     btnHelpWindow.setOnAction(this::openHelpWindow);
+    bestTimes.setOnAction(this::openBestTimesWindow);
     startNewGame();
   }
 
@@ -146,6 +149,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
     toggleButton.setGraphic(new ImageView(IMAGE_MINE)); // TODO: TEMP
   }
 
+  public void openBestTimesWindow(ActionEvent event) {
+    createDialog("../view/HighScoresWindow.fxml", "Meilleurs Temps", new HighScoresWindowController());
+  }
+  
   public void openAboutWindow(ActionEvent event) {
     createDialog("../view/AboutWindow.fxml", "À propos", new AboutWindowController());
   }
