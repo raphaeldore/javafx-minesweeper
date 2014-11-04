@@ -188,7 +188,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    argument.revealGameTile(); // TODO: TEMP
+    argument.revealedGameTileAreaIsClean(); // TODO: TEMP
   }
 
   @FXML public void changeGodModeState() {

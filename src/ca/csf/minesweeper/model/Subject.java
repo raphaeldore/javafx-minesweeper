@@ -31,7 +31,6 @@ public class Subject<T> {
     if (!observers.contains(observer)) {
       throw new NoSuchElementException();
     }
-
     observers.remove(observer);
   }
 
