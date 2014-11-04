@@ -1,7 +1,8 @@
 package ca.csf.minesweeper.model;
 
-public class GameState extends Subject<MinesweeperGame>{
+public class GameState extends Subject<GameState>{
   /*
+   * 
    * TODO: -Timer -Flags -nbrOfRevealedTiles
    */
 
@@ -32,7 +33,7 @@ public class GameState extends Subject<MinesweeperGame>{
   }
 
   public static enum GameStates {
-    START, PAUSE, PLAYING, WON;
+    START, PAUSE, PLAYING, WON; //TODO: should this be in its own file?
   }
 
   /**
@@ -40,6 +41,10 @@ public class GameState extends Subject<MinesweeperGame>{
    */
   public int getTimePlayed() {
     return timePlayed;
+  }
+  
+  public void lose() {
+    notifyObservers(this);
   }
 
 }

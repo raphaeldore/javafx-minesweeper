@@ -22,7 +22,7 @@ public class GameTile extends Subject<GameTile> {
     boolean isClean = false;
     if (state == TileState.HIDDEN) {
       if (isMine) {
-        //TODO: changer le game state à "perdu": game.lose();
+        game.lose();
         state = TileState.REVEALED;
       } else {
         if(neighboringMineCount == 0) {
