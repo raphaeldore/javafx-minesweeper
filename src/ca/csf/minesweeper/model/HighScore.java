@@ -13,10 +13,6 @@ import java.util.Hashtable;
 
 public class HighScore {
   Hashtable<String, ArrayList<String>> scores;
-  ArrayList<String> highScoreBeginner;
-  ArrayList<String> highScoreIntermediate;
-  ArrayList<String> highScoreExpert;
-
 
   public HighScore() {
     scores = new Hashtable<String, ArrayList<String>>();
