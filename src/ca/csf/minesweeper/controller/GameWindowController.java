@@ -1,24 +1,27 @@
 package ca.csf.minesweeper.controller;
 
-import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -34,40 +37,15 @@ import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXScene;
 import ca.csf.simpleFx.SimpleFXStage;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
-
-  /* @formatter:off */
-  public final Image IMAGE_ONE_MINE = new Image(getClass().getResourceAsStream(resourcesPath + "1.png"));
-  public final Image IMAGE_TWO_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "2.png"));
-  public final Image IMAGE_TREE_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "3.png"));
-  public final Image IMAGE_FOUR_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "4.png"));
-  public final Image IMAGE_FIVE_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "5.png"));
-  public final Image IMAGE_SIX_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "6.png"));
-  public final Image IMAGE_SEVEN_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "7.png"));
-  public final Image IMAGE_EIGHT_MINES = new Image(getClass().getResourceAsStream(resourcesPath + "8.png"));
-  public final Image IMAGE_FLAG = new Image(getClass().getResourceAsStream(resourcesPath + "Flag.png"));
-  public final Image IMAGE_MINE = new Image(getClass().getResourceAsStream(resourcesPath + "Mine.png"));
-  public final Image IMAGE_MINE_CROSS = new Image(getClass().getResourceAsStream(resourcesPath + "MineCross.png"));
-  public final Image IMAGE_MINE_RED = new Image(getClass().getResourceAsStream(resourcesPath + "MineRed.png"));
-  public final Image IMAGE_QUESTION_MARK = new Image(getClass().getResourceAsStream(resourcesPath + "QuestionMark.png"));
-  public final Image IMAGE_SMILE_DEAD = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Dead.png"));
-  public final Image IMAGE_SMILE_HAPPY = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Happy.png"));
-  public final Image IMAGE_SMILE_NORMAL = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Normal.png"));
-  public final Image IMAGE_SMILE_WORRY = new Image(getClass().getResourceAsStream(resourcesPath + "Smile_Worry.png"));
-  /* @formatter:on */
 
   private SimpleFXStage parentStage;
   private Timer timer;
   private GameState gameState;
   private Integer timePlayed = new Integer(0);
   private Timeline timeline;
-  private ToggleButton toggleButton = new ToggleButton();
   private ToggleButton[][] gameTiles;
 
   @FXML
@@ -79,44 +57,42 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   Label lblLabel1;
   @FXML
-  Button btnAboutWindow;
+  MenuItem btnAboutWindow;
   @FXML
-  Button btnHelpWindow;
-
+  MenuItem btnHelpWindow;
+  @FXML
+  ToggleGroup difficultyToggleGroup;
+  @FXML
+  RadioMenuItem beginnerDifficulty;
+  @FXML
+  RadioMenuItem intermediateDifficulty;
+  @FXML
+  RadioMenuItem hardDifficulty;
+  @FXML
+  CheckMenuItem godMode;
+  @FXML
+  Label lblTimer;
+  @FXML
+  Button btnNewGame;
+  @FXML
+  Label lblremainingMines;
+  @FXML
+  MenuItem bestTimes;
 
   public void setStage(SimpleFXStage stage) {
     this.parentStage = stage;
-  }
-
-  @FXML
-  public void patate() {
-    toggleButton.isArmed();
-    BooleanProperty oulala = toggleButton.selectedProperty();
-    SimpleFXDialogResult simpleFXDialogResult =
-        SimpleFXDialogs.showMessageBox("My Application Name",
-            "Do you want to save before you exit the application ?", SimpleFXDialogIcon.QUESTION,
-            SimpleFXDialogChoiceSet.YES_NO_CANCEL, SimpleFXDialogResult.CANCEL, getSimpleFxStage());
-    if (simpleFXDialogResult == SimpleFXDialogResult.YES) {
-      // Do something
-    } else if (simpleFXDialogResult == SimpleFXDialogResult.NO) {
-      // Do something else
-    } else if (simpleFXDialogResult == SimpleFXDialogResult.CANCEL) {
-      // Do some other thing
-    }
-  }
-
-  @FXML
-  public void havok() {
-    startGame();
   }
 
   public void timer() {
     // Basic timer template
     timeline =
         new Timeline(new KeyFrame(Duration.millis(1000),
-            actionEvent -> lblLabel1.setText(updateTimer()))); // TODO: Placeholder. Eventually
-                                                               // replace with
-                                                               // gameState.incrementTimePlayedByOneSecond()
+            actionEvent -> lblTimer.setText(updateTimer()))); // TODO:
+    // Placeholder.
+    // Eventually
+    // replace
+    // with
+    // gameState.incrementTimePlayedByOneSecond()
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
   }
@@ -135,14 +111,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
+    intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
+    hardDifficulty.setToggleGroup(difficultyToggleGroup);
     btnAboutWindow.setOnAction(this::openAboutWindow);
     btnHelpWindow.setOnAction(this::openHelpWindow);
-    timer();
-    startGame();
-  }
-
-  public void startGame() {
-    populateGameBoard();
+    bestTimes.setOnAction(this::openBestTimesWindow);
+    startNewGame();
   }
 
   public void populateGameBoard() {
@@ -152,11 +127,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j] = new ToggleButton();
-        gameTiles[i][j].setPrefSize(16, 16);
+        gameTiles[i][j].setMinSize(36, 36);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j));
         gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
-        gameTiles[i][j].setGraphic(new ImageView(IMAGE_FLAG)); // TODO: TEMP
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
@@ -164,39 +138,37 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   public void disableToggleButtonOnAction(ActionEvent event) {
     ToggleButton toggleButton = (ToggleButton) event.getSource();
-    toggleButton.setDisable(true); // Once the button has been clicked, we don't want the user to be
-                                   // able to click it again
+    // toggleButton.setDisable(true); // Once the button has been clicked, we
+
+    // don't want the user to be
+    // able to click it again
+    // ToggleButton toggleButton = (ToggleButton) event.getSource();
+    toggleButton.setSelected(true);
+
+    // toggleButton.setStyle("-fx-background-color: black");
+    toggleButton.setGraphic(new ImageView(IMAGE_MINE)); // TODO: TEMP
   }
 
+  public void openBestTimesWindow(ActionEvent event) {
+    createDialog("../view/HighScoresWindow.fxml", "Meilleurs Temps", new HighScoresWindowController());
+  }
+  
   public void openAboutWindow(ActionEvent event) {
-    try {
-      SimpleFXScene scene =
-          new SimpleFXScene(AboutWindowController.class.getResource("../view/AboutWindow.fxml"),
-              AboutWindowController.class.getResource("../view/application.css"),
-              new AboutWindowController());
-
-      SimpleFXStage stage =
-          new SimpleFXStage("About", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
-              this.getSimpleFxStage());
-      
-      stage.setOnCloseRequest(new preventStageFromClosing());
-      stage.setResizable(false);
-      stage.centerOnScreen();
-      stage.show();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    createDialog("../view/AboutWindow.fxml", "À propos", new AboutWindowController());
   }
 
   public void openHelpWindow(ActionEvent event) {
+    createDialog("../view/HelpWindow.fxml", "Aide", new HelpWindowController());
+  }
+
+  private void createDialog(String fxmlPath, String windowName, SimpleFXController controller) {
     try {
       SimpleFXScene scene =
-          new SimpleFXScene(HelpWindowController.class.getResource("../view/HelpWindow.fxml"),
-              HelpWindowController.class.getResource("../view/application.css"),
-              new HelpWindowController());
+          new SimpleFXScene(controller.getClass().getResource(fxmlPath), controller.getClass()
+              .getResource("../view/application.css"), controller);
 
       SimpleFXStage stage =
-          new SimpleFXStage("Help!", StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
+          new SimpleFXStage(windowName, StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
               this.getSimpleFxStage());
       stage.setOnCloseRequest(new preventStageFromClosing());
       stage.sizeToScene();
@@ -205,6 +177,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
     } catch (IOException e) {
       e.printStackTrace();
     }
+    // TODO: decide whether to have the initialize function set the window
+    // name and stuff
   }
 
   // Prevents user from closing dialog boxes
@@ -220,4 +194,15 @@ public class GameWindowController extends SimpleFXController implements Initiali
     argument.revealGameTile(); // TODO: TEMP
   }
 
+  @FXML
+  public void changeGodModeState() {
+    // reveal mines
+  }
+
+  @FXML
+  public void startNewGame() {
+    populateGameBoard();
+    timePlayed = 0;
+    timer(); // TODO: change it to start on first click
+  }
 }
