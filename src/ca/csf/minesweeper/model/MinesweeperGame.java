@@ -16,7 +16,7 @@ public MinesweeperGame (GameDifficulty difficulty, Observer observer) {
   }
   
   public void revealTile(int row, int column) {
-    gameBoard.revealTile(row, column);
+    gameBoard.revealTileArea(row, column);
   }
 
   public void alternateReminder(int row, int column) {
