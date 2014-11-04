@@ -8,10 +8,23 @@ public class GameTile extends Subject<GameTile> {
   private MinesweeperGame game;
   private TileState state;
   
-  public GameTile(MinesweeperGame game, Observer observer) {
+  private final int ROW;
+  private final int COLUMN;
+  
+  public GameTile(MinesweeperGame game, Observer<GameTile> observer, int row, int column) {
     this.game = game;
+    this.ROW = row;
+    this.COLUMN = column;
     addObserver(observer);
     state = TileState.HIDDEN;
+  }
+  
+  public int getROW() {
+    return ROW;
+  }
+  
+  public int getCOLUMN() {
+    return COLUMN;
   }
 
   public int getNeighboringMineCount() {
@@ -67,6 +80,14 @@ public class GameTile extends Subject<GameTile> {
       state = TileState.FLAGGED;
     }
     notifyObservers(this);
+  }
+  
+  public TileState getState() {
+    return state;
+  }
+  
+  public boolean isMine() {
+    return isMine;
   }
 
   //TODO: mettre les fonctions en ordre selon leur public/private

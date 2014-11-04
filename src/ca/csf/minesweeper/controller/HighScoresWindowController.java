@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import ca.csf.minesweeper.Configuration;
+import ca.csf.minesweeper.model.GameDifficulty;
 import ca.csf.minesweeper.model.HighScore;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
@@ -86,11 +87,11 @@ public class HighScoresWindowController extends SimpleFXController implements In
 
   @FXML
   public void setTestHighScore() {
-    highScore.setHighScore(Configuration.GameDifficulty.BEGINNER.difficultyName, "Raphaël Doré",
+    highScore.setHighScore(GameDifficulty.BEGINNER.difficultyName, "Raphaël Doré",
         123);
-    highScore.setHighScore(Configuration.GameDifficulty.INTERMEDIATE.difficultyName,
+    highScore.setHighScore(GameDifficulty.INTERMEDIATE.difficultyName,
         "Ginette Renault", 532);
-    highScore.setHighScore(Configuration.GameDifficulty.EXPERT.difficultyName, "Johny Capala", 312);
+    highScore.setHighScore(GameDifficulty.EXPERT.difficultyName, "Johny Capala", 312);
 
     loadData();
   }

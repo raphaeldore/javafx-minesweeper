@@ -11,11 +11,11 @@ public class GameBoard {
 
   private GameTile[][] tiles;
   // TODO: Accept Configuration.GameDifficulty Enumeration
-  public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game, Observer observer) {
+  public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game, Observer<GameTile> observer) {
     tiles = new GameTile[rowSize][columnSize];
     for (int i = 0; i < columnSize; i++) {
       for (int j = 0; j < rowSize; j++) {
-        tiles[j][i] = new GameTile(game, observer);
+        tiles[j][i] = new GameTile(game, observer, j, i);
       }
     }
     
