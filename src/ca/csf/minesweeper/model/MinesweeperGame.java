@@ -10,8 +10,8 @@ public class MinesweeperGame {
   GameBoard gameBoard;
   GameState gameState;
   
-public MinesweeperGame (GameDifficulty difficulty, Observer<> observer) {
-    gameState = new GameState(difficulty, observer);
+public MinesweeperGame (GameDifficulty difficulty, Observer<GameTile> observer) {
+    gameState = new GameState(difficulty);
     gameBoard = new GameBoard(difficulty.nbrOfRows, difficulty.nbrOfColumns, difficulty.nbrOfMines, this, observer );
   }
   
@@ -34,4 +34,9 @@ public MinesweeperGame (GameDifficulty difficulty, Observer<> observer) {
   public void lose() {
     gameState.lose();
   }
+  
+  public GameStates getGameState() {
+    return gameState.getState();
+  }
+  
 }

@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.StageStyle;
 import ca.csf.minesweeper.controller.GameWindowController;
-import ca.csf.minesweeper.model.GameState.GameStates;
+import ca.csf.minesweeper.model.GameStates;
 import ca.csf.simpleFx.SimpleFXApplication;
 import ca.csf.simpleFx.SimpleFXApplicationLauncher;
 import ca.csf.simpleFx.SimpleFXScene;

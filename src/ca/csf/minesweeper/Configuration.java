@@ -1,7 +1,6 @@
 package ca.csf.minesweeper;
 
-import ca.csf.minesweeper.model.GameState;
-import ca.csf.minesweeper.model.GameState.GameStates;
+import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameDifficulty;
 
 /*
@@ -15,6 +14,6 @@ public class Configuration {
   public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER; // Default
                                                                                  // GameDifficulty
   
-  public static GameStates currentGameState = GameState.GameStates.START;        // Initial GameState
+  public static GameStates currentGameState = GameStates.START;        // Initial GameState
 
 }

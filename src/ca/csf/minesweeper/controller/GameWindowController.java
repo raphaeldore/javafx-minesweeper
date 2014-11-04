@@ -1,8 +1,6 @@
 package ca.csf.minesweeper.controller;
 
-import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
-import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_HAPPY;
-import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
+import static ca.csf.minesweeper.controller.ControllerConsts.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,13 +25,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
-import ca.csf.minesweeper.model.GameDifficulty;
-import ca.csf.minesweeper.model.GameState;
-import ca.csf.minesweeper.model.GameState.GameStates;
+import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameTile;
 import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
+import ca.csf.minesweeper.model.TileState;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
 
@@ -43,6 +40,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private Timeline timeline;
   private ToggleButton[][] gameTiles;
   private IntegerProperty timePlayed;
+  private boolean isFirstClick;
 
   @FXML
   GridPane gameBoard;
@@ -160,7 +158,59 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    argument.revealedGameTileAreaIsClean(); // TODO: TEMP
+    if (game.getGameState() == GameStates.LOST) {
+      btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_WORRY));
+      //TODO: change interface to display defeat :O :(
+    } else if (game.getGameState() == GameStates.WON) {
+      btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
+    }
+    
+    if (isFirstClick) {
+      timer();
+      isFirstClick = false;
+    }
+    
+    if (argument.getState() == TileState.FLAGGED) {
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FLAG));
+    } else if (argument.getState() == TileState.QUESTIONNED) {
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_QUESTION_MARK));
+    } else if (argument.getState() == TileState.REVEALED) {
+      if (argument.isMine()) {
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE_RED));
+      } else {
+        switch (argument.getNeighboringMineCount()) {
+          case 0:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null);
+            break;
+          case 1:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_ONE_MINE));
+            break;
+          case 2:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_TWO_MINES));
+            break;
+          case 3:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_THREE_MINES));
+            break;
+          case 4:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FOUR_MINES));
+            break;
+          case 5:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FIVE_MINES));
+            break;
+          case 6:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_SIX_MINES));
+            break;
+          case 7:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_SEVEN_MINES));
+            break;
+          case 8:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_EIGHT_MINES));
+            break;
+        }
+      }
+    } else {
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); //Aucune image
+    }
   }
 
   @FXML
@@ -170,6 +220,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @FXML
   public void startNewGame() {
+    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
+    isFirstClick = true;
     populateGameBoard();
     timePlayed.setValue(0);
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));

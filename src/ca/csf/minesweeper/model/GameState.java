@@ -1,6 +1,6 @@
 package ca.csf.minesweeper.model;
 
-public class GameState extends Subject<GameState>{
+public class GameState {
   /*
    * 
    * TODO: -Timer -Flags -nbrOfRevealedTiles
@@ -10,10 +10,11 @@ public class GameState extends Subject<GameState>{
   private int timePlayed; // TODO: When the game starts, the JavaFX timer starts (In the GameWindow
                           // Controller).
   private GameDifficulty difficulty;
+  private GameStates state;
 
-  GameState(GameDifficulty difficulty, Observer observer) {
+  GameState(GameDifficulty difficulty) {
+    state = GameStates.PLAYING;
     this.difficulty = difficulty;
-    addObserver(observer);
   }
 
   public int getFlagCount() {
@@ -32,8 +33,8 @@ public class GameState extends Subject<GameState>{
     flagCount--;
   }
 
-  public static enum GameStates {
-    START, PAUSE, PLAYING, WON; //TODO: should this be in its own file?
+  public GameStates getState() {
+    return state;
   }
 
   /**
@@ -44,7 +45,7 @@ public class GameState extends Subject<GameState>{
   }
   
   public void lose() {
-    notifyObservers(this);
+    //TODO: state = LOST
   }
 
 }
