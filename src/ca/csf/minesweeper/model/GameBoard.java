@@ -10,7 +10,7 @@ import java.util.Random;
 public class GameBoard {
 
   private GameTile[][] tiles;
-  // TODO: Accept Configuration.GameDifficulty enum
+  // TODO: Accept Configuration.GameDifficulty Enumeration
   public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game, Observer observer) {
     tiles = new GameTile[rowSize][columnSize];
     for (int i = 0; i < columnSize; i++) {
