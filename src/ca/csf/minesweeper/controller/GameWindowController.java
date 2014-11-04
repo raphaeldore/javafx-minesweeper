@@ -179,26 +179,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
     stage.show();
   }
 
-  private void createDialog(String fxmlPath, String windowName, SimpleFXController controller) {
-    try {
-      SimpleFXScene scene =
-          new SimpleFXScene(controller.getClass().getResource(fxmlPath), controller.getClass()
-              .getResource("../view/application.css"), controller);
-
-      SimpleFXStage stage =
-          new SimpleFXStage(windowName, StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
-              this.getSimpleFxStage());
-      stage.setOnCloseRequest(new preventStageFromClosing());
-      stage.sizeToScene();
-      stage.centerOnScreen();
-      stage.showAndWait();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    // TODO: decide whether to have the initialize function set the window
-    // name and stuff
-  }
-
   // Prevents user from closing dialog boxes
   private class preventStageFromClosing implements EventHandler<WindowEvent> {
     @Override
