@@ -168,7 +168,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void startNewGame() {
     populateGameBoard();
-    timePlayed.setValue(93);
+    timePlayed.setValue(0);
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     timeline.playFromStart();
