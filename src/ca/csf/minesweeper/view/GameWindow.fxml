@@ -3,56 +3,90 @@
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioMenuItem?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 
-<BorderPane prefHeight="206.0" prefWidth="295.0"
+<BorderPane prefHeight="206.0" prefWidth="295.0" stylesheets="@application.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="ca.csf.minesweeper.controller.GameWindowController">
 	<top>
 		<fx:define>
 			<ToggleGroup fx:id="difficultyToggleGroup" />
 		</fx:define>
-			<MenuBar>
-				<menus>
-					<Menu mnemonicParsing="false" text="Partie">
-						<MenuItem mnemonicParsing="false" text="Nouveau" accelerator="F2" onAction="#startNewGame" />
-						<RadioMenuItem fx:id="beginnerDifficulty" mnemonicParsing="false" text="Débutant" selected="true" />
-						<RadioMenuItem fx:id="intermediateDifficulty" mnemonicParsing="false" text="Intermédiaire" />
-						<RadioMenuItem fx:id="hardDifficulty" mnemonicParsing="false" text="Expert" />
-						<CheckMenuItem onAction="#changeGodModeState" fx:id="godMode" mnemonicParsing="false" text="Tricher" />
-						<MenuItem fx:id="bestTimes" mnemonicParsing="false" text="Meilleurs temps..." />
-					</Menu>
-					<Menu mnemonicParsing="false" text="?">
-						<items>
-							<MenuItem mnemonicParsing="false" text="Aide"
-								accelerator="F1" fx:id="btnHelpWindow" />
-							<MenuItem mnemonicParsing="false" text="À propos..." fx:id="btnAboutWindow" />
-						</items>
-					</Menu>
-				</menus>
-			</MenuBar>
+		<MenuBar>
+			<menus>
+				<Menu mnemonicParsing="false" text="Partie">
+					<items>
+						<MenuItem accelerator="F2" mnemonicParsing="false"
+							onAction="#startNewGame" text="Nouveau" />
+						<RadioMenuItem fx:id="menuBeginnerDifficulty"
+							mnemonicParsing="false" selected="true" text="Débutant"
+							toggleGroup="$difficultyToggleGroup" />
+						<RadioMenuItem fx:id="menuIntermediateDifficulty"
+							mnemonicParsing="false" text="Intermédiaire" toggleGroup="$difficultyToggleGroup" />
+						<RadioMenuItem fx:id="menuHardDifficulty"
+							mnemonicParsing="false" text="Expert" toggleGroup="$difficultyToggleGroup" />
+						<CheckMenuItem fx:id="godMode" mnemonicParsing="false"
+							onAction="#changeGodModeState" text="Tricher" />
+						<MenuItem fx:id="menuHighScores" onAction="#openBestTimesWindow"
+							mnemonicParsing="false" text="Meilleurs temps..." />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="?">
+					<items>
+						<MenuItem fx:id="menuHelpWindow" onAction="#openHelpWindow"
+							accelerator="F1" mnemonicParsing="false" text="Aide" />
+						<MenuItem fx:id="menuAboutWindow" onAction="#openAboutWindow"
+							mnemonicParsing="false" text="À propos..." />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
 	</top>
-	
-	<center>
-		<HBox>
-				<Label fx:id="lblremainingMines" text="Yo mama" />
-				<Button fx:id="btnNewGame" onAction="#startNewGame" text="Start Game" />
-				<Label fx:id="lblTimer" text="Label" />
-			</HBox>
-	</center>
 
 	<bottom>
-		<GridPane fx:id="gameBoard" layoutX="0.0" layoutY="0.0">
+		<GridPane fx:id="gameBoard">
 		</GridPane>
 	</bottom>
-	
+	<left>
+		<VBox alignment="TOP_CENTER" minWidth="100" prefHeight="177.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label id="mainWindowLabel" fx:id="lblremainingMines"
+					alignment="TOP_CENTER" text="000">
+					<VBox.margin>
+						<Insets bottom="10.0" />
+						<Insets top="10.0" />
+					</VBox.margin>
+				</Label>
+			</children>
+		</VBox>
+	</left>
+	<right>
+		<VBox alignment="TOP_CENTER" minWidth="100" prefHeight="177.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label id="mainWindowLabel" fx:id="lblTimer" alignment="TOP_CENTER"
+					text="000">
+					<VBox.margin>
+						<Insets bottom="10.0" />
+						<Insets top="10.0" />
+					</VBox.margin>
+				</Label>
+			</children>
+		</VBox>
+	</right>
+	<center>
+		<VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+			<children>
+				<Button fx:id="btnNewGame" onAction="#startNewGame">
+					<VBox.margin>
+						<Insets bottom="10.0" />
+						<Insets top="15.0" />
+					</VBox.margin>
+				</Button>
+			</children>
+		</VBox>
+	</center>
 </BorderPane>
