@@ -2,15 +2,15 @@ package ca.csf.minesweeper.controller;
 
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,7 +25,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
@@ -35,7 +34,6 @@ import ca.csf.minesweeper.model.GameTile;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
 import ca.csf.simpleFx.SimpleFXController;
-import ca.csf.simpleFx.SimpleFXScene;
 import ca.csf.simpleFx.SimpleFXStage;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
@@ -44,9 +42,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private SimpleFXStage parentStage;
   private Timer timer;
   private GameState gameState;
-  private Integer timePlayed = new Integer(0);
+  // private Integer timePlayed = new Integer(0);
   private Timeline timeline;
   private ToggleButton[][] gameTiles;
+
+  private IntegerProperty timePlayed;
 
   @FXML
   private BorderPane gameWindow;
@@ -83,40 +83,29 @@ public class GameWindowController extends SimpleFXController implements Initiali
     this.parentStage = stage;
   }
 
-  public void timer() {
-    // Basic timer template
-    timeline =
-        new Timeline(new KeyFrame(Duration.millis(1000),
-            actionEvent -> lblTimer.setText(updateTimer()))); // TODO:
-    // Placeholder.
-    // Eventually
-    // replace
-    // with
-    // gameState.incrementTimePlayedByOneSecond()
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
+  public void updateTimer() {
+    if (Configuration.currentGameState != GameStates.PAUSE) {
+      timePlayed.setValue(timePlayed.getValue() + 1);
+    }
 
-  public String updateTimer() {
-    if (timePlayed == 998) {
+    if (timePlayed.intValue() == 999) {
       timeline.stop();
     }
-
-    if (Configuration.currentGameState != GameStates.PAUSE) {
-      timePlayed++;
-    }
-
-    return timePlayed.toString();
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    timePlayed = new SimpleIntegerProperty(0);
+    lblTimer.textProperty().bind(timePlayed.asString());
     beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
     intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
     hardDifficulty.setToggleGroup(difficultyToggleGroup);
     btnAboutWindow.setOnAction(this::openAboutWindow);
     btnHelpWindow.setOnAction(this::openHelpWindow);
     bestTimes.setOnAction(this::openBestTimesWindow);
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> updateTimer()));
+    timeline.setCycleCount(Animation.INDEFINITE);
+
     startNewGame();
   }
 
@@ -155,27 +144,29 @@ public class GameWindowController extends SimpleFXController implements Initiali
             .simpleFXController(new HighScoresWindowController())
             .simpleFXApplication(this.getSimpleFXApplication())
             .SimpleFXStage(this.getSimpleFxStage()).buildStage();
-    
+
     stage.setResizable(false);
     stage.show();
   }
 
   public void openAboutWindow(ActionEvent event) {
-    SimpleFXStage stage = new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
-        .simpleFXController(new AboutWindowController())
-        .simpleFXApplication(this.getSimpleFXApplication())
-        .SimpleFXStage(this.getSimpleFxStage()).buildStage();
-    
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
+            .simpleFXController(new AboutWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication())
+            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+
     stage.setResizable(false);
     stage.show();
   }
 
   public void openHelpWindow(ActionEvent event) {
-    SimpleFXStage stage = new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
-    .simpleFXController(new HelpWindowController())
-    .simpleFXApplication(this.getSimpleFXApplication())
-    .SimpleFXStage(this.getSimpleFxStage()).buildStage();
-    
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
+            .simpleFXController(new HelpWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication())
+            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+
     stage.show();
   }
 
@@ -200,7 +191,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void startNewGame() {
     populateGameBoard();
-    timePlayed = 0;
-    timer(); // TODO: change it to start on first click
+    timePlayed.setValue(0);
+    timeline.playFromStart();
   }
+
 }
