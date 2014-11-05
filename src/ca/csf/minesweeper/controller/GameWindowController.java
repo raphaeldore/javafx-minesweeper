@@ -1,10 +1,11 @@
 package ca.csf.minesweeper.controller;
 
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_HAPPY;
+import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -12,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,12 +23,10 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.WindowEvent;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
-import ca.csf.minesweeper.model.GameState;
 import ca.csf.minesweeper.model.GameState.GameStates;
 import ca.csf.minesweeper.model.GameTile;
 import ca.csf.minesweeper.model.Observer;
@@ -39,35 +37,28 @@ import ca.csf.simpleFx.SimpleFXStage;
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
 
-  private SimpleFXStage parentStage;
-  private Timer timer;
-  private GameState gameState;
-  // private Integer timePlayed = new Integer(0);
   private Timeline timeline;
   private ToggleButton[][] gameTiles;
-
   private IntegerProperty timePlayed;
 
   @FXML
-  private BorderPane gameWindow;
-  @FXML
-  private GridPane gameBoard;
-  @FXML
-  public Button btnPatate;
+  GridPane gameBoard;
   @FXML
   Label lblLabel1;
   @FXML
-  MenuItem btnAboutWindow;
+  MenuItem menuAboutWindow;
   @FXML
-  MenuItem btnHelpWindow;
+  MenuItem menuHelpWindow;
   @FXML
   ToggleGroup difficultyToggleGroup;
   @FXML
-  RadioMenuItem beginnerDifficulty;
+  RadioMenuItem menuBeginnerDifficulty;
   @FXML
-  RadioMenuItem intermediateDifficulty;
+  RadioMenuItem menuIntermediateDifficulty;
   @FXML
-  RadioMenuItem hardDifficulty;
+  RadioMenuItem menuHardDifficulty;
+  @FXML
+  MenuItem menuHighScores;
   @FXML
   CheckMenuItem godMode;
   @FXML
@@ -76,12 +67,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Button btnNewGame;
   @FXML
   Label lblremainingMines;
-  @FXML
-  MenuItem bestTimes;
-
-  public void setStage(SimpleFXStage stage) {
-    this.parentStage = stage;
-  }
 
   public void updateTimer() {
     if (Configuration.currentGameState != GameStates.PAUSE) {
@@ -95,14 +80,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    Font.loadFont(GameWindowController.class.getResource(resourcesPath + "Terminus.ttf")
+        .toExternalForm(), 10);
     timePlayed = new SimpleIntegerProperty(0);
     lblTimer.textProperty().bind(timePlayed.asString());
-    beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
-    intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
-    hardDifficulty.setToggleGroup(difficultyToggleGroup);
-    btnAboutWindow.setOnAction(this::openAboutWindow);
-    btnHelpWindow.setOnAction(this::openHelpWindow);
-    bestTimes.setOnAction(this::openBestTimesWindow);
+    // lblremainingMines.textProperty().bind(timePlayed.asString()); // TODO: Delete this line
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> updateTimer()));
     timeline.setCycleCount(Animation.INDEFINITE);
 
@@ -138,6 +120,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     toggleButton.setGraphic(new ImageView(IMAGE_MINE)); // TODO: TEMP
   }
 
+  @FXML
   public void openBestTimesWindow(ActionEvent event) {
     SimpleFXStage stage =
         new WindowBuilder().fxmlPath("../view/HighScoresWindow.fxml").windowName("Meilleurs Temps")
@@ -149,6 +132,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     stage.show();
   }
 
+  @FXML
   public void openAboutWindow(ActionEvent event) {
     SimpleFXStage stage =
         new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
@@ -160,6 +144,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     stage.show();
   }
 
+  @FXML
   public void openHelpWindow(ActionEvent event) {
     SimpleFXStage stage =
         new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
@@ -169,14 +154,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
     stage.show();
   }
-
-  // Prevents user from closing dialog boxes
-  private class preventStageFromClosing implements EventHandler<WindowEvent> {
-    @Override
-    public void handle(WindowEvent event) {
-      event.consume();
-    }
-  };
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
@@ -191,7 +168,9 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void startNewGame() {
     populateGameBoard();
-    timePlayed.setValue(0);
+    timePlayed.setValue(93);
+    lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
+    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     timeline.playFromStart();
   }
 
