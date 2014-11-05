@@ -86,8 +86,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public void updateTimer() {
     if (Configuration.currentGameState != GameStates.PAUSE) {
       timePlayed.setValue(timePlayed.getValue() + 1);
-      System.out.println(timePlayed.toString());
-      System.out.println(Integer.toString(timePlayed.intValue()));
     }
 
     if (timePlayed.intValue() == 999) {
@@ -99,7 +97,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public void initialize(URL location, ResourceBundle resources) {
     timePlayed = new SimpleIntegerProperty(0);
     lblTimer.textProperty().bind(timePlayed.asString());
-    // lblTimer.textProperty().bind(Bindings.convert(timePlayed));
     beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
     intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
     hardDifficulty.setToggleGroup(difficultyToggleGroup);
