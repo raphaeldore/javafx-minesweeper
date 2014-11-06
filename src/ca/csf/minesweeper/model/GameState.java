@@ -1,33 +1,44 @@
 package ca.csf.minesweeper.model;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class GameState {
   /*
-   * TODO: -Timer -Flags -nbrOfRevealedTiles
+   * 
+   * TODO: -nbrOfRevealedTiles
    */
 
   private int flagCount;
-  private int timePlayed; // TODO: When the game starts, the JavaFX timer starts (In the GameWindow Controller).
+  private GameDifficulty difficulty;
+  private GameStates state;
+  private int revealedTiles;
 
-  public static enum GameStates {
-    START, PAUSE, PLAYING, WON;
+  GameState(GameDifficulty difficulty) {
+    state = GameStates.PLAYING;
+    this.difficulty = difficulty;
+    revealedTiles = 0;
   }
 
-  /**
-   * @return the timePlayed
-   */
-  public int getTimePlayed() {
-    return timePlayed;
+  public int getFlagCount() {
+    return flagCount;
   }
 
-  /**
-   * @param timePlayed the timePlayed to set
-   */
-  public void incrementTimePlayedByOneSecond() {
-    timePlayed++;
+  public GameDifficulty getDifficulty() {
+    return difficulty;
+  }
+
+  public void incrementFlagCount() {
+    flagCount++;
+  }
+
+  public void decrementFlagCount() {
+    flagCount--;
+  }
+
+  public GameStates getState() {
+    return state;
   }
   
-  
+  public void lose() {
+    state = GameStates.LOST;
+  }
 
 }
