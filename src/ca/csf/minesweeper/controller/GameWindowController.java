@@ -177,7 +177,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     }
     
     if (isFirstClick) {
-      timer();
+      timeline.playFromStart();
       isFirstClick = false;
     }
     
@@ -235,12 +235,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
   public void startNewGame() {
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
     isFirstClick = true;
-    populateGameBoard();
     timePlayed.setValue(0);
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
-    timeline.playFromStart();
     game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
+    populateGameBoard();
   }
 
 }
