@@ -10,6 +10,7 @@ import java.util.Random;
 public class GameBoard {
 
   private GameTile[][] tiles;
+
   // TODO: Accept Configuration.GameDifficulty Enumeration
   public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game, Observer<GameTile> observer) {
     tiles = new GameTile[rowSize][columnSize];
@@ -18,7 +19,7 @@ public class GameBoard {
         tiles[j][i] = new GameTile(game, observer, j, i);
       }
     }
-    
+
     while (mineCount > 0) {
       Random random = new Random();
       int row = random.nextInt(rowSize - 1);
@@ -43,23 +44,24 @@ public class GameBoard {
       tiles[row][column].incrementNeighboringMineCount();
     }
   }
-  
+
   public void revealTileArea(int row, int column) {
-    if (row >= 0 && column >= 0)
-    if (tiles[row][column].revealedGameTileAreaIsClean()) {
-      revealTileArea(row - 1, column - 1);
-      revealTileArea(row - 1, column);
-      revealTileArea(row, column - 1);
-      revealTileArea(row + 1, column - 1);
-      revealTileArea(row + 1, column + 1);
-      revealTileArea(row - 1, column + 1);
-      revealTileArea(row + 1, column);
-      revealTileArea(row, column + 1);
+    if (row >= 0 && column >= 0 && row <= 8&& column <= 8) {
+      if (tiles[row][column].revealedGameTileAreaIsClean()) {
+        revealTileArea(row - 1, column - 1);
+        revealTileArea(row - 1, column);
+        revealTileArea(row, column - 1);
+        revealTileArea(row + 1, column - 1);
+        revealTileArea(row + 1, column + 1);
+        revealTileArea(row - 1, column + 1);
+        revealTileArea(row + 1, column);
+        revealTileArea(row, column + 1);
+      }
     }
   }
 
   public void toggleTileState(int row, int column) {
     tiles[row][column].toggleState();
   }
-  
+
 }

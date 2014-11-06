@@ -36,13 +36,12 @@ public class GameTile extends Subject<GameTile> {
     if (state == TileState.HIDDEN) {
       if (isMine) {
         game.lose();
-        state = TileState.REVEALED;
       } else {
         if(neighboringMineCount == 0) {
           isClean = true;
-          state = TileState.REVEALED;
         }
       }
+      state = TileState.REVEALED;
       notifyObservers(this);
     }
     return isClean;

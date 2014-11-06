@@ -37,6 +37,7 @@ import ca.csf.simpleFx.SimpleFXStage;
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
 
+  private MinesweeperGame game;
   private Timeline timeline;
   private ToggleButton[][] gameTiles;
   private IntegerProperty timePlayed;
@@ -93,19 +94,29 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   public void populateGameBoard() {
-    gameTiles =
-        new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
-
-    for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
-      for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
+//    ToggleButton[][] gameTiles =
+//        new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
+    gameTiles = new ToggleButton[9][9];
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
         gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setMinSize(36, 36);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j));
-        gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
+        gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j, game));
+        //gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
+//    for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
+//      for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
+//        gameTiles[i][j] = new ToggleButton();
+//        gameTiles[i][j].setMinSize(36, 36);
+//        gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+//        gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j, game));
+//        //gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
+//        gameBoard.add(gameTiles[i][j], i, j);
+//      }
+//    }
   }
 
   public void disableToggleButtonOnAction(ActionEvent event) {
@@ -178,9 +189,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
       if (argument.isMine()) {
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE_RED));
       } else {
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setSelected(true);
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setDisable(true);;
         switch (argument.getNeighboringMineCount()) {
           case 0:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null);
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); //No image
             break;
           case 1:
             gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_ONE_MINE));
@@ -209,7 +222,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
         }
       }
     } else {
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); //Aucune image
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); //No image
     }
   }
 
@@ -228,7 +241,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     timeline.playFromStart();
     game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
-    
   }
 
 }

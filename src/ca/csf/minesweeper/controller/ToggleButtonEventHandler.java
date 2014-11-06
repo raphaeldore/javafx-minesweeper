@@ -1,6 +1,7 @@
 package ca.csf.minesweeper.controller;
 
 import static ca.csf.minesweeper.controller.ControllerConsts.*;
+import ca.csf.minesweeper.model.MinesweeperGame;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
@@ -9,22 +10,25 @@ import javafx.scene.input.MouseEvent;
 
 public class ToggleButtonEventHandler implements EventHandler<MouseEvent> {
 
-  private int column;
-  private int row;
+  private final int COLUMN;
+  private final int ROW;
   private int counter = 1;
+  private final MinesweeperGame game;
 
-  public ToggleButtonEventHandler(int column, int row) {
-    this.column = column;
-    this.row = row;
+  public ToggleButtonEventHandler(int row, int column, MinesweeperGame game) {
+    COLUMN = column;
+    ROW = row;
+    this.game = game;
   }
 
   @Override
   public void handle(MouseEvent event) {
-    if (event.isPrimaryButtonDown()) {
-
+    if (event.getButton() == MouseButton.PRIMARY) {
+        game.revealTile(ROW, COLUMN);
+        
     } else if (event.getButton() == MouseButton.SECONDARY) {
       ToggleButton sourceButton = (ToggleButton) event.getSource();
-
+      
       /* @formatter:off */
       
             /*
@@ -53,15 +57,15 @@ public class ToggleButtonEventHandler implements EventHandler<MouseEvent> {
       
       /* @formatter:on */
 
-      if (counter % 3 == 0) {
-        sourceButton.setGraphic(null);
-      } else if (counter % 3 == 1) {
-        sourceButton.setGraphic(new ImageView(IMAGE_FLAG));
-      } else {
-        sourceButton.setGraphic(new ImageView(IMAGE_QUESTION_MARK));
-      }
-
-      counter++;
+//      if (counter % 3 == 0) {
+//        sourceButton.setGraphic(null);
+//      } else if (counter % 3 == 1) {
+//        sourceButton.setGraphic(new ImageView(IMAGE_FLAG));
+//      } else {
+//        sourceButton.setGraphic(new ImageView(IMAGE_QUESTION_MARK));
+//      }
+//
+//      counter++;
     }
   }
 
