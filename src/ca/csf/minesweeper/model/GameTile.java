@@ -89,5 +89,5 @@ public class GameTile extends Subject<GameTile> {
     return isMine;
   }
 
-  //TODO: mettre les fonctions en ordre selon leur public/private
+  //TODO: put functions in order according to public/private/protected
 }

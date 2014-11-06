@@ -3,18 +3,18 @@ package ca.csf.minesweeper.model;
 public class GameState {
   /*
    * 
-   * TODO: -Timer -Flags -nbrOfRevealedTiles
+   * TODO: -nbrOfRevealedTiles
    */
 
   private int flagCount;
-  private int timePlayed; // TODO: When the game starts, the JavaFX timer starts (In the GameWindow
-                          // Controller).
   private GameDifficulty difficulty;
   private GameStates state;
+  private int revealedTiles;
 
   GameState(GameDifficulty difficulty) {
     state = GameStates.PLAYING;
     this.difficulty = difficulty;
+    revealedTiles = 0;
   }
 
   public int getFlagCount() {
@@ -36,16 +36,9 @@ public class GameState {
   public GameStates getState() {
     return state;
   }
-
-  /**
-   * @return the timePlayed
-   */
-  public int getTimePlayed() {
-    return timePlayed;
-  }
   
   public void lose() {
-    //TODO: state = LOST
+    state = GameStates.LOST;
   }
 
 }

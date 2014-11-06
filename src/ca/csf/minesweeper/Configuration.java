@@ -11,9 +11,9 @@ public class Configuration {
   // TODO: Enum TileState {Normal, Flag, QuestionMark}
   // public static final nbrOfTiles
 
-  public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER; // Default
-                                                                                 // GameDifficulty
+  public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER;// Default
+                                                                                // GameDifficulty
   
-  public static GameStates currentGameState = GameStates.START;        // Initial GameState
+  public static GameStates currentGameState = GameStates.PLAYING;               // Initial GameState
 
 }
