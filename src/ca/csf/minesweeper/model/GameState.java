@@ -41,4 +41,10 @@ public class GameState {
     state = GameStates.LOST;
   }
 
+  public void incrementTilesRevealed() {
+    revealedTiles++;
+    if (revealedTiles == 71) { //TODO: change to (nbrRows X nbrColumns)- nbrMines 
+      state = GameStates.WON;
+    }
+  }
 }
