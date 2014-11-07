@@ -1,18 +1,16 @@
 package ca.csf.minesweeper.controller;
 
-import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
+import static ca.csf.minesweeper.controller.ControllerConsts.*;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,51 +21,46 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
-import ca.csf.minesweeper.model.GameState;
-import ca.csf.minesweeper.model.GameState.GameStates;
+import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameTile;
+import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
+import ca.csf.minesweeper.model.TileState;
 import ca.csf.simpleFx.SimpleFXController;
-import ca.csf.simpleFx.SimpleFXScene;
 import ca.csf.simpleFx.SimpleFXStage;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
 
-  private SimpleFXStage parentStage;
-  private Timer timer;
-  private GameState gameState;
-  private Integer timePlayed = new Integer(0);
+  private MinesweeperGame game;
   private Timeline timeline;
   private ToggleButton[][] gameTiles;
+  private IntegerProperty timePlayed;
+  private boolean isFirstClick;
 
   @FXML
-  private BorderPane gameWindow;
-  @FXML
-  private GridPane gameBoard;
-  @FXML
-  public Button btnPatate;
+  GridPane gameBoard;
   @FXML
   Label lblLabel1;
   @FXML
-  MenuItem btnAboutWindow;
+  MenuItem menuAboutWindow;
   @FXML
-  MenuItem btnHelpWindow;
+  MenuItem menuHelpWindow;
   @FXML
   ToggleGroup difficultyToggleGroup;
   @FXML
-  RadioMenuItem beginnerDifficulty;
+  RadioMenuItem menuBeginnerDifficulty;
   @FXML
-  RadioMenuItem intermediateDifficulty;
+  RadioMenuItem menuIntermediateDifficulty;
   @FXML
-  RadioMenuItem hardDifficulty;
+  RadioMenuItem menuHardDifficulty;
+  @FXML
+  MenuItem menuHighScores;
   @FXML
   CheckMenuItem godMode;
   @FXML
@@ -76,72 +69,53 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Button btnNewGame;
   @FXML
   Label lblremainingMines;
-  @FXML
-  MenuItem bestTimes;
 
-  public void setStage(SimpleFXStage stage) {
-    this.parentStage = stage;
-  }
+  public void updateTimer() {
+    if (Configuration.currentGameState != GameStates.PAUSE) {
+      timePlayed.setValue(timePlayed.getValue() + 1);
+    }
 
-  public void timer() {
-    // Basic timer template
-    timeline =
-        new Timeline(new KeyFrame(Duration.millis(1000),
-            actionEvent -> lblTimer.setText(updateTimer()))); // TODO:
-    // Placeholder.
-    // Eventually
-    // replace
-    // with
-    // gameState.incrementTimePlayedByOneSecond()
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-  }
-
-  public String updateTimer() {
-    if (timePlayed == 998) {
+    if (timePlayed.intValue() == 999) {
       timeline.stop();
     }
-
-    if (Configuration.currentGameState != GameStates.PAUSE) {
-      timePlayed++;
-    }
-
-    return timePlayed.toString();
   }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    beginnerDifficulty.setToggleGroup(difficultyToggleGroup);
-    intermediateDifficulty.setToggleGroup(difficultyToggleGroup);
-    hardDifficulty.setToggleGroup(difficultyToggleGroup);
-    btnAboutWindow.setOnAction(this::openAboutWindow);
-    btnHelpWindow.setOnAction(this::openHelpWindow);
-    bestTimes.setOnAction(this::openBestTimesWindow);
+    Font.loadFont(GameWindowController.class.getResource(resourcesPath + "Terminus.ttf")
+        .toExternalForm(), 10);
+    timePlayed = new SimpleIntegerProperty(0);
+    lblTimer.textProperty().bind(timePlayed.asString());
+    // lblremainingMines.textProperty().bind(timePlayed.asString()); // TODO: Delete this line
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> updateTimer()));
+    timeline.setCycleCount(Animation.INDEFINITE);
+
     startNewGame();
   }
 
   public void populateGameBoard() {
-    ToggleButton[][] gameTiles =
-        new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
-
+//    ToggleButton[][] gameTiles =
+//        new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
+    gameTiles = new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setMinSize(36, 36);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j));
-        gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
+        gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j, game));
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
+    //TODO: get the Configuration.selectedDifficulty to work again and replace the numbers with it
+
+    //gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
   }
 
   public void disableToggleButtonOnAction(ActionEvent event) {
     ToggleButton toggleButton = (ToggleButton) event.getSource();
     // toggleButton.setDisable(true); // Once the button has been clicked, we
 
-    // don't want the user to be
-    // able to click it again
+    
     // ToggleButton toggleButton = (ToggleButton) event.getSource();
     toggleButton.setSelected(true);
 
@@ -149,60 +123,125 @@ public class GameWindowController extends SimpleFXController implements Initiali
     toggleButton.setGraphic(new ImageView(IMAGE_MINE)); // TODO: TEMP
   }
 
+  @FXML
   public void openBestTimesWindow(ActionEvent event) {
-    createDialog("../view/HighScoresWindow.fxml", "Meilleurs Temps", new HighScoresWindowController());
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/HighScoresWindow.fxml").windowName("Meilleurs Temps")
+            .simpleFXController(new HighScoresWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication())
+            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+
+    stage.setResizable(false);
+    stage.show();
   }
-  
+
+  @FXML
   public void openAboutWindow(ActionEvent event) {
-    createDialog("../view/AboutWindow.fxml", "À propos", new AboutWindowController());
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
+            .simpleFXController(new AboutWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication())
+            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+
+    stage.setResizable(false);
+    stage.show();
   }
 
+  @FXML
   public void openHelpWindow(ActionEvent event) {
-    createDialog("../view/HelpWindow.fxml", "Aide", new HelpWindowController());
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
+            .simpleFXController(new HelpWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication())
+            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+    
+    stage.show();
   }
-
-  private void createDialog(String fxmlPath, String windowName, SimpleFXController controller) {
-    try {
-      SimpleFXScene scene =
-          new SimpleFXScene(controller.getClass().getResource(fxmlPath), controller.getClass()
-              .getResource("../view/application.css"), controller);
-
-      SimpleFXStage stage =
-          new SimpleFXStage(windowName, StageStyle.UTILITY, scene, this.getSimpleFXApplication(),
-              this.getSimpleFxStage());
-      stage.setOnCloseRequest(new preventStageFromClosing());
-      stage.sizeToScene();
-      stage.centerOnScreen();
-      stage.showAndWait();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    // TODO: decide whether to have the initialize function set the window
-    // name and stuff
-  }
-
-  // Prevents user from closing dialog boxes
-  private class preventStageFromClosing implements EventHandler<WindowEvent> {
-    @Override
-    public void handle(WindowEvent event) {
-      event.consume();
-    }
-  };
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    argument.revealGameTile(); // TODO: TEMP
+    if (game.getGameState() == GameStates.LOST) {
+      btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_WORRY));
+      //TODO: change interface to display defeat :O :(
+      //TODO: reveal mines here too
+      //TODO: prevent player from continuing to play
+    } else if (game.getGameState() == GameStates.WON) {
+      btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
+      //TODO: something to congratulate the player
+    }
+    
+    if (isFirstClick) {
+      timeline.playFromStart();
+      isFirstClick = false;
+    }
+    
+    if (argument.getState() == TileState.FLAGGED) {
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FLAG));
+    } else if (argument.getState() == TileState.QUESTIONNED) {
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_QUESTION_MARK));
+    } else if (argument.getState() == TileState.REVEALED) {
+      
+      // don't want the user to be able to click it again
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setDisable(true);
+      
+      // if tile is revealed without clicking it, we want to toggle it's state too
+      gameTiles[argument.getROW()][argument.getCOLUMN()].setSelected(true);
+      
+      if (argument.isMine()) {
+        //TODO: decide whether we should do something else regarding the loss here, also remove comment
+        //note that this means the game is lost
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE_RED));
+      } else {
+        switch (argument.getNeighboringMineCount()) {
+          case 0:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); //No image
+            break;
+          case 1:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_ONE_MINE));
+            break;
+          case 2:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_TWO_MINES));
+            break;
+          case 3:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_THREE_MINES));
+            break;
+          case 4:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FOUR_MINES));
+            break;
+          case 5:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FIVE_MINES));
+            break;
+          case 6:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_SIX_MINES));
+            break;
+          case 7:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_SEVEN_MINES));
+            break;
+          case 8:
+            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_EIGHT_MINES));
+            break;
+        }
+      }
+    } else {
+      //gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); //No image
+    }
   }
 
   @FXML
   public void changeGodModeState() {
-    // reveal mines
+    //TODO: reveal mines
   }
 
   @FXML
   public void startNewGame() {
+    gameBoard.getChildren().clear();
+    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
+    isFirstClick = true;
+    timePlayed.setValue(0);
+    lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
+    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
+    game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
     populateGameBoard();
-    timePlayed = 0;
-    timer(); // TODO: change it to start on first click
   }
+
 }

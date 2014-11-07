@@ -1,9 +1,10 @@
 package ca.csf.minesweeper;
 
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.stage.StageStyle;
 import ca.csf.minesweeper.controller.GameWindowController;
-import ca.csf.minesweeper.model.GameState.GameStates;
+import ca.csf.minesweeper.model.GameStates;
 import ca.csf.simpleFx.SimpleFXApplication;
 import ca.csf.simpleFx.SimpleFXApplicationLauncher;
 import ca.csf.simpleFx.SimpleFXScene;
@@ -40,6 +41,7 @@ public class Main extends SimpleFXApplication {
           }
         }
       });
+      simpleFXStage.getInternalJavaFXStage().getIcons().add(new Image("file:src/resources/Minesweeper_Icon.png"));
       simpleFXStage.setResizable(false);
       simpleFXStage.setTitle("Démineur");
       simpleFXStage.show();

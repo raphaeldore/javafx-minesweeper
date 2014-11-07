@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Subject<T> {
-  private List<Observer<T>> observers;
+  protected List<Observer<T>> observers;
 
   public Subject() {
     this.observers = new ArrayList<Observer<T>>();
@@ -31,7 +31,6 @@ public class Subject<T> {
     if (!observers.contains(observer)) {
       throw new NoSuchElementException();
     }
-
     observers.remove(observer);
   }
 

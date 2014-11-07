@@ -7,17 +7,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 
 public class HighScore {
   Hashtable<String, ArrayList<String>> scores;
-  ArrayList<String> highScoreBeginner;
-  ArrayList<String> highScoreIntermediate;
-  ArrayList<String> highScoreExpert;
-
 
   public HighScore() {
     scores = new Hashtable<String, ArrayList<String>>();

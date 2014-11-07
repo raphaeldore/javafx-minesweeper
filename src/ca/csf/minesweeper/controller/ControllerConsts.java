@@ -12,7 +12,7 @@ public final class ControllerConsts {
 
 	public static final Image IMAGE_ONE_MINE = loadImage("1.png");
 	public static final Image IMAGE_TWO_MINES = loadImage("2.png");
-	public static final Image IMAGE_TREE_MINES = loadImage("3.png");
+	public static final Image IMAGE_THREE_MINES = loadImage("3.png");
 	public static final Image IMAGE_FOUR_MINES = loadImage("4.png");
 	public static final Image IMAGE_FIVE_MINES = loadImage("5.png");
 	public static final Image IMAGE_SIX_MINES = loadImage("6.png");
