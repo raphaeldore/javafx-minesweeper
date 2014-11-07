@@ -11,7 +11,6 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import ca.csf.minesweeper.Configuration;
+import ca.csf.minesweeper.model.GameDifficulty;
 import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameTile;
 import ca.csf.minesweeper.model.MinesweeperGame;
@@ -246,9 +246,30 @@ public class GameWindowController extends SimpleFXController implements Initiali
     isFirstClick = true;
     timePlayed.setValue(0);
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
-    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
     populateGameBoard();
+    gameBoard.autosize();
+  }
+
+  @FXML
+  public void changeDifficultyToBeginner() {
+    Configuration.selectedGameDifficulty = GameDifficulty.BEGINNER;
+    startNewGame();
+    this.getSimpleFxStage().sizeToScene();
+  }
+
+  @FXML
+  public void changeDifficultyToIntermediate() {
+    Configuration.selectedGameDifficulty = GameDifficulty.INTERMEDIATE;
+    startNewGame();
+    this.getSimpleFxStage().sizeToScene();
+  }
+
+  @FXML
+  public void changeDifficultyToExpert() {
+    Configuration.selectedGameDifficulty = GameDifficulty.EXPERT;
+    startNewGame();
+    this.getSimpleFxStage().sizeToScene();
   }
 
 }
