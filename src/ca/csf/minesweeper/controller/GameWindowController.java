@@ -87,7 +87,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
         .toExternalForm(), 10);
     timePlayed = new SimpleIntegerProperty(0);
     lblTimer.textProperty().bind(timePlayed.asString());
-    // lblremainingMines.textProperty().bind(timePlayed.asString()); // TODO: Delete this line
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> updateTimer()));
     timeline.setCycleCount(Animation.INDEFINITE);
 
