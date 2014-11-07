@@ -42,6 +42,7 @@ public class GameTile extends Subject<GameTile> {
         }
       }
       state = TileState.REVEALED;
+      game.incrementTilesRevealed();
       notifyObservers(this);
     }
     return isClean;

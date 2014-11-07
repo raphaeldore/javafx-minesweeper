@@ -19,6 +19,10 @@ public class MinesweeperGame {
   public void revealTile(int row, int column) {
     gameBoard.revealTileArea(row, column);
   }
+  
+  public void toggleTileState(int row, int column) {
+    gameBoard.toggleTileState(row, column);
+  }
 
   public void alternateReminder(int row, int column) {
     gameBoard.toggleTileState(row, column);
@@ -40,4 +44,8 @@ public class MinesweeperGame {
     return gameState.getState();
   }
 
+  public void incrementTilesRevealed() {
+    gameState.incrementTilesRevealed();
+  }
+  
 }
