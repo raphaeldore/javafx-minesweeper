@@ -41,7 +41,7 @@ public class Main extends SimpleFXApplication {
           }
         }
       });
-      simpleFXStage.getInternalJavaFXStage().getIcons().add(new Image("file:src/resources/Minesweeper_Icon.png"));
+      simpleFXStage.getInternalJavaFXStage().getIcons().add(new Image("file:src/resources/icon.png"));
       simpleFXStage.setResizable(false);
       simpleFXStage.setTitle("Démineur");
       simpleFXStage.show();
