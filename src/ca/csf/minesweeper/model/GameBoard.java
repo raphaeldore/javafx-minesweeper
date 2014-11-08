@@ -2,6 +2,10 @@ package ca.csf.minesweeper.model;
 
 import java.util.Random;
 
+import javafx.scene.control.ToggleButton;
+import ca.csf.minesweeper.Configuration;
+import ca.csf.minesweeper.controller.ToggleButtonEventHandler;
+
 /*
  * 
  * Represents a grid of GameTile instances.
@@ -35,6 +39,15 @@ public class GameBoard {
         incrementExistingTile(row + 1, column);
         incrementExistingTile(row, column + 1);
         mineCount--;
+      }
+    }
+  }
+  
+  
+  public void endGame() {
+    for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
+      for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
+        revealTileArea(i, j);
       }
     }
   }

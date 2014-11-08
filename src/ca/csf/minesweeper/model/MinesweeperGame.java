@@ -17,9 +17,13 @@ public class MinesweeperGame {
   }
 
   public void revealTile(int row, int column) {
+    if (gameBoard.getIfTileIsMineAtPos(row, column) == true) {
+      gameState.lose();
+      gameBoard.endGame();
+    }
     gameBoard.revealTileArea(row, column);
   }
-  
+    
   public void toggleTileState(int row, int column) {
     gameBoard.toggleTileState(row, column);
   }

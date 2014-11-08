@@ -28,6 +28,7 @@ import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameDifficulty;
 import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameTile;
+import ca.csf.minesweeper.model.HighScore;
 import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
@@ -47,6 +48,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private ToggleButton[][] gameTiles;
   private IntegerProperty timePlayed;
   private boolean isFirstClick;
+  private HighScore highScore;
 
   @FXML
   GridPane gameBoard;
@@ -87,6 +89,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    highScore = new HighScore();
     Font.loadFont(GameWindowController.class.getResource(resourcesPath + "Terminus.ttf")
         .toExternalForm(), 10);
     timePlayed = new SimpleIntegerProperty(0);
@@ -162,6 +165,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
       // TODO: change interface to display defeat :O :(
       // TODO: reveal mines here too
       // TODO: prevent player from continuing to play
+      lost();
     } else if (game.getGameState() == GameStates.WON) {
       btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
       // TODO: something to congratulate the player
@@ -251,6 +255,17 @@ public class GameWindowController extends SimpleFXController implements Initiali
     }
 
     Configuration.godModeEnabled = !Configuration.godModeEnabled;
+  }
+
+  public void lost() {
+    timeline.stop();
+  }
+
+  public void won() {
+    if (highScore.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName,
+        timePlayed.get())) {
+      openBestTimesWindow(new ActionEvent());
+    }
   }
 
   @FXML
