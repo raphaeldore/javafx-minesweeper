@@ -48,6 +48,7 @@ public class GameBoard {
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         revealTileArea(i, j);
+        // TODO : User stories 11 et 13
       }
     }
   }
