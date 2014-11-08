@@ -15,5 +15,7 @@ public class Configuration {
                                                                                 // GameDifficulty
   
   public static GameStates currentGameState = GameStates.PLAYING;               // Initial GameState
+  
+  public static boolean godModeEnabled = false;
 
 }

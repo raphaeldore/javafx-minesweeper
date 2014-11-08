@@ -34,6 +34,10 @@ import ca.csf.minesweeper.model.Subject;
 import ca.csf.minesweeper.model.TileState;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
+import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
+import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
+import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
+import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -63,7 +67,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   MenuItem menuHighScores;
   @FXML
-  CheckMenuItem godMode;
+  CheckMenuItem menuGodMode;
   @FXML
   Label lblTimer;
   @FXML
@@ -104,7 +108,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setMinSize(36, 36);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        gameTiles[i][j].setOnMouseReleased(new ToggleButtonEventHandler(i, j, game));
+        ToggleButtonEventHandler toggleButtonEventHandler =
+            new ToggleButtonEventHandler(i, j, game);
+        gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
+        gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
@@ -235,7 +242,15 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @FXML
   public void changeGodModeState() {
-    // TODO: reveal mines
+
+    if (Configuration.godModeEnabled == false) {
+      SimpleFXDialogs.showMessageBox("Démineur",
+          "Lorsque votre souris survolera une mine, la tuile affichera une image de mine.",
+          SimpleFXDialogIcon.INFORMATION, SimpleFXDialogChoiceSet.OK, SimpleFXDialogResult.OK,
+          getSimpleFxStage());
+    }
+
+    Configuration.godModeEnabled = !Configuration.godModeEnabled;
   }
 
   @FXML

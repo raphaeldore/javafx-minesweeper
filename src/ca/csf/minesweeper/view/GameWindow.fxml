@@ -29,7 +29,7 @@
 						<RadioMenuItem fx:id="menuHardDifficulty"
 							mnemonicParsing="false" text="Expert" toggleGroup="$difficultyToggleGroup"
 							onAction="#changeDifficultyToExpert" />
-						<CheckMenuItem fx:id="godMode" mnemonicParsing="false"
+						<CheckMenuItem fx:id="menuGodMode" mnemonicParsing="false"
 							onAction="#changeGodModeState" text="Tricher" />
 						<MenuItem fx:id="menuHighScores" onAction="#openBestTimesWindow"
 							mnemonicParsing="false" text="Meilleurs temps..." />

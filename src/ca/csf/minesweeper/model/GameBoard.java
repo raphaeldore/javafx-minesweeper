@@ -63,5 +63,9 @@ public class GameBoard {
   public void toggleTileState(int row, int column) {
     tiles[row][column].toggleState();
   }
+  
+  public boolean getIfTileIsMineAtPos(int row, int column) {
+    return tiles[row][column].isMine();
+  }
 
 }
