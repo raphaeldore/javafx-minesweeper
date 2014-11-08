@@ -55,5 +55,12 @@ public class MinesweeperGame {
   public void incrementTilesRevealed() {
     gameState.incrementTilesRevealed();
   }
+
+  public void revealMines() {
+    gameBoard.revealMines();    
+  }
   
+  public void hideMines() {
+    gameBoard.hideMines();
+  }
 }

@@ -101,9 +101,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   public void populateGameBoard() {
-    // ToggleButton[][] gameTiles =
-    // new
-    // ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
     gameTiles =
         new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
@@ -118,9 +115,9 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
-    // TODO: get the Configuration.selectedDifficulty to work again and replace the numbers with it
-
+    
     // gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
+    
   }
 
   @FXML
@@ -160,15 +157,20 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    if (game.getGameState() == GameStates.LOST) {
-      btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_WORRY));
-      // TODO: change interface to display defeat :O :(
-      // TODO: reveal mines here too
+    if (game.getGameState() != GameStates.PLAYING) {
+      if (game.getGameState() == GameStates.LOST) {
+        btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_DEAD));
+        // TODO: change interface to display defeat :O :(
+        // TODO: reveal mines here too
+        game.revealMines();
+        lost();
+      } else { //if he is not playing anymore and has not lost, then he hgas won
+        btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
+        // TODO: something to congratulate the player as well as update the highscore
+        
+      }
+      
       // TODO: prevent player from continuing to play
-      lost();
-    } else if (game.getGameState() == GameStates.WON) {
-      btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
-      // TODO: something to congratulate the player
     }
 
     if (isFirstClick) {
@@ -176,12 +178,28 @@ public class GameWindowController extends SimpleFXController implements Initiali
       isFirstClick = false;
     }
 
+    switch (argument.getState()) {
+      case FLAGGED:
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FLAG));
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setOnAction((event) -> {
+          ToggleButton sourceButton = (ToggleButton) event.getSource();
+          sourceButton.setSelected(false);
+        }); //what does this do?
+        break;
+      case QUESTIONNED:
+        break;
+      case MINE_REVEALED:
+        break;
+      case REVEALED:
+        break;
+        
+        
+      default:
+        break;
+    }
+    
     if (argument.getState() == TileState.FLAGGED) {
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FLAG));
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setOnAction((event) -> {
-        ToggleButton sourceButton = (ToggleButton) event.getSource();
-        sourceButton.setSelected(false);
-      });
+      
 
     } else if (argument.getState() == TileState.QUESTIONNED) {
       gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
@@ -246,7 +264,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @FXML
   public void changeGodModeState() {
-
+    //To implement this, I think that I will add a TileState that will be MINE_SHOWN
+    //If you activate god mode or lose, tiles will receive a revealMine() call that
+    //will set MINE_SHOWN if they have a mine and are not already at REVEALED (to prevent an on-death
+    //revealing from changing from a red mine to a spotted mine) and then call update() in the
+    //GameWindowController associated to them. The update method will have to be adjusted so that
+    //it displays the black mines correctly. There will also need to be an opposite, a unrealMine()
+    //so that disabling godMode hides the mines once again.
     if (Configuration.godModeEnabled == false) {
       SimpleFXDialogs.showMessageBox("Démineur",
           "Lorsque votre souris survolera une mine, la tuile affichera une image de mine.",
@@ -262,6 +286,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   public void won() {
+    timeline.stop();
     if (highScore.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName,
         timePlayed.get())) {
       openBestTimesWindow(new ActionEvent());

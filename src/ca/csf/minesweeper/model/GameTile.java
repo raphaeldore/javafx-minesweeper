@@ -90,5 +90,21 @@ public class GameTile extends Subject<GameTile> {
     return isMine;
   }
 
+  public void revealIfMine() {
+    if (state != TileState.REVEALED) {
+      if (state == TileState.FLAGGED) {
+        decrementFlagCount();
+      }
+      state = TileState.MINE_REVEALED;
+      notifyObservers(this);
+    }
+  }
+  
+  public void hideIfMine() {
+    if (state != TileState.MINE_REVEALED) {
+      state = TileState.HIDDEN;
+    }
+  }
+
   //TODO: put functions in order according to public/private/protected
 }
