@@ -158,16 +158,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
     if (game.getGameState() != GameStates.PLAYING) {
+      timeline.stop();
       if (game.getGameState() == GameStates.LOST) {
         btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_DEAD));
-        // TODO: change interface to display defeat :O :(
-        // TODO: reveal mines here too
-        game.revealMines();
-        lost();
-      } else { //if he is not playing anymore and has not lost, then he hgas won
+      } else { //if he is not playing anymore and has not lost, then he has won
         btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
         // TODO: something to congratulate the player as well as update the highscore
-        
+        won();
       }
       
       // TODO: prevent player from continuing to play
@@ -187,106 +184,73 @@ public class GameWindowController extends SimpleFXController implements Initiali
         }); //what does this do?
         break;
       case QUESTIONNED:
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_QUESTION_MARK));
         break;
       case MINE_REVEALED:
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE));
         break;
       case REVEALED:
-        break;
         
-        
-      default:
-        break;
-    }
-    
-    if (argument.getState() == TileState.FLAGGED) {
-      
+        // don't want the user to be able to click it again
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setDisable(true);
 
-    } else if (argument.getState() == TileState.QUESTIONNED) {
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-          IMAGE_QUESTION_MARK));
-    } else if (argument.getState() == TileState.REVEALED) {
+        // if tile is revealed without clicking it, we want to toggle it's state too
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setSelected(true);
 
-      // don't want the user to be able to click it again
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setDisable(true);
-
-      // if tile is revealed without clicking it, we want to toggle it's state too
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setSelected(true);
-
-      if (argument.isMine()) {
-        // TODO: decide whether we should do something else regarding the loss here, also remove
-        // comment
-        // note that this means the game is lost
-        gameTiles[argument.getROW()][argument.getCOLUMN()]
-            .setGraphic(new ImageView(IMAGE_MINE_RED));
-      } else {
-        switch (argument.getNeighboringMineCount()) {
-          case 0:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
-            break;
-          case 1:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_ONE_MINE));
-            break;
-          case 2:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_TWO_MINES));
-            break;
-          case 3:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_THREE_MINES));
-            break;
-          case 4:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_FOUR_MINES));
-            break;
-          case 5:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_FIVE_MINES));
-            break;
-          case 6:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_SIX_MINES));
-            break;
-          case 7:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_SEVEN_MINES));
-            break;
-          case 8:
-            gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(
-                IMAGE_EIGHT_MINES));
-            break;
+        if (argument.isMine()) {
+          gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE_RED));
+        } else {
+          switch (argument.getNeighboringMineCount()) {
+            case 0:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
+              break;
+            case 1:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_ONE_MINE));
+              break;
+            case 2:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_TWO_MINES));
+              break;
+            case 3:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_THREE_MINES));
+              break;
+            case 4:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FOUR_MINES));
+              break;
+            case 5:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FIVE_MINES));
+              break;
+            case 6:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_SIX_MINES));
+              break;
+            case 7:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_SEVEN_MINES));
+              break;
+            case 8:
+              gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_EIGHT_MINES));
+              break;
+          }
         }
-      }
-    } else {
-      gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
+        break;
+        
+      case HIDDEN:
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
+        break;
     }
   }
 
   @FXML
   public void changeGodModeState() {
-    //To implement this, I think that I will add a TileState that will be MINE_SHOWN
-    //If you activate god mode or lose, tiles will receive a revealMine() call that
-    //will set MINE_SHOWN if they have a mine and are not already at REVEALED (to prevent an on-death
-    //revealing from changing from a red mine to a spotted mine) and then call update() in the
-    //GameWindowController associated to them. The update method will have to be adjusted so that
-    //it displays the black mines correctly. There will also need to be an opposite, a unrealMine()
-    //so that disabling godMode hides the mines once again.
-    if (Configuration.godModeEnabled == false) {
-      SimpleFXDialogs.showMessageBox("Démineur",
-          "Lorsque votre souris survolera une mine, la tuile affichera une image de mine.",
-          SimpleFXDialogIcon.INFORMATION, SimpleFXDialogChoiceSet.OK, SimpleFXDialogResult.OK,
-          getSimpleFxStage());
-    }
-
     Configuration.godModeEnabled = !Configuration.godModeEnabled;
-  }
-
-  public void lost() {
-    timeline.stop();
+    
+    if (Configuration.godModeEnabled == true) {
+      game.revealMines();
+    } else {
+      game.hideMines();
+    }
   }
 
   public void won() {
-    timeline.stop();
+    
     if (highScore.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName,
         timePlayed.get())) {
       openBestTimesWindow(new ActionEvent());
@@ -295,6 +259,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @FXML
   public void startNewGame() {
+    Configuration.godModeEnabled = false;
     gameBoard.getChildren().clear();
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
     isFirstClick = true;

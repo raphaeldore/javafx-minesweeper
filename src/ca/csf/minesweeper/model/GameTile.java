@@ -34,15 +34,15 @@ public class GameTile extends Subject<GameTile> {
   public boolean revealedGameTileAreaIsClean() {
     boolean isClean = false;
     if (state == TileState.HIDDEN) {
+      state = TileState.REVEALED;
       if (isMine) {
         game.lose();
       } else {
         if(neighboringMineCount == 0) {
           isClean = true;
+          game.incrementTilesRevealed();
         }
       }
-      state = TileState.REVEALED;
-      game.incrementTilesRevealed();
       notifyObservers(this);
     }
     return isClean;
@@ -91,7 +91,7 @@ public class GameTile extends Subject<GameTile> {
   }
 
   public void revealIfMine() {
-    if (state != TileState.REVEALED) {
+    if (state != TileState.REVEALED && isMine) {
       if (state == TileState.FLAGGED) {
         decrementFlagCount();
       }
@@ -100,9 +100,10 @@ public class GameTile extends Subject<GameTile> {
     }
   }
   
-  public void hideIfMine() {
-    if (state != TileState.MINE_REVEALED) {
+  public void hideIfReavealedMine() {
+    if (state == TileState.MINE_REVEALED) {
       state = TileState.HIDDEN;
+      notifyObservers(this);
     }
   }
 

@@ -92,7 +92,7 @@ public class GameBoard {
   public void hideMines() {
     for (int i = 0; i < 9; i++) { // TODO: change 9 to rows
       for (int j = 0; j < 9; j++) { // here too
-        tiles[i][j].hideIfMine();
+        tiles[i][j].hideIfReavealedMine();
       }
     }
   }

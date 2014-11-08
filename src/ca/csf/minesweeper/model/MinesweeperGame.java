@@ -12,15 +12,15 @@ public class MinesweeperGame {
   public MinesweeperGame(GameDifficulty difficulty, Observer<GameTile> observer) {
     gameState = new GameState(difficulty);
     // gameBoard = new GameBoard(difficulty.nbrOfRows, difficulty.nbrOfColumns,
-    // difficulty.nbrOfMines, this, observer );
+    // difficulty.nbrOfMines, this, observer ); TODO: use this instead
     gameBoard = new GameBoard(9, 9, 10, this, observer);
   }
 
   public void revealTile(int row, int column) {
-    if (gameBoard.getIfTileIsMineAtPos(row, column) == true) {
-      gameState.lose();
-      gameBoard.endGame();
-    }
+//    if (gameBoard.getIfTileIsMineAtPos(row, column) == true) {
+//      gameState.lose();
+//      gameBoard.endGame();
+//    } TODO: not use this
     gameBoard.revealTileArea(row, column);
   }
     
@@ -42,6 +42,7 @@ public class MinesweeperGame {
 
   public void lose() {
     gameState.lose();
+    gameBoard.revealMines();  
   }
 
   public GameStates getGameState() {
@@ -55,12 +56,12 @@ public class MinesweeperGame {
   public void incrementTilesRevealed() {
     gameState.incrementTilesRevealed();
   }
-
-  public void revealMines() {
-    gameBoard.revealMines();    
-  }
   
   public void hideMines() {
     gameBoard.hideMines();
+  }
+  
+  public void revealMines() {
+    gameBoard.revealMines();  
   }
 }
