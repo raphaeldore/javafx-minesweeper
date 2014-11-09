@@ -26,19 +26,15 @@ public class Main extends SimpleFXApplication {
       SimpleFXStage simpleFXStage =
           new SimpleFXStage("Démineur", StageStyle.DECORATED, simpleFXScene, this);
       simpleFXStage.centerOnScreen();
-      simpleFXStage.setOnFocusChanged(new EventHandler<WindowFocusEvent>() {
-
-        @Override
-        public void handle(WindowFocusEvent event) {
-          if (simpleFXStage.isFocused()) {
-            System.out.println("FOCUS");
-            if (Configuration.currentGameState == GameStates.PAUSE) {
-              Configuration.currentGameState = GameStates.PLAYING;
-            }
-          } else {
-            System.out.println("NO FOCUS");
-            Configuration.currentGameState = GameStates.PAUSE;
+      simpleFXStage.setOnFocusChanged(event -> {
+        if (simpleFXStage.isFocused()) {
+          System.out.println("FOCUS");
+          if (Configuration.currentGameState == GameStates.PAUSE) {
+            Configuration.currentGameState = GameStates.PLAYING;
           }
+        } else {
+          System.out.println("NO FOCUS");
+          Configuration.currentGameState = GameStates.PAUSE;
         }
       });
       simpleFXStage.getInternalJavaFXStage().getIcons().add(new Image("file:src/resources/icon.png"));
