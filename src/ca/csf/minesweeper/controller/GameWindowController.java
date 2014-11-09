@@ -1,6 +1,21 @@
 package ca.csf.minesweeper.controller;
 
-import static ca.csf.minesweeper.controller.ControllerConsts.*;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_EIGHT_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_FIVE_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_FLAG;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_FOUR_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE_RED;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_ONE_MINE;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_QUESTION_MARK;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SEVEN_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SIX_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_DEAD;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_HAPPY;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_NORMAL;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_THREE_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_TWO_MINES;
+import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,6 +26,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -32,13 +48,8 @@ import ca.csf.minesweeper.model.HighScore;
 import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
-import ca.csf.minesweeper.model.TileState;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
-import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -108,15 +119,25 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setMinSize(36, 36);
         gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        ToggleButtonEventHandler toggleButtonEventHandler =
-            new ToggleButtonEventHandler(i, j, game);
+        ToggleButtonEventHandler toggleButtonEventHandler = new ToggleButtonEventHandler(i, j, game);
         gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
         gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
+        
+//        gameTiles[i][j].setOnAction(new EventHandler<ActionEvent>() {
+//          @Override
+//          public void handle(ActionEvent ae) {
+//            ae.consume();
+//          }
+//        });
+        gameTiles[i][j].setOnAction((event) -> {
+          ToggleButton sourceButton = (ToggleButton) event.getSource();
+          sourceButton.setSelected(false);
+        });
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
     
-    // gameTiles[i][j].setOnAction(this::disableToggleButtonOnAction);
+    // 
     
   }
 
@@ -162,8 +183,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
       if (game.getGameState() == GameStates.LOST) {
         btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_DEAD));
       } else { //if he is not playing anymore and has not lost, then he has won
-        btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
-        // TODO: something to congratulate the player as well as update the highscore
         won();
       }
       
@@ -178,10 +197,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
     switch (argument.getState()) {
       case FLAGGED:
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_FLAG));
-        gameTiles[argument.getROW()][argument.getCOLUMN()].setOnAction((event) -> {
-          ToggleButton sourceButton = (ToggleButton) event.getSource();
-          sourceButton.setSelected(false);
-        }); //what does this do?
         break;
       case QUESTIONNED:
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_QUESTION_MARK));
@@ -250,11 +265,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   public void won() {
-    
-    if (highScore.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName,
-        timePlayed.get())) {
+    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
+    if (highScore.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get())) {
       openBestTimesWindow(new ActionEvent());
     }
+    // TODO: something to congratulate the player as well as update the highscore
   }
 
   @FXML

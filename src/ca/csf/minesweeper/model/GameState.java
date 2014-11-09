@@ -45,7 +45,7 @@ public class GameState {
 
   public void incrementTilesRevealed() {
     revealedTiles++;
-    if (revealedTiles == 71) { //TODO: change to (nbrRows X nbrColumns)- nbrMines 
+    if (revealedTiles == (difficulty.nbrOfColumns * difficulty.nbrOfRows) - difficulty.nbrOfMines) { //TODO: change to (nbrRows X nbrColumns)- nbrMines 
       state = GameStates.WON;
       game.win();
     }
