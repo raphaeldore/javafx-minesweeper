@@ -305,7 +305,14 @@ public class GameWindowController extends SimpleFXController implements Initiali
     this.getSimpleFxStage().sizeToScene();
   }
 
+  //TODO: 1. make timer start on first reveal rather than click
+  //TODO: 2. Update highscores on win if necessary
+  //TODO: 3. disable god mode on win/loss
+  //TODO: 4. allow for erasing of the highscores
+  //TODO: 5. allow for saving of the highscores
+  //TODO: 6. put normal values only as default highscores and clean it's interface up
   
-  //TODO: 1. make timer start on fisrt reavela rather than click
-  //TODO: 2.
+  //TODO: Test classes
+  //TODO: Programming folder
+  //TODO: teammate report
 }
