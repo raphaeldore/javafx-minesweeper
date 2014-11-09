@@ -14,7 +14,6 @@ public class GameBoard {
   private GameDifficulty difficulty;
   private GameTile[][] tiles;
 
-  // TODO: Accept Configuration.GameDifficulty Enumeration
   public GameBoard(GameDifficulty gameDifficulty, MinesweeperGame game, Observer<GameTile> observer) {
     difficulty = gameDifficulty;
     int mineCount = difficulty.nbrOfMines;
@@ -78,16 +77,16 @@ public class GameBoard {
   }
 
   public void revealMines() {
-    for (int i = 0; i < difficulty.nbrOfRows; i++) { // TODO: change 9 to rows
-      for (int j = 0; j < difficulty.nbrOfColumns; j++) { // here too
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
         tiles[i][j].revealIfMine();
       }
     }
   }
 
   public void hideMines() {
-    for (int i = 0; i < 9; i++) { // TODO: change 9 to rows
-      for (int j = 0; j < 9; j++) { // here too
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
         tiles[i][j].hideIfReavealedMine();
       }
     }

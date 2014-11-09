@@ -12,8 +12,6 @@ public class MinesweeperGame {
   public MinesweeperGame(GameDifficulty difficulty, Observer<GameTile> observer) {
     gameState = new GameState(difficulty, this);
     gameBoard = new GameBoard(difficulty, this, observer );
-    //TODO: do not use this instead
-    //gameBoard = new GameBoard(9, 9, 10, this, observer);
   }
   
   public void win() {
@@ -55,5 +53,9 @@ public class MinesweeperGame {
   
   public void revealMines() {
     gameBoard.revealMines();  
+  }
+
+  public int getFlagCount() {
+    return gameState.getFlagCount();
   }
 }

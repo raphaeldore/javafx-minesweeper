@@ -110,7 +110,7 @@ public class GameTile extends Subject<GameTile> {
   public void setMinesAsFlags() {
     if(isMine) {
       state = TileState.FLAGGED;
-      game.decrementFlagCount();
+      game.incrementFlagCount();
       notifyObservers(this);
     }
   }

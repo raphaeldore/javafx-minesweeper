@@ -8,14 +8,8 @@ import ca.csf.minesweeper.model.GameStates;
  * difficulty).
  */
 public class Configuration {
-  // TODO: Enum TileState {Normal, Flag, QuestionMark}
-  // public static final nbrOfTiles
-
-  public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER;// Default
-                                                                                // GameDifficulty
+  public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER;
+  public static GameStates currentGameState = GameStates.PLAYING;   // Initial GameState
   
-  public static GameStates currentGameState = GameStates.PLAYING;               // Initial GameState
-  
-  public static boolean godModeEnabled = false;
-
+  public static boolean godModeEnabled = false; //TODO: decide whether this is useful (see startGame)
 }

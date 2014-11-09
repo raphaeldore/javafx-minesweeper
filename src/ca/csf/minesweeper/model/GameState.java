@@ -1,10 +1,6 @@
 package ca.csf.minesweeper.model;
 
 public class GameState {
-  /*
-   * 
-   * TODO: -nbrOfRevealedTiles
-   */
 
   private int flagCount;
   private GameDifficulty difficulty;
@@ -45,7 +41,7 @@ public class GameState {
 
   public void incrementTilesRevealed() {
     revealedTiles++;
-    if (revealedTiles == (difficulty.nbrOfColumns * difficulty.nbrOfRows) - difficulty.nbrOfMines) { //TODO: change to (nbrRows X nbrColumns)- nbrMines 
+    if (revealedTiles == (difficulty.nbrOfColumns * difficulty.nbrOfRows) - difficulty.nbrOfMines) {
       state = GameStates.WON;
       game.win();
     }

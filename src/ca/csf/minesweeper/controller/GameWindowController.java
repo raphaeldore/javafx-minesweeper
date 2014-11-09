@@ -180,8 +180,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
       } else { //if he is not playing anymore and has not lost, then he has won
         won();
       }
-      
-      // TODO: prevent player from continuing to play
     }
 
     if (isFirstClick) {
@@ -246,6 +244,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
         break;
     }
+    lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines - game.getFlagCount()));
   }
 
   @FXML
@@ -306,4 +305,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     this.getSimpleFxStage().sizeToScene();
   }
 
+  
+  //TODO: 1. make timer start on fisrt reavela rather than click
+  //TODO: 2.
 }
