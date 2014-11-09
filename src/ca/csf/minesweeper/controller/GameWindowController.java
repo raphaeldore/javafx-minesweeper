@@ -64,8 +64,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   GridPane gameBoard;
   @FXML
-  Label lblLabel1;
-  @FXML
   MenuItem menuAboutWindow;
   @FXML
   MenuItem menuHelpWindow;
