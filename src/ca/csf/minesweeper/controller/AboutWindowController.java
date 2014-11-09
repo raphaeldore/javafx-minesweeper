@@ -18,14 +18,10 @@ public class AboutWindowController extends SimpleFXController implements Initial
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    btnOk.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
-        Stage stage = ((Stage) btnOk.getScene().getWindow());
-        stage.close();
-      }
+    btnOk.setOnAction(e -> {
+      Stage stage = ((Stage) btnOk.getScene().getWindow());
+      stage.close();
     });
-
   }
 
 }
