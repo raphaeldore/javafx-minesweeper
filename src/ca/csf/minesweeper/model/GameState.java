@@ -1,20 +1,18 @@
 package ca.csf.minesweeper.model;
 
 public class GameState {
-  /*
-   * 
-   * TODO: -nbrOfRevealedTiles
-   */
 
   private int flagCount;
   private GameDifficulty difficulty;
   private GameStates state;
   private int revealedTiles;
+  private MinesweeperGame game;
 
-  GameState(GameDifficulty difficulty) {
+  GameState(GameDifficulty difficulty, MinesweeperGame game) {
     state = GameStates.PLAYING;
     this.difficulty = difficulty;
     revealedTiles = 0;
+    this.game = game;
   }
 
   public int getFlagCount() {
@@ -43,8 +41,9 @@ public class GameState {
 
   public void incrementTilesRevealed() {
     revealedTiles++;
-    if (revealedTiles == 71) { //TODO: change to (nbrRows X nbrColumns)- nbrMines 
+    if (revealedTiles == (difficulty.nbrOfColumns * difficulty.nbrOfRows) - difficulty.nbrOfMines) {
       state = GameStates.WON;
+      game.win();
     }
   }
 }

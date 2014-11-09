@@ -34,15 +34,15 @@ public class GameTile extends Subject<GameTile> {
   public boolean revealedGameTileAreaIsClean() {
     boolean isClean = false;
     if (state == TileState.HIDDEN) {
+      state = TileState.REVEALED;
       if (isMine) {
         game.lose();
       } else {
+        game.incrementTilesRevealed();
         if(neighboringMineCount == 0) {
           isClean = true;
         }
       }
-      state = TileState.REVEALED;
-      game.incrementTilesRevealed();
       notifyObservers(this);
     }
     return isClean;
@@ -88,6 +88,31 @@ public class GameTile extends Subject<GameTile> {
   
   public boolean isMine() {
     return isMine;
+  }
+
+  public void revealIfMine() {
+    if (state != TileState.REVEALED && isMine) {
+      if (state == TileState.FLAGGED) {
+        decrementFlagCount();
+      }
+      state = TileState.MINE_REVEALED;
+      notifyObservers(this);
+    }
+  }
+  
+  public void hideIfReavealedMine() {
+    if (state == TileState.MINE_REVEALED) {
+      state = TileState.HIDDEN;
+      notifyObservers(this);
+    }
+  }
+
+  public void setMinesAsFlags() {
+    if(isMine) {
+      state = TileState.FLAGGED;
+      game.incrementFlagCount();
+      notifyObservers(this);
+    }
   }
 
   //TODO: put functions in order according to public/private/protected

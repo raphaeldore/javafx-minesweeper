@@ -5,11 +5,11 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
-import ca.csf.simpleFx.SimpleFXController;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import ca.csf.simpleFx.SimpleFXController;
 
 public class AboutWindowController extends SimpleFXController implements Initializable {
 

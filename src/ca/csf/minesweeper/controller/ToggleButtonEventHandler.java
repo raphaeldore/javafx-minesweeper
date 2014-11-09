@@ -1,7 +1,6 @@
 package ca.csf.minesweeper.controller;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import ca.csf.minesweeper.model.MinesweeperGame;
@@ -10,7 +9,6 @@ public class ToggleButtonEventHandler implements EventHandler<MouseEvent> {
 
   private final int COLUMN;
   private final int ROW;
-  private int counter = 1;
   private final MinesweeperGame game;
 
   public ToggleButtonEventHandler(int row, int column, MinesweeperGame game) {

@@ -34,16 +34,12 @@ public class HighScore {
       Object result = d.readObject();
       this.scores = (Hashtable<String, ArrayList<String>>) result;
       d.close();
-    } catch (FileNotFoundException e) {
-      initializeFile();
+    } catch (Exception e) {
       e.printStackTrace();
-    } catch (ArrayIndexOutOfBoundsException e) {
+      System.err.println("An error occured while reading the file HighScores.xml. It seems corrupted. The file will be reset.");
       initializeFile();
-      e.printStackTrace();
-    } catch (IllegalStateException e) {
-      initializeFile();
-      e.printStackTrace();
     }
+    
 
   }
 
