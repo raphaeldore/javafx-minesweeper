@@ -190,8 +190,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
         won();
       }
     }
-
-    if (isFirstClick) {
+    
+    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED) {
       timeline.playFromStart();
       isFirstClick = false;
     }
