@@ -259,7 +259,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void changeGodModeState() {
     Configuration.godModeEnabled = !Configuration.godModeEnabled;
-    if (Configuration.godModeEnabled == true) {
+    if (Configuration.godModeEnabled) {
       game.revealMines();
     } else {
       game.hideMines();
