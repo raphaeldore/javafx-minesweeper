@@ -122,13 +122,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
         ToggleButtonEventHandler toggleButtonEventHandler = new ToggleButtonEventHandler(i, j, game);
         gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
         gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
-        
-//        gameTiles[i][j].setOnAction(new EventHandler<ActionEvent>() {
-//          @Override
-//          public void handle(ActionEvent ae) {
-//            ae.consume();
-//          }
-//        });
         gameTiles[i][j].setOnAction((event) -> {
           ToggleButton sourceButton = (ToggleButton) event.getSource();
           sourceButton.setSelected(false);

@@ -41,7 +41,6 @@ public class GameBoard {
     }
   }
 
-
   public void setMinesAsFlags() {
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
@@ -73,10 +72,6 @@ public class GameBoard {
 
   public void toggleTileState(int row, int column) {
     tiles[row][column].toggleState();
-  }
-
-  public boolean getIfTileIsMineAtPos(int row, int column) {
-    return tiles[row][column].isMine();
   }
 
   public void revealMines() {

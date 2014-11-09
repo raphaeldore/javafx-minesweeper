@@ -52,10 +52,6 @@ public class MinesweeperGame {
   public GameStates getGameState() {
     return gameState.getState();
   }
-  
-  public boolean getIfTileIsMineAtPos(int row, int column) {
-    return gameBoard.getIfTileIsMineAtPos(row, column);
-  }
 
   public void incrementTilesRevealed() {
     gameState.incrementTilesRevealed();

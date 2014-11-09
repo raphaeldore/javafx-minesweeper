@@ -29,10 +29,5 @@ public class ToggleButtonEventHandler implements EventHandler<MouseEvent> {
     } else if (event.getButton() == MouseButton.SECONDARY) {      
       game.toggleTileState(ROW, COLUMN);
     }
-    
-    if (Configuration.godModeEnabled && event.getEventType() == MouseEvent.MOUSE_ENTERED && game.getIfTileIsMineAtPos(ROW, COLUMN) == true ) {
-      ToggleButton sourceButton = (ToggleButton) event.getSource();
-      sourceButton.setGraphic(new ImageView(resourcesPath + "Mine.png"));
-    }
   }
 }
