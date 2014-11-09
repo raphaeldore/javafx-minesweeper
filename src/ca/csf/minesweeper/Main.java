@@ -1,6 +1,5 @@
 package ca.csf.minesweeper;
 
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.stage.StageStyle;
 import ca.csf.minesweeper.controller.GameWindowController;
@@ -9,7 +8,6 @@ import ca.csf.simpleFx.SimpleFXApplication;
 import ca.csf.simpleFx.SimpleFXApplicationLauncher;
 import ca.csf.simpleFx.SimpleFXScene;
 import ca.csf.simpleFx.SimpleFXStage;
-import ca.csf.simpleFx.events.WindowFocusEvent;
 
 public class Main extends SimpleFXApplication {
   public static void main(String[] args) {

@@ -2,8 +2,6 @@ package ca.csf.minesweeper.model;
 
 import java.util.Random;
 
-import ca.csf.minesweeper.Configuration;
-
 /*
  * 
  * Represents a grid of GameTile instances.
