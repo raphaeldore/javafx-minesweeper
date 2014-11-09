@@ -1,6 +1,6 @@
 package ca.csf.minesweeper.model;
 
-public class GameState {
+class GameState {
 
   private int flagCount;
   private GameDifficulty difficulty;

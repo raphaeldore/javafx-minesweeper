@@ -88,7 +88,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   Label lblremainingMines;
 
-  public void updateTimer() {
+  void updateTimer() {
     if (Configuration.currentGameState != GameStates.PAUSE) {
       timePlayed.setValue(timePlayed.getValue() + 1);
     }
@@ -111,7 +111,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     startNewGame();
   }
 
-  public void populateGameBoard() {
+  void populateGameBoard() {
     gameTiles =
         new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
@@ -266,7 +266,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     }
   }
 
-  public void won() {
+  void won() {
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     // TODO: something to congratulate the player as well as update the highscore
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {

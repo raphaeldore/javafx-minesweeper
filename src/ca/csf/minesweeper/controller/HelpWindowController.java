@@ -20,7 +20,7 @@ public class HelpWindowController extends SimpleFXController implements Initiali
   @FXML
   WebView webView;
   @FXML
-  Button btnOk;
+  private Button btnOk;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {

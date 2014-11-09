@@ -6,8 +6,8 @@ package ca.csf.minesweeper.model;
  */
 
 public class MinesweeperGame {
-  GameBoard gameBoard;
-  GameState gameState;
+  private GameBoard gameBoard;
+  private GameState gameState;
 
   public MinesweeperGame(GameDifficulty difficulty, Observer<GameTile> observer) {
     gameState = new GameState(difficulty, this);

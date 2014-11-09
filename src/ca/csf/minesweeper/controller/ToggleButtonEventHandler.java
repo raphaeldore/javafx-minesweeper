@@ -5,7 +5,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import ca.csf.minesweeper.model.MinesweeperGame;
 
-public class ToggleButtonEventHandler implements EventHandler<MouseEvent> {
+class ToggleButtonEventHandler implements EventHandler<MouseEvent> {
 
   private final int COLUMN;
   private final int ROW;

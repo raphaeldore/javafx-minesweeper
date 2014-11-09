@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import javafx.scene.image.Image;
 
-public final class ControllerConsts {
+final class ControllerConsts {
 
 	// Path to images
 	public static final String resourcesPath = "/resources/";
