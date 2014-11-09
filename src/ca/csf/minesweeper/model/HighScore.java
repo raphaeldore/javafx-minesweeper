@@ -36,10 +36,11 @@ public class HighScore {
       d.close();
     } catch (Exception e) {
       e.printStackTrace();
-      System.err.println("An error occured while reading the file HighScores.xml. It seems corrupted. The file will be reset.");
+      System.err
+          .println("An error occured while reading the file HighScores.xml. It seems corrupted. The file will be reset.");
       initializeFile();
     }
-    
+
 
   }
 
@@ -56,11 +57,8 @@ public class HighScore {
   }
 
   public void setHighScore(String difficulty, String playerName, int time) {
-    if (isHighestScoreForDifficulty(difficulty, time) == true) {
-      scores.put(difficulty,
-          new ArrayList<String>(Arrays.asList(playerName, Integer.toString(time))));
-      saveHighScores();
-    }
+    scores.put(difficulty, new ArrayList<String>(Arrays.asList(playerName, Integer.toString(time))));
+    saveHighScores();
   }
 
   public boolean isHighestScoreForDifficulty(String difficulty, int time) {
@@ -94,5 +92,5 @@ public class HighScore {
 
   public ArrayList<String> getHighestScoreExpert() {
     return scores.get("Expert");
-  }  
+  }
 }
