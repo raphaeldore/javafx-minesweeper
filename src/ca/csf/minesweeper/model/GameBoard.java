@@ -11,8 +11,8 @@ import ca.csf.minesweeper.Configuration;
 
 public class GameBoard {
 
-  private GameDifficulty difficulty;
-  private GameTile[][] tiles;
+  private final GameDifficulty difficulty;
+  private final GameTile[][] tiles;
 
   public GameBoard(GameDifficulty gameDifficulty, MinesweeperGame game, Observer<GameTile> observer) {
     difficulty = gameDifficulty;

@@ -3,10 +3,10 @@ package ca.csf.minesweeper.model;
 class GameState {
 
   private int flagCount;
-  private GameDifficulty difficulty;
+  private final GameDifficulty difficulty;
   private GameStates state;
   private int revealedTiles;
-  private MinesweeperGame game;
+  private final MinesweeperGame game;
 
   GameState(GameDifficulty difficulty, MinesweeperGame game) {
     state = GameStates.PLAYING;

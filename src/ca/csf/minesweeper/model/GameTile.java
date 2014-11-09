@@ -5,7 +5,7 @@ public class GameTile extends Subject<GameTile> {
 
   private boolean isMine = false;
   private int neighboringMineCount = 0;
-  private MinesweeperGame game;
+  private final MinesweeperGame game;
   private TileState state;
   
   private final int ROW;
