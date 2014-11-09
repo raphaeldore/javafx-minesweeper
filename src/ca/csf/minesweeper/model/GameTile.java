@@ -38,9 +38,9 @@ public class GameTile extends Subject<GameTile> {
       if (isMine) {
         game.lose();
       } else {
+        game.incrementTilesRevealed();
         if(neighboringMineCount == 0) {
           isClean = true;
-          game.incrementTilesRevealed();
         }
       }
       notifyObservers(this);
@@ -103,6 +103,14 @@ public class GameTile extends Subject<GameTile> {
   public void hideIfReavealedMine() {
     if (state == TileState.MINE_REVEALED) {
       state = TileState.HIDDEN;
+      notifyObservers(this);
+    }
+  }
+
+  public void setMinesAsFlags() {
+    if(isMine) {
+      state = TileState.FLAGGED;
+      game.decrementFlagCount();
       notifyObservers(this);
     }
   }

@@ -10,16 +10,20 @@ public class MinesweeperGame {
   GameState gameState;
 
   public MinesweeperGame(GameDifficulty difficulty, Observer<GameTile> observer) {
-    gameState = new GameState(difficulty);
-    // gameBoard = new GameBoard(difficulty.nbrOfRows, difficulty.nbrOfColumns,
-    // difficulty.nbrOfMines, this, observer ); TODO: use this instead
-    gameBoard = new GameBoard(9, 9, 10, this, observer);
+    gameState = new GameState(difficulty, this);
+    gameBoard = new GameBoard(difficulty.nbrOfRows, difficulty.nbrOfColumns, difficulty.nbrOfMines, this, observer );
+    //TODO: do not use this instead
+    //gameBoard = new GameBoard(9, 9, 10, this, observer);
+  }
+  
+  public void win() {
+    gameBoard.setMinesAsFlags();
   }
 
   public void revealTile(int row, int column) {
 //    if (gameBoard.getIfTileIsMineAtPos(row, column) == true) {
 //      gameState.lose();
-//      gameBoard.endGame();
+        
 //    } TODO: not use this
     gameBoard.revealTileArea(row, column);
   }

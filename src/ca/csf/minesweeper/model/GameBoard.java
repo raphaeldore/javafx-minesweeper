@@ -42,11 +42,10 @@ public class GameBoard {
   }
 
 
-  public void endGame() {
+  public void setMinesAsFlags() {
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
-        revealTileArea(i, j);
-        // TODO : User stories 11 et 13
+        tiles[i][j].setMinesAsFlags();
       }
     }
   }
@@ -79,7 +78,6 @@ public class GameBoard {
   public boolean getIfTileIsMineAtPos(int row, int column) {
     return tiles[row][column].isMine();
   }
-
 
   public void revealMines() {
     for (int i = 0; i < 9; i++) { // TODO: change 9 to rows

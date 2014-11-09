@@ -10,11 +10,13 @@ public class GameState {
   private GameDifficulty difficulty;
   private GameStates state;
   private int revealedTiles;
+  private MinesweeperGame game;
 
-  GameState(GameDifficulty difficulty) {
+  GameState(GameDifficulty difficulty, MinesweeperGame game) {
     state = GameStates.PLAYING;
     this.difficulty = difficulty;
     revealedTiles = 0;
+    this.game = game;
   }
 
   public int getFlagCount() {
@@ -45,6 +47,7 @@ public class GameState {
     revealedTiles++;
     if (revealedTiles == 71) { //TODO: change to (nbrRows X nbrColumns)- nbrMines 
       state = GameStates.WON;
+      game.win();
     }
   }
 }
