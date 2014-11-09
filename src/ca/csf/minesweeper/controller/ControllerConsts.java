@@ -1,7 +1,6 @@
 package ca.csf.minesweeper.controller;
 
 import java.io.InputStream;
-import java.net.URL;
 
 import javafx.scene.image.Image;
 

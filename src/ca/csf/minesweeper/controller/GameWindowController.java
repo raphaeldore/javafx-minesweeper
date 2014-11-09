@@ -26,7 +26,6 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -129,9 +128,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameBoard.add(gameTiles[i][j], i, j);
       }
     }
-    
-    // 
-    
   }
 
   @FXML
@@ -249,7 +245,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void changeGodModeState() {
     Configuration.godModeEnabled = !Configuration.godModeEnabled;
-    
     if (Configuration.godModeEnabled == true) {
       game.revealMines();
     } else {
@@ -268,6 +263,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void startNewGame() {
     Configuration.godModeEnabled = false;
+    menuGodMode.setSelected(false);
     gameBoard.getChildren().clear();
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
     isFirstClick = true;

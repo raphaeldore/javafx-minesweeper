@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameDifficulty;
 import ca.csf.minesweeper.model.HighScore;
 import ca.csf.simpleFx.SimpleFXController;

@@ -1,7 +1,7 @@
 package ca.csf.minesweeper;
 
-import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameDifficulty;
+import ca.csf.minesweeper.model.GameStates;
 
 /*
  * All constants are defined here. As are all user defined options (Such as the selected
