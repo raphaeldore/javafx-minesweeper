@@ -8,6 +8,7 @@ public final class ControllerConsts {
 
 	// Path to images
 	public static final String resourcesPath = "/resources/";
+	public static final String defaultName = "NoName";
 
 	public static final Image IMAGE_ONE_MINE = loadImage("1.png");
 	public static final Image IMAGE_TWO_MINES = loadImage("2.png");

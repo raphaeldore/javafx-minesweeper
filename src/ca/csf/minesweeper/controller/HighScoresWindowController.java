@@ -1,5 +1,6 @@
 package ca.csf.minesweeper.controller;
 
+import static ca.csf.minesweeper.controller.ControllerConsts.defaultName;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -21,8 +22,6 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
 public class HighScoresWindowController extends SimpleFXController implements Initializable {
 
-  private final String defaultName = "NoName";
- 
   @FXML
   Button btnOk;
   @FXML
