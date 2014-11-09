@@ -47,6 +47,7 @@ import ca.csf.minesweeper.model.HighScore;
 import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
+import ca.csf.minesweeper.model.TileState;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
 
@@ -167,10 +168,15 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    if (game.getGameState() != GameStates.PLAYING) {
+    if (game.getGameState() != GameStates.PLAYING && argument.getState() != TileState.FLAGGED) {
       timeline.stop();
       if (game.getGameState() == GameStates.LOST) {
         btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_DEAD));
+        for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
+          for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
+            gameTiles[i][j].setDisable(true);
+          }
+        }
       } else { //if he is not playing anymore and has not lost, then he has won
         won();
       }
@@ -258,6 +264,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
       openBestTimesWindow(new ActionEvent());
     }
     // TODO: something to congratulate the player as well as update the highscore
+    for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
+      for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
+        gameTiles[i][j].setDisable(true);
+      }
+    }
   }
 
   @FXML
