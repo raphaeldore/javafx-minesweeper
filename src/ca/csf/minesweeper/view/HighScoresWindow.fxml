@@ -26,7 +26,7 @@
                   <Insets left="15.0" />
                </padding>
             </Label>
-            <Label text="Intermédaire" GridPane.rowIndex="1">
+            <Label text="Intermédiaire" GridPane.rowIndex="1">
                <padding>
                   <Insets left="15.0" />
                </padding>
@@ -54,22 +54,21 @@
                   <Insets left="15.0" />
                </padding>
             </Label>
-            <Label fx:id="lblNameBeginner" text="Label" GridPane.columnIndex="2"></Label>
-            <Label fx:id="lblNameIntermediate" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1"></Label>
-            <Label fx:id="lblNameExpert" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2"></Label>
+            <Label fx:id="lblNameBeginner" text="Label" GridPane.columnIndex="2" />
+            <Label fx:id="lblNameIntermediate" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="lblNameExpert" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="43.0" prefWidth="350.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Effacer les temps" onAction="#deleteHighScores" />
-            <Button alignment="CENTER" mnemonicParsing="false" text="Test SetHighScore" onAction="#setTestHighScore" />
-            <Button fx:id="btnOk" alignment="CENTER" mnemonicParsing="false" text="OK">
+            <Button fx:id="btnOk" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="OK">
                <HBox.margin>
-                  <Insets left="15.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
             </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#deleteHighScores" text="Effacer les temps" />
          </children>
       </HBox>
    </bottom>

@@ -25,7 +25,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -43,13 +42,13 @@ import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameDifficulty;
 import ca.csf.minesweeper.model.GameStates;
 import ca.csf.minesweeper.model.GameTile;
-import ca.csf.minesweeper.model.HighScore;
 import ca.csf.minesweeper.model.MinesweeperGame;
 import ca.csf.minesweeper.model.Observer;
 import ca.csf.minesweeper.model.Subject;
 import ca.csf.minesweeper.model.TileState;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
+import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
 public class GameWindowController extends SimpleFXController implements Initializable,
     Observer<GameTile> {
@@ -59,7 +58,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   private ToggleButton[][] gameTiles;
   private IntegerProperty timePlayed;
   private boolean isFirstClick;
-  private HighScore highScore;
+  private boolean isHighestScoreForDifficulty;
+  private String playerName;
 
   @FXML
   GridPane gameBoard;
@@ -100,7 +100,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    highScore = new HighScore();
+    playerName = "NoName";
     Font.loadFont(GameWindowController.class.getResource(resourcesPath + "Terminus.ttf")
         .toExternalForm(), 10);
     timePlayed = new SimpleIntegerProperty(0);
@@ -122,9 +122,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
         ToggleButtonEventHandler toggleButtonEventHandler = new ToggleButtonEventHandler(i, j, game);
         gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
         gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
+        // Disables keypresses on the ToggleButtons:
         gameTiles[i][j].setOnAction((event) -> {
           ToggleButton sourceButton = (ToggleButton) event.getSource();
-          sourceButton.setSelected(false);
+          sourceButton.setSelected(false); 
         });
         gameBoard.add(gameTiles[i][j], i, j);
       }
@@ -132,10 +133,17 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   @FXML
-  public void openBestTimesWindow(ActionEvent event) {
+  public void openBestTimesWindow() {
+    HighScoresWindowController highScoresWindowController;
+    if (isHighestScoreForDifficulty && game.getGameState() == GameStates.WON ) {
+      highScoresWindowController = new HighScoresWindowController(playerName, timePlayed.get());
+    } else {
+      highScoresWindowController = new HighScoresWindowController();
+    }
+    
     SimpleFXStage stage =
         new WindowBuilder().fxmlPath("../view/HighScoresWindow.fxml").windowName("Meilleurs Temps")
-            .simpleFXController(new HighScoresWindowController())
+            .simpleFXController(highScoresWindowController)
             .simpleFXApplication(this.getSimpleFXApplication())
             .SimpleFXStage(this.getSimpleFxStage()).buildStage();
 
@@ -144,7 +152,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   @FXML
-  public void openAboutWindow(ActionEvent event) {
+  public void openAboutWindow() {
     SimpleFXStage stage =
         new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
             .simpleFXController(new AboutWindowController())
@@ -156,13 +164,14 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   @FXML
-  public void openHelpWindow(ActionEvent event) {
+  public void openHelpWindow() {
     SimpleFXStage stage =
         new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
             .simpleFXController(new HelpWindowController())
             .simpleFXApplication(this.getSimpleFXApplication())
             .SimpleFXStage(this.getSimpleFxStage()).buildStage();
 
+    stage.sizeToScene();
     stage.show();
   }
 
@@ -259,15 +268,21 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   public void won() {
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
-    if (highScore.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get())) {
-      openBestTimesWindow(new ActionEvent());
-    }
     // TODO: something to congratulate the player as well as update the highscore
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j].setDisable(true);
       }
     }
+    
+    isHighestScoreForDifficulty = Configuration.highScores.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get());
+    if (isHighestScoreForDifficulty) {
+      playerName = SimpleFXDialogs.showInputBox(getSimpleFxStage().getTitle(), "Félicitation! Vous avez le meilleur score pour cette difficulté. Quel est votre nom ?", playerName, getSimpleFxStage());
+      openBestTimesWindow();
+    }
+    
+    isHighestScoreForDifficulty = false;
+    
   }
 
   @FXML
@@ -276,7 +291,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
     menuGodMode.setSelected(false);
     gameBoard.getChildren().clear();
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
-    isFirstClick = true;
+   isFirstClick = true;
     timePlayed.setValue(0);
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
     game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
