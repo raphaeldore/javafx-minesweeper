@@ -54,9 +54,9 @@
                   <Insets left="15.0" />
                </padding>
             </Label>
-            <Label fx:id="lblNameBeginner" text="Label" GridPane.columnIndex="2" />
-            <Label fx:id="lblNameIntermediate" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="lblNameExpert" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="lblNameBeginner" text="Label" GridPane.columnIndex="2" wrapText="true" />
+            <Label fx:id="lblNameIntermediate" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" wrapText="true" />
+            <Label fx:id="lblNameExpert" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" wrapText="true" />
          </children>
       </GridPane>
    </center>
