@@ -2,6 +2,7 @@ package ca.csf.minesweeper.controller;
 
 import java.io.InputStream;
 
+import ca.csf.minesweeper.model.HighScore;
 import javafx.scene.image.Image;
 
 final class ControllerConsts {
@@ -9,6 +10,7 @@ final class ControllerConsts {
 	// Path to images
 	public static final String resourcesPath = "/resources/";
 	public static final String defaultName = "NoName";
+	public static final HighScore highScores = new HighScore();
 
 	public static final Image IMAGE_ONE_MINE = loadImage("1.png");
 	public static final Image IMAGE_TWO_MINES = loadImage("2.png");

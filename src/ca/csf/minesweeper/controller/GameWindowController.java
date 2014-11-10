@@ -16,6 +16,7 @@ import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_NORMAL;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_THREE_MINES;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_TWO_MINES;
 import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
+import static ca.csf.minesweeper.controller.ControllerConsts.highScores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -273,7 +274,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
       }
     }
     
-    isHighestScoreForDifficulty = Configuration.highScores.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get());
+    isHighestScoreForDifficulty = highScores.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get());
     if (isHighestScoreForDifficulty) {
       playerName = SimpleFXDialogs.showInputBox(getSimpleFxStage().getTitle(), "Félicitation! Vous avez le meilleur score pour cette difficulté. Quel est votre nom ?", playerName, getSimpleFxStage());
       openBestTimesWindow();
