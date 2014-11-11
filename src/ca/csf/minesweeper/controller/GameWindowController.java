@@ -52,8 +52,7 @@ import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.SimpleFXStage;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
-public class GameWindowController extends SimpleFXController implements Initializable,
-    Observer<GameTile> {
+public class GameWindowController extends SimpleFXController implements Initializable, Observer<GameTile> {
 
   private MinesweeperGame game;
   private Timeline timeline;
@@ -101,8 +100,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     playerName = "NoName";
-    Font.loadFont(GameWindowController.class.getResource(resourcesPath + "Terminus.ttf")
-        .toExternalForm(), 10);
+    Font.loadFont(GameWindowController.class.getResource(resourcesPath + "Terminus.ttf").toExternalForm(), 10);
     timePlayed = new SimpleIntegerProperty(0);
     lblTimer.textProperty().bind(timePlayed.asString());
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), actionEvent -> updateTimer()));
@@ -112,8 +110,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
   void populateGameBoard() {
-    gameTiles =
-        new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
+    gameTiles = new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j] = new ToggleButton();
@@ -125,7 +122,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
         // Disables keypresses on the ToggleButtons:
         gameTiles[i][j].setOnAction((event) -> {
           ToggleButton sourceButton = (ToggleButton) event.getSource();
-          sourceButton.setSelected(false); 
+          sourceButton.setSelected(false);
         });
         gameBoard.add(gameTiles[i][j], i, j);
       }
@@ -135,17 +132,15 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void openBestTimesWindow() {
     HighScoresWindowController highScoresWindowController;
-    if (isHighestScoreForDifficulty && game.getGameState() == GameStates.WON ) {
+    if (isHighestScoreForDifficulty && game.getGameState() == GameStates.WON) {
       highScoresWindowController = new HighScoresWindowController(playerName, timePlayed.get());
     } else {
       highScoresWindowController = new HighScoresWindowController();
     }
-    
+
     SimpleFXStage stage =
-        new WindowBuilder().fxmlPath("../view/HighScoresWindow.fxml").windowName("Meilleurs Temps")
-            .simpleFXController(highScoresWindowController)
-            .simpleFXApplication(this.getSimpleFXApplication())
-            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+        new WindowBuilder().fxmlPath("../view/HighScoresWindow.fxml").windowName("Meilleurs Temps").simpleFXController(highScoresWindowController)
+            .simpleFXApplication(this.getSimpleFXApplication()).SimpleFXStage(this.getSimpleFxStage()).buildStage();
 
     stage.setResizable(false);
     stage.show();
@@ -154,10 +149,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void openAboutWindow() {
     SimpleFXStage stage =
-        new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos")
-            .simpleFXController(new AboutWindowController())
-            .simpleFXApplication(this.getSimpleFXApplication())
-            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+        new WindowBuilder().fxmlPath("../view/AboutWindow.fxml").windowName("À propos").simpleFXController(new AboutWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication()).SimpleFXStage(this.getSimpleFxStage()).buildStage();
 
     stage.setResizable(false);
     stage.show();
@@ -166,10 +159,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
   @FXML
   public void openHelpWindow() {
     SimpleFXStage stage =
-        new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide")
-            .simpleFXController(new HelpWindowController())
-            .simpleFXApplication(this.getSimpleFXApplication())
-            .SimpleFXStage(this.getSimpleFxStage()).buildStage();
+        new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide").simpleFXController(new HelpWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication()).SimpleFXStage(this.getSimpleFxStage()).buildStage();
 
     stage.sizeToScene();
     stage.show();
@@ -186,12 +177,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
             gameTiles[i][j].setDisable(true);
           }
         }
-      } else { //if he is not playing anymore and has not lost, then he has won
+      } else { // if he is not playing anymore and has not lost, then he has won
         won();
       }
     }
-    
-    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED && argument.getState() != TileState.MINE_REVEALED) {
+
+    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED
+        && argument.getState() != TileState.MINE_REVEALED) {
       timeline.playFromStart();
       isFirstClick = false;
     }
@@ -207,7 +199,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE));
         break;
       case REVEALED:
-        
+
         // don't want the user to be able to click it again
         gameTiles[argument.getROW()][argument.getCOLUMN()].setDisable(true);
 
@@ -248,7 +240,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
           }
         }
         break;
-        
+
       case HIDDEN:
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
         break;
@@ -263,11 +255,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @FXML
   public void changeGodModeState() {
-    Configuration.godModeEnabled = !Configuration.godModeEnabled;
-    if (Configuration.godModeEnabled) {
-      game.revealMines();
-    } else {
-      game.hideMines();
+    if (game.getGameState() == GameStates.PLAYING) {
+      Configuration.godModeEnabled = !Configuration.godModeEnabled;
+      if (Configuration.godModeEnabled) {
+        game.revealMines();
+      } else {
+        game.hideMines();
+      }
     }
   }
 
@@ -279,15 +273,17 @@ public class GameWindowController extends SimpleFXController implements Initiali
         gameTiles[i][j].setDisable(true);
       }
     }
-    
+
     isHighestScoreForDifficulty = highScores.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get());
     if (isHighestScoreForDifficulty) {
-      playerName = SimpleFXDialogs.showInputBox(getSimpleFxStage().getTitle(), "Félicitation! Vous avez le meilleur score pour cette difficulté. Quel est votre nom ?", playerName, getSimpleFxStage());
+      playerName =
+          SimpleFXDialogs.showInputBox(getSimpleFxStage().getTitle(), "Félicitation! Vous avez le meilleur score pour cette difficulté. Quel est votre nom ?",
+              playerName, getSimpleFxStage());
       openBestTimesWindow();
     }
-    
+
     isHighestScoreForDifficulty = false;
-    
+
   }
 
   @FXML
@@ -326,13 +322,12 @@ public class GameWindowController extends SimpleFXController implements Initiali
     this.getSimpleFxStage().sizeToScene();
   }
 
-  //TODO: 1. fix starting a new game resets the timer but also makes it start
-  //TODO: 2. disable god mode toggling on win/loss
-  //TODO: 3. should you be able to click on a mine in godMode? you can't now
-  //TODO: 4. Finish GameTileTest and create one other test class
-  //TODO: 5. Review revealing of tiles
-  //TODO: 6. order functions properly and clean comments/TODOs
-  //TODO: 7. There is repetition of info within Configuration and GameState (playing/pause is weird now)
-  //TODO: 8. Some features should maybe work with model rather than controller 
-  //TODO: yo mama
+  // TODO: 3. should you be able to click on a mine in godMode? you can't now
+  // TODO: 4. Finish GameTileTest and create one other test class
+  // TODO: 5. Review revealing of tiles
+  // TODO: 6. order functions properly and clean comments/TODOs
+  // TODO: 7. There is repetition of info within Configuration and GameState (playing/pause is weird
+  // now)
+  // TODO: 8. Some features should maybe work with model rather than controller
+  // TODO: yo mama
 }
