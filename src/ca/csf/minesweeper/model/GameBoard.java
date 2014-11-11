@@ -44,7 +44,7 @@ public class GameBoard {
   public void setMinesAsFlags() {
     for (int i = 0; i < difficulty.nbrOfRows; i++) {
       for (int j = 0; j < difficulty.nbrOfColumns; j++) {
-        tiles[i][j].setMinesAsFlags();
+        tiles[i][j].setMineAsFlags();
       }
     }
   }
@@ -86,6 +86,14 @@ public class GameBoard {
     for (int i = 0; i < difficulty.nbrOfRows; i++) {
       for (int j = 0; j < difficulty.nbrOfColumns; j++) {
         tiles[i][j].hideIfReavealedMine();
+      }
+    }
+  }
+  
+  public void setWrongFlagsAsCrossed() {
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
+        tiles[i][j].setWrongFlagAsCross();
       }
     }
   }

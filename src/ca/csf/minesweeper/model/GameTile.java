@@ -4,7 +4,7 @@ package ca.csf.minesweeper.model;
 public class GameTile extends Subject<GameTile> {
 
   private boolean isMine = false;
-  private int neighboringMineCount = 0;
+  private int neighboringMineCount;
   private final MinesweeperGame game;
   private TileState state;
   
@@ -17,6 +17,7 @@ public class GameTile extends Subject<GameTile> {
     this.COLUMN = column;
     addObserver(observer);
     state = TileState.HIDDEN;
+    neighboringMineCount = 0;
   }
   
   public int getROW() {
@@ -31,9 +32,9 @@ public class GameTile extends Subject<GameTile> {
     return neighboringMineCount;
   }
 
-  public boolean revealedGameTileAreaIsClean() {
+  public boolean revealedGameTileAreaIsClean() { //TODO: we could do part of this in GameBoard
     boolean isClean = false;
-    if (state == TileState.HIDDEN) {
+    if (state == TileState.HIDDEN) { //TODO: Should "cheating" allow you to reveal a tile and lose?
       state = TileState.REVEALED;
       if (isMine) {
         game.lose();
@@ -107,10 +108,18 @@ public class GameTile extends Subject<GameTile> {
     }
   }
 
-  public void setMinesAsFlags() {
+  public void setMineAsFlags() {
     if(isMine && state != TileState.FLAGGED) {
       state = TileState.FLAGGED;
       game.incrementFlagCount();
+      notifyObservers(this);
+    }
+  }
+  
+  public void setWrongFlagAsCross() {
+    if (state == TileState.FLAGGED && !isMine) {
+      state = TileState.CROSSED_MINE;
+      game.decrementFlagCount();
       notifyObservers(this);
     }
   }

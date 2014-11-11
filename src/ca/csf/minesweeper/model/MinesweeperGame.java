@@ -36,7 +36,8 @@ public class MinesweeperGame {
 
   public void lose() {
     gameState.lose();
-    gameBoard.revealMines();  
+    gameBoard.revealMines();
+    gameBoard.setWrongFlagsAsCrossed();
   }
 
   public GameStates getGameState() {

@@ -15,8 +15,9 @@ import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_HAPPY;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_NORMAL;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_THREE_MINES;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_TWO_MINES;
-import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE_CROSS;
 import static ca.csf.minesweeper.controller.ControllerConsts.highScores;
+import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -176,7 +177,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   @Override
   public void update(Subject<GameTile> sender, GameTile argument) {
-    if (game.getGameState() != GameStates.PLAYING && argument.getState() != TileState.FLAGGED) {
+    if (game.getGameState() != GameStates.PLAYING && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.CROSSED_MINE) {
       timeline.stop();
       if (game.getGameState() == GameStates.LOST) {
         btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_DEAD));
@@ -251,6 +252,11 @@ public class GameWindowController extends SimpleFXController implements Initiali
       case HIDDEN:
         gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(null); // No image
         break;
+      case CROSSED_MINE:
+        gameTiles[argument.getROW()][argument.getCOLUMN()].setGraphic(new ImageView(IMAGE_MINE_CROSS));
+        break;
+      default:
+        break;
     }
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines - game.getFlagCount()));
   }
@@ -319,14 +325,13 @@ public class GameWindowController extends SimpleFXController implements Initiali
     this.getSimpleFxStage().sizeToScene();
   }
 
-  //TODO: 1. make timer start on first reveal rather than click
-  //TODO: 2. Update highscores on win if necessary
-  //TODO: 3. disable god mode on win/loss
-  //TODO: 4. allow for erasing of the highscores
-  //TODO: 5. allow for saving of the highscores
-  //TODO: 6. put normal values only as default highscores and clean it's interface up
-  
-  //TODO: Test classes
-  //TODO: Programming folder
-  //TODO: teammate report
+  //TODO: 1. fix menu starts timer bug, also starting a new game resets the timer but also makes it start
+  //TODO: 2. disable god mode on win/loss
+  //TODO: 3. should you be able to click on a mine in godMode?
+  //TODO: 4. Finish GameTileTest and create one other test class
+  //TODO: 5. Review revealing of tiles
+  //TODO: 6. order functions properly and clean comments/TODOs
+  //TODO: 7. There is repetition of info within Configuration and GameState (playing/pause is weird now)
+  //TODO: 8. Some features should maybe work with model rather than controller 
+  //TODO: yo mama
 }
