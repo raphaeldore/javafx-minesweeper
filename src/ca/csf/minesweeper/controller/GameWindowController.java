@@ -325,9 +325,9 @@ public class GameWindowController extends SimpleFXController implements Initiali
     this.getSimpleFxStage().sizeToScene();
   }
 
-  //TODO: 1. fix menu starts timer bug, also starting a new game resets the timer but also makes it start
-  //TODO: 2. disable god mode on win/loss
-  //TODO: 3. should you be able to click on a mine in godMode?
+  //TODO: 1. fix starting a new game resets the timer but also makes it start
+  //TODO: 2. disable god mode toggling on win/loss
+  //TODO: 3. should you be able to click on a mine in godMode? you can't now
   //TODO: 4. Finish GameTileTest and create one other test class
   //TODO: 5. Review revealing of tiles
   //TODO: 6. order functions properly and clean comments/TODOs
