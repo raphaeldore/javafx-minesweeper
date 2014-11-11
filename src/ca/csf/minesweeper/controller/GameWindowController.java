@@ -191,7 +191,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
       }
     }
     
-    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED) {
+    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED && argument.getState() != TileState.MINE_REVEALED) {
       timeline.playFromStart();
       isFirstClick = false;
     }
@@ -296,8 +296,9 @@ public class GameWindowController extends SimpleFXController implements Initiali
     menuGodMode.setSelected(false);
     gameBoard.getChildren().clear();
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
-   isFirstClick = true;
+    isFirstClick = true;
     timePlayed.setValue(0);
+    timeline.pause();
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
     game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
     populateGameBoard();
