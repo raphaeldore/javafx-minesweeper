@@ -15,7 +15,9 @@ public class GameTile extends Subject<GameTile> {
     this.game = game;
     this.ROW = row;
     this.COLUMN = column;
-    addObserver(observer);
+    if (observer != null) {
+      addObserver(observer);
+    }
     state = TileState.HIDDEN;
     neighboringMineCount = 0;
   }
@@ -34,7 +36,7 @@ public class GameTile extends Subject<GameTile> {
 
   public boolean revealedGameTileAreaIsClean() { //TODO: we could do part of this in GameBoard
     boolean isClean = false;
-    if (state == TileState.HIDDEN) { //TODO: Should "cheating" allow you to reveal a tile and lose?
+    if (state == TileState.HIDDEN) {
       state = TileState.REVEALED;
       if (isMine) {
         game.lose();
@@ -124,5 +126,4 @@ public class GameTile extends Subject<GameTile> {
     }
   }
 
-  //TODO: put functions in order according to public/private/protected
 }
