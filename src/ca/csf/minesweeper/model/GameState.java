@@ -19,10 +19,6 @@ class GameState {
     return flagCount;
   }
 
-  public GameDifficulty getDifficulty() {
-    return difficulty;
-  }
-
   public void incrementFlagCount() {
     flagCount++;
   }
