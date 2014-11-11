@@ -191,7 +191,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
       }
     }
     
-    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED) {
+    if (isFirstClick && argument.getState() != TileState.FLAGGED && argument.getState() != TileState.QUESTIONNED && argument.getState() != TileState.MINE_REVEALED) {
       timeline.playFromStart();
       isFirstClick = false;
     }
