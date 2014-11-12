@@ -56,18 +56,14 @@ public class HighScore {
     saveHighScores();
   }
 
-  public void setHighScore(String difficulty, String playerName, int time) {
-    scores.put(difficulty, new ArrayList<String>(Arrays.asList(playerName, Integer.toString(time))));
+  public void setHighScore(GameDifficulty difficulty, String playerName, int time) {
+    scores.put(difficulty.difficultyName, new ArrayList<String>(Arrays.asList(playerName, Integer.toString(time))));
     saveHighScores();
   }
 
-  public boolean isHighestScoreForDifficulty(String difficulty, int time) {
-    ArrayList<String> highestScore = scores.get(difficulty);
-    if (time < Integer.parseInt(highestScore.get(1))) {
-      return true;
-    }
-
-    return false;
+  public boolean isHighestScoreForDifficulty(GameDifficulty difficulty, int time) {
+    ArrayList<String> highestScore = scores.get(difficulty.difficultyName);
+    return time < Integer.parseInt(highestScore.get(1));
   }
 
   public void saveHighScores() {
@@ -81,16 +77,8 @@ public class HighScore {
       e1.printStackTrace();
     }
   }
-
-  public ArrayList<String> getHighestScoreBeginner() {
-    return scores.get("Débutant");
-  }
-
-  public ArrayList<String> getHighestScoreIntermediate() {
-    return scores.get("Intermédiaire");
-  }
-
-  public ArrayList<String> getHighestScoreExpert() {
-    return scores.get("Expert");
+  
+  public ArrayList<String> getHighestScoreForDifficulty(GameDifficulty difficulty) {
+    return scores.get(difficulty.difficultyName);
   }
 }
