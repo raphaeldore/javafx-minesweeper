@@ -59,10 +59,9 @@ public class HighScoresWindowController extends SimpleFXController implements In
   }
 
   private void loadData() {
-    // highScore = new HighScore();
-    ArrayList<String> bestTimeBeginner = highScores.getHighestScoreBeginner();
-    ArrayList<String> bestTimeIntermediate = highScores.getHighestScoreIntermediate();
-    ArrayList<String> bestTimeExpert = highScores.getHighestScoreExpert();
+    ArrayList<String> bestTimeBeginner = highScores.getHighestScoreForDifficulty(GameDifficulty.BEGINNER);
+    ArrayList<String> bestTimeIntermediate = highScores.getHighestScoreForDifficulty(GameDifficulty.INTERMEDIATE);
+    ArrayList<String> bestTimeExpert = highScores.getHighestScoreForDifficulty(GameDifficulty.EXPERT);
 
     lblTimeBeginner.setText(bestTimeBeginner.get(1) + " secondes");
     lblNameBeginner.setText(bestTimeBeginner.get(0));
@@ -89,7 +88,7 @@ public class HighScoresWindowController extends SimpleFXController implements In
   }
 
   private void setHighScore(GameDifficulty gameDifficulty, String playerName, int time) {
-    highScores.setHighScore(gameDifficulty.difficultyName, playerName, time);
+    highScores.setHighScore(gameDifficulty, playerName, time);
   }
 
 }
