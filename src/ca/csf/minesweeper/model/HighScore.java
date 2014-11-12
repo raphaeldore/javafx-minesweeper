@@ -34,16 +34,13 @@ public class HighScore {
       Object result = d.readObject();
       this.scores = (Hashtable<String, ArrayList<String>>) result;
       d.close();
-    } catch (FileNotFoundException e) {
-      initializeFile();
+    } catch (Exception e) {
       e.printStackTrace();
-    } catch (ArrayIndexOutOfBoundsException e) {
+      System.err
+          .println("An error occured while reading the file HighScores.xml. It seems corrupted. The file will be reset.");
       initializeFile();
-      e.printStackTrace();
-    } catch (IllegalStateException e) {
-      initializeFile();
-      e.printStackTrace();
     }
+
 
   }
 
@@ -59,21 +56,14 @@ public class HighScore {
     saveHighScores();
   }
 
-  public void setHighScore(String difficulty, String playerName, int time) {
-    if (isHighestScoreForDifficulty(difficulty, time) == true) {
-      scores.put(difficulty,
-          new ArrayList<String>(Arrays.asList(playerName, Integer.toString(time))));
-      saveHighScores();
-    }
+  public void setHighScore(GameDifficulty difficulty, String playerName, int time) {
+    scores.put(difficulty.difficultyName, new ArrayList<String>(Arrays.asList(playerName, Integer.toString(time))));
+    saveHighScores();
   }
 
-  public boolean isHighestScoreForDifficulty(String difficulty, int time) {
-    ArrayList<String> highestScore = scores.get(difficulty);
-    if (time < Integer.parseInt(highestScore.get(1))) {
-      return true;
-    }
-
-    return false;
+  public boolean isHighestScoreForDifficulty(GameDifficulty difficulty, int time) {
+    ArrayList<String> highestScore = scores.get(difficulty.difficultyName);
+    return time < Integer.parseInt(highestScore.get(1));
   }
 
   public void saveHighScores() {
@@ -87,16 +77,8 @@ public class HighScore {
       e1.printStackTrace();
     }
   }
-
-  public ArrayList<String> getHighestScoreBeginner() {
-    return scores.get("Débutant");
+  
+  public ArrayList<String> getHighestScoreForDifficulty(GameDifficulty difficulty) {
+    return scores.get(difficulty.difficultyName);
   }
-
-  public ArrayList<String> getHighestScoreIntermediate() {
-    return scores.get("Intermédiaire");
-  }
-
-  public ArrayList<String> getHighestScoreExpert() {
-    return scores.get("Expert");
-  }  
 }

@@ -9,21 +9,23 @@ import java.util.Random;
 
 public class GameBoard {
 
-  private GameTile[][] tiles;
+  private final GameDifficulty difficulty;
+  private final GameTile[][] tiles;
 
-  // TODO: Accept Configuration.GameDifficulty Enumeration
-  public GameBoard(int rowSize, int columnSize, int mineCount, MinesweeperGame game, Observer<GameTile> observer) {
-    tiles = new GameTile[rowSize][columnSize];
-    for (int i = 0; i < columnSize; i++) {
-      for (int j = 0; j < rowSize; j++) {
+  public GameBoard(GameDifficulty gameDifficulty, MinesweeperGame game, Observer<GameTile> observer) {
+    difficulty = gameDifficulty;
+    int mineCount = difficulty.nbrOfMines;
+    tiles = new GameTile[difficulty.nbrOfRows][difficulty.nbrOfColumns];
+    for (int i = 0; i < difficulty.nbrOfColumns; i++) {
+      for (int j = 0; j < difficulty.nbrOfRows; j++) {
         tiles[j][i] = new GameTile(game, observer, j, i);
       }
     }
 
     while (mineCount > 0) {
       Random random = new Random();
-      int row = random.nextInt(rowSize - 1);
-      int column = random.nextInt(columnSize - 1);
+      int row = random.nextInt(difficulty.nbrOfRows - 1);
+      int column = random.nextInt(difficulty.nbrOfColumns - 1);
 
       if (tiles[row][column].setAsMine()) {
         incrementExistingTile(row - 1, column - 1);
@@ -39,6 +41,14 @@ public class GameBoard {
     }
   }
 
+  public void setMinesAsFlags() {
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
+        tiles[i][j].setMineAsFlags();
+      }
+    }
+  }
+
   private void incrementExistingTile(int row, int column) {
     if (row >= 0 && column >= 0) {
       tiles[row][column].incrementNeighboringMineCount();
@@ -46,7 +56,7 @@ public class GameBoard {
   }
 
   public void revealTileArea(int row, int column) {
-    if (row >= 0 && column >= 0 && row <= 8&& column <= 8) {
+    if (row >= 0 && column >= 0 && row <= difficulty.nbrOfRows - 1 && column <= difficulty.nbrOfColumns - 1) {
       if (tiles[row][column].revealedGameTileAreaIsClean()) {
         revealTileArea(row - 1, column - 1);
         revealTileArea(row - 1, column);
@@ -62,6 +72,30 @@ public class GameBoard {
 
   public void toggleTileState(int row, int column) {
     tiles[row][column].toggleState();
+  }
+
+  public void revealMines() {
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
+        tiles[i][j].revealIfMine();
+      }
+    }
+  }
+
+  public void hideMines() {
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
+        tiles[i][j].hideIfReavealedMine();
+      }
+    }
+  }
+  
+  public void setWrongFlagsAsCrossed() {
+    for (int i = 0; i < difficulty.nbrOfRows; i++) {
+      for (int j = 0; j < difficulty.nbrOfColumns; j++) {
+        tiles[i][j].setWrongFlagAsCross();
+      }
+    }
   }
 
 }

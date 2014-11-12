@@ -1,11 +1,12 @@
 package ca.csf.minesweeper.controller;
 
+import static ca.csf.minesweeper.controller.ControllerConsts.defaultPlayerName;
+import static ca.csf.minesweeper.controller.ControllerConsts.highScores;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import ca.csf.minesweeper.Configuration;
 import ca.csf.minesweeper.model.GameDifficulty;
-import ca.csf.minesweeper.model.HighScore;
 import ca.csf.simpleFx.SimpleFXController;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogChoiceSet;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogIcon;
@@ -21,8 +21,6 @@ import ca.csf.simpleFx.dialogs.SimpleFXDialogResult;
 import ca.csf.simpleFx.dialogs.SimpleFXDialogs;
 
 public class HighScoresWindowController extends SimpleFXController implements Initializable {
-
-  HighScore highScore;
 
   @FXML
   Button btnOk;
@@ -38,28 +36,32 @@ public class HighScoresWindowController extends SimpleFXController implements In
   Label lblNameIntermediate;
   @FXML
   Label lblNameExpert;
+  
+  public HighScoresWindowController(String playerName, int time) {
+    if (playerName == null) {
+      setHighScore(Configuration.selectedGameDifficulty, defaultPlayerName, time);
+    }
+    
+    setHighScore(Configuration.selectedGameDifficulty, playerName, time);
+  }
+  
+  public HighScoresWindowController() {
+  }
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
-
-    btnOk.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
-        Stage stage = ((Stage) btnOk.getScene().getWindow());
-        stage.close();
-      }
+    btnOk.setOnAction(e -> {
+      Stage stage = ((Stage) btnOk.getScene().getWindow());
+      stage.close();
     });
 
     loadData();
-
   }
 
   private void loadData() {
-    highScore = new HighScore();
-    ArrayList<String> bestTimeBeginner = highScore.getHighestScoreBeginner();
-    ArrayList<String> bestTimeIntermediate = highScore.getHighestScoreIntermediate();
-    ArrayList<String> bestTimeExpert = highScore.getHighestScoreExpert();
+    ArrayList<String> bestTimeBeginner = highScores.getHighestScoreForDifficulty(GameDifficulty.BEGINNER);
+    ArrayList<String> bestTimeIntermediate = highScores.getHighestScoreForDifficulty(GameDifficulty.INTERMEDIATE);
+    ArrayList<String> bestTimeExpert = highScores.getHighestScoreForDifficulty(GameDifficulty.EXPERT);
 
     lblTimeBeginner.setText(bestTimeBeginner.get(1) + " secondes");
     lblNameBeginner.setText(bestTimeBeginner.get(0));
@@ -79,20 +81,14 @@ public class HighScoresWindowController extends SimpleFXController implements In
             SimpleFXDialogChoiceSet.YES_NO, SimpleFXDialogResult.NO, getSimpleFxStage());
     
     if (simpleFXDialogResult == SimpleFXDialogResult.YES) {
-      highScore.deleteHighScores();
+      highScores.deleteHighScores();
       loadData();
     }
 
   }
 
-  @FXML
-  public void setTestHighScore() {
-    highScore.setHighScore(GameDifficulty.BEGINNER.difficultyName, "Raphaël Doré",
-        123);
-    highScore.setHighScore(GameDifficulty.INTERMEDIATE.difficultyName,
-        "Ginette Renault", 532);
-    highScore.setHighScore(GameDifficulty.EXPERT.difficultyName, "Johny Capala", 312);
-
-    loadData();
+  private void setHighScore(GameDifficulty gameDifficulty, String playerName, int time) {
+    highScores.setHighScore(gameDifficulty, playerName, time);
   }
+
 }

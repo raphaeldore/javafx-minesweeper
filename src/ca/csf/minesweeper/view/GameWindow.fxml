@@ -22,12 +22,14 @@
 							onAction="#startNewGame" text="Nouveau" />
 						<RadioMenuItem fx:id="menuBeginnerDifficulty"
 							mnemonicParsing="false" selected="true" text="Débutant"
-							toggleGroup="$difficultyToggleGroup" />
+							toggleGroup="$difficultyToggleGroup" onAction="#changeDifficultyToBeginner" />
 						<RadioMenuItem fx:id="menuIntermediateDifficulty"
-							mnemonicParsing="false" text="Intermédiaire" toggleGroup="$difficultyToggleGroup" />
+							mnemonicParsing="false" text="Intermédiaire" toggleGroup="$difficultyToggleGroup"
+							onAction="#changeDifficultyToIntermediate" />
 						<RadioMenuItem fx:id="menuHardDifficulty"
-							mnemonicParsing="false" text="Expert" toggleGroup="$difficultyToggleGroup" />
-						<CheckMenuItem fx:id="godMode" mnemonicParsing="false"
+							mnemonicParsing="false" text="Expert" toggleGroup="$difficultyToggleGroup"
+							onAction="#changeDifficultyToExpert" />
+						<CheckMenuItem fx:id="menuGodMode" mnemonicParsing="false"
 							onAction="#changeGodModeState" text="Tricher" />
 						<MenuItem fx:id="menuHighScores" onAction="#openBestTimesWindow"
 							mnemonicParsing="false" text="Meilleurs temps..." />

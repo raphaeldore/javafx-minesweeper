@@ -11,16 +11,15 @@ import ca.csf.simpleFx.SimpleFXStage;
 /*
  * @author Raphaël Doré
  * 
- * 
  */
 public class WindowBuilder extends SimpleFXController {
 
-  SimpleFXApplication simpleFXApplication;
-  SimpleFXStage simpleFXStage;
-  SimpleFXScene scene;
-  String fxmlPath;
-  String windowName;
-  SimpleFXController controller;
+  private SimpleFXApplication simpleFXApplication;
+  private SimpleFXStage simpleFXStage;
+  private SimpleFXScene scene;
+  private String fxmlPath;
+  private String windowName;
+  private SimpleFXController controller;
 
   public WindowBuilder() {}
 

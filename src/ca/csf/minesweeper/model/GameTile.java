@@ -4,8 +4,8 @@ package ca.csf.minesweeper.model;
 public class GameTile extends Subject<GameTile> {
 
   private boolean isMine = false;
-  private int neighboringMineCount = 0;
-  private MinesweeperGame game;
+  private int neighboringMineCount;
+  private final MinesweeperGame game;
   private TileState state;
   
   private final int ROW;
@@ -15,8 +15,11 @@ public class GameTile extends Subject<GameTile> {
     this.game = game;
     this.ROW = row;
     this.COLUMN = column;
-    addObserver(observer);
+    if (observer != null) {
+      addObserver(observer);
+    }
     state = TileState.HIDDEN;
+    neighboringMineCount = 0;
   }
   
   public int getROW() {
@@ -34,14 +37,15 @@ public class GameTile extends Subject<GameTile> {
   public boolean revealedGameTileAreaIsClean() {
     boolean isClean = false;
     if (state == TileState.HIDDEN) {
+      state = TileState.REVEALED;
       if (isMine) {
         game.lose();
       } else {
+        game.incrementTilesRevealed();
         if(neighboringMineCount == 0) {
           isClean = true;
         }
       }
-      state = TileState.REVEALED;
       notifyObservers(this);
     }
     return isClean;
@@ -89,5 +93,37 @@ public class GameTile extends Subject<GameTile> {
     return isMine;
   }
 
-  //TODO: put functions in order according to public/private/protected
+  public void revealIfMine() {
+    if (state != TileState.REVEALED && isMine) {
+      if (state == TileState.FLAGGED) {
+        decrementFlagCount();
+      }
+      state = TileState.MINE_REVEALED;
+      notifyObservers(this);
+    }
+  }
+  
+  public void hideIfReavealedMine() {
+    if (state == TileState.MINE_REVEALED) {
+      state = TileState.HIDDEN;
+      notifyObservers(this);
+    }
+  }
+
+  public void setMineAsFlags() {
+    if(isMine && state != TileState.FLAGGED) {
+      state = TileState.FLAGGED;
+      game.incrementFlagCount();
+      notifyObservers(this);
+    }
+  }
+  
+  public void setWrongFlagAsCross() {
+    if (state == TileState.FLAGGED && !isMine) {
+      state = TileState.CROSSED_MINE;
+      game.decrementFlagCount();
+      notifyObservers(this);
+    }
+  }
+
 }
