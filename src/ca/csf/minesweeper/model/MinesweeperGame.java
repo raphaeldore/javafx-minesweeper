@@ -1,8 +1,7 @@
 package ca.csf.minesweeper.model;
 
 /*
- * 
- * Main game loop class
+ * Interface between the controllers and the model
  */
 
 public class MinesweeperGame {
