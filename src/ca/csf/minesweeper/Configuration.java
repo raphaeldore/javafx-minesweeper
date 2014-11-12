@@ -6,6 +6,5 @@ import ca.csf.minesweeper.model.GameStates;
 public class Configuration {
   public static GameDifficulty selectedGameDifficulty = GameDifficulty.BEGINNER;
   public static GameStates currentGameState = GameStates.PLAYING;   // Initial GameState
-  
   public static boolean godModeEnabled = false;
 }
