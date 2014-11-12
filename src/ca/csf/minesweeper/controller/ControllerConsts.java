@@ -9,7 +9,7 @@ final class ControllerConsts {
 
 	// Path to images
 	public static final String resourcesPath = "/resources/";
-	public static final String defaultName = "NoName";
+	public static final String defaultPlayerName = "NoName";
 	public static final HighScore highScores = new HighScore();
 
 	public static final Image IMAGE_ONE_MINE = loadImage("1.png");

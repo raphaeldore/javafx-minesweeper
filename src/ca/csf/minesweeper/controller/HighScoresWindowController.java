@@ -1,6 +1,6 @@
 package ca.csf.minesweeper.controller;
 
-import static ca.csf.minesweeper.controller.ControllerConsts.defaultName;
+import static ca.csf.minesweeper.controller.ControllerConsts.defaultPlayerName;
 import static ca.csf.minesweeper.controller.ControllerConsts.highScores;
 
 import java.net.URL;
@@ -39,7 +39,7 @@ public class HighScoresWindowController extends SimpleFXController implements In
   
   public HighScoresWindowController(String playerName, int time) {
     if (playerName == null) {
-      setHighScore(Configuration.selectedGameDifficulty, defaultName, time);
+      setHighScore(Configuration.selectedGameDifficulty, defaultPlayerName, time);
     }
     
     setHighScore(Configuration.selectedGameDifficulty, playerName, time);
