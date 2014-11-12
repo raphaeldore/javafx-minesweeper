@@ -5,6 +5,7 @@ import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_FIVE_MINES;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_FLAG;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_FOUR_MINES;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE;
+import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE_CROSS;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE_RED;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_ONE_MINE;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_QUESTION_MARK;
@@ -15,7 +16,6 @@ import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_HAPPY;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_SMILE_NORMAL;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_THREE_MINES;
 import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_TWO_MINES;
-import static ca.csf.minesweeper.controller.ControllerConsts.IMAGE_MINE_CROSS;
 import static ca.csf.minesweeper.controller.ControllerConsts.highScores;
 import static ca.csf.minesweeper.controller.ControllerConsts.resourcesPath;
 

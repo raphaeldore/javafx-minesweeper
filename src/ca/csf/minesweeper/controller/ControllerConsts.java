@@ -2,8 +2,8 @@ package ca.csf.minesweeper.controller;
 
 import java.io.InputStream;
 
-import ca.csf.minesweeper.model.HighScore;
 import javafx.scene.image.Image;
+import ca.csf.minesweeper.model.HighScore;
 
 final class ControllerConsts {
 
