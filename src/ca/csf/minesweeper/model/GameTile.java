@@ -34,7 +34,7 @@ public class GameTile extends Subject<GameTile> {
     return neighboringMineCount;
   }
 
-  public boolean revealedGameTileAreaIsClean() { //TODO: we could do part of this in GameBoard
+  public boolean revealedGameTileAreaIsClean() {
     boolean isClean = false;
     if (state == TileState.HIDDEN) {
       state = TileState.REVEALED;

@@ -311,7 +311,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   void won() {
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
-    // TODO: something to congratulate the player as well as update the highscore
     for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j].setDisable(true);
@@ -329,9 +328,4 @@ public class GameWindowController extends SimpleFXController implements Initiali
     isHighestScoreForDifficulty = false;
 
   }
-
-
-  // TODO: 4. Finish GameTileTest and create one other test class
-  // TODO: 7. There is repetition of info within Configuration and GameState (playing/pause is weird now)
-  // TODO: 8. Some features should maybe work with model rather than controller
 }
