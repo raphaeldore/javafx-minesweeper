@@ -86,17 +86,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   Button btnNewGame;
   @FXML
   Label lblremainingMines;
-
-  void updateTimer() {
-    if (Configuration.currentGameState != GameStates.PAUSE) {
-      timePlayed.setValue(timePlayed.getValue() + 1);
-    }
-
-    if (timePlayed.intValue() == 999) {
-      timeline.stop();
-    }
-  }
-
+  
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     playerName = "NoName";
@@ -108,27 +98,59 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
     startNewGame();
   }
+  
+  /*
+   * Menu Game (Partie) onAction methods
+   */  
+  
+  @FXML
+  public void startNewGame() {
+    Configuration.godModeEnabled = false;
+    menuGodMode.setSelected(false);
+    gameBoard.getChildren().clear();
+    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
+    isFirstClick = true;
+    timePlayed.setValue(0);
+    timeline.pause();
+    lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
+    game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
+    populateGameBoard();
+    gameBoard.autosize();
+  }
+  
+  @FXML
+  public void changeDifficultyToBeginner() {
+    Configuration.selectedGameDifficulty = GameDifficulty.BEGINNER;
+    startNewGame();
+    this.getSimpleFxStage().sizeToScene();
+  }
 
-  void populateGameBoard() {
-    gameTiles = new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
-    for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
-      for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
-        gameTiles[i][j] = new ToggleButton();
-        gameTiles[i][j].setMinSize(36, 36);
-        gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        ToggleButtonEventHandler toggleButtonEventHandler = new ToggleButtonEventHandler(i, j, game);
-        gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
-        gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
-        // Disables keypresses on the ToggleButtons:
-        gameTiles[i][j].setOnAction((event) -> {
-          ToggleButton sourceButton = (ToggleButton) event.getSource();
-          sourceButton.setSelected(false);
-        });
-        gameBoard.add(gameTiles[i][j], i, j);
+  @FXML
+  public void changeDifficultyToIntermediate() {
+    Configuration.selectedGameDifficulty = GameDifficulty.INTERMEDIATE;
+    startNewGame();
+    this.getSimpleFxStage().sizeToScene();
+  }
+
+  @FXML
+  public void changeDifficultyToExpert() {
+    Configuration.selectedGameDifficulty = GameDifficulty.EXPERT;
+    startNewGame();
+    this.getSimpleFxStage().sizeToScene();
+  }
+  
+  @FXML
+  public void changeGodModeState() {
+    if (game.getGameState() == GameStates.PLAYING) {
+      Configuration.godModeEnabled = !Configuration.godModeEnabled;
+      if (Configuration.godModeEnabled) {
+        game.revealMines();
+      } else {
+        game.hideMines();
       }
     }
   }
-
+  
   @FXML
   public void openBestTimesWindow() {
     HighScoresWindowController highScoresWindowController;
@@ -146,6 +168,19 @@ public class GameWindowController extends SimpleFXController implements Initiali
     stage.show();
   }
 
+  /*
+   * Help Menu onAction methods
+   */  
+  @FXML
+  public void openHelpWindow() {
+    SimpleFXStage stage =
+        new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide").simpleFXController(new HelpWindowController())
+            .simpleFXApplication(this.getSimpleFXApplication()).SimpleFXStage(this.getSimpleFxStage()).buildStage();
+
+    stage.sizeToScene();
+    stage.show();
+  }
+  
   @FXML
   public void openAboutWindow() {
     SimpleFXStage stage =
@@ -156,14 +191,35 @@ public class GameWindowController extends SimpleFXController implements Initiali
     stage.show();
   }
 
-  @FXML
-  public void openHelpWindow() {
-    SimpleFXStage stage =
-        new WindowBuilder().fxmlPath("../view/HelpWindow.fxml").windowName("Aide").simpleFXController(new HelpWindowController())
-            .simpleFXApplication(this.getSimpleFXApplication()).SimpleFXStage(this.getSimpleFxStage()).buildStage();
+  void updateTimer() {
+    if (Configuration.currentGameState != GameStates.PAUSE) {
+      timePlayed.setValue(timePlayed.getValue() + 1);
+    }
 
-    stage.sizeToScene();
-    stage.show();
+    if (timePlayed.intValue() == 999) {
+      timeline.stop();
+    }
+  }
+
+  
+  void populateGameBoard() {
+    gameTiles = new ToggleButton[Configuration.selectedGameDifficulty.nbrOfRows][Configuration.selectedGameDifficulty.nbrOfColumns];
+    for (int i = 0; i < Configuration.selectedGameDifficulty.nbrOfRows; i++) {
+      for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
+        gameTiles[i][j] = new ToggleButton();
+        gameTiles[i][j].setMinSize(36, 36);
+        // gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        ToggleButtonEventHandler toggleButtonEventHandler = new ToggleButtonEventHandler(i, j, game);
+        gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
+        gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
+        // Disables keypresses on the ToggleButtons:
+        gameTiles[i][j].setOnAction((event) -> {
+          ToggleButton sourceButton = (ToggleButton) event.getSource();
+          sourceButton.setSelected(false);
+        });
+        gameBoard.add(gameTiles[i][j], i, j);
+      }
+    }
   }
 
   @Override
@@ -253,18 +309,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
     lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines - game.getFlagCount()));
   }
 
-  @FXML
-  public void changeGodModeState() {
-    if (game.getGameState() == GameStates.PLAYING) {
-      Configuration.godModeEnabled = !Configuration.godModeEnabled;
-      if (Configuration.godModeEnabled) {
-        game.revealMines();
-      } else {
-        game.hideMines();
-      }
-    }
-  }
-
   void won() {
     btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_HAPPY));
     // TODO: something to congratulate the player as well as update the highscore
@@ -274,7 +318,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
       }
     }
 
-    isHighestScoreForDifficulty = highScores.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty.difficultyName, timePlayed.get());
+    isHighestScoreForDifficulty = highScores.isHighestScoreForDifficulty(Configuration.selectedGameDifficulty, timePlayed.get());
     if (isHighestScoreForDifficulty) {
       playerName =
           SimpleFXDialogs.showInputBox(getSimpleFxStage().getTitle(), "Félicitation! Vous avez le meilleur score pour cette difficulté. Quel est votre nom ?",
@@ -286,41 +330,6 @@ public class GameWindowController extends SimpleFXController implements Initiali
 
   }
 
-  @FXML
-  public void startNewGame() {
-    Configuration.godModeEnabled = false;
-    menuGodMode.setSelected(false);
-    gameBoard.getChildren().clear();
-    btnNewGame.setGraphic(new ImageView(IMAGE_SMILE_NORMAL));
-    isFirstClick = true;
-    timePlayed.setValue(0);
-    timeline.pause();
-    lblremainingMines.setText(Integer.toString(Configuration.selectedGameDifficulty.nbrOfMines));
-    game = new MinesweeperGame(Configuration.selectedGameDifficulty, this);
-    populateGameBoard();
-    gameBoard.autosize();
-  }
-
-  @FXML
-  public void changeDifficultyToBeginner() {
-    Configuration.selectedGameDifficulty = GameDifficulty.BEGINNER;
-    startNewGame();
-    this.getSimpleFxStage().sizeToScene();
-  }
-
-  @FXML
-  public void changeDifficultyToIntermediate() {
-    Configuration.selectedGameDifficulty = GameDifficulty.INTERMEDIATE;
-    startNewGame();
-    this.getSimpleFxStage().sizeToScene();
-  }
-
-  @FXML
-  public void changeDifficultyToExpert() {
-    Configuration.selectedGameDifficulty = GameDifficulty.EXPERT;
-    startNewGame();
-    this.getSimpleFxStage().sizeToScene();
-  }
 
   // TODO: 3. should you be able to click on a mine in godMode? you can't now
   // TODO: 4. Finish GameTileTest and create one other test class
