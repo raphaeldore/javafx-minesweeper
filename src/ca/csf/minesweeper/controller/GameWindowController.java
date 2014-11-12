@@ -331,12 +331,7 @@ public class GameWindowController extends SimpleFXController implements Initiali
   }
 
 
-  // TODO: 3. should you be able to click on a mine in godMode? you can't now
   // TODO: 4. Finish GameTileTest and create one other test class
-  // TODO: 5. Review revealing of tiles
-  // TODO: 6. order functions properly and clean comments/TODOs
-  // TODO: 7. There is repetition of info within Configuration and GameState (playing/pause is weird
-  // now)
+  // TODO: 7. There is repetition of info within Configuration and GameState (playing/pause is weird now)
   // TODO: 8. Some features should maybe work with model rather than controller
-  // TODO: yo mama
 }
