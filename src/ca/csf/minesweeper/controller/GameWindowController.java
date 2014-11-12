@@ -190,6 +190,10 @@ public class GameWindowController extends SimpleFXController implements Initiali
     stage.setResizable(false);
     stage.show();
   }
+  
+  /*
+   * Other methods
+   */
 
   void updateTimer() {
     if (Configuration.currentGameState != GameStates.PAUSE) {
@@ -208,10 +212,8 @@ public class GameWindowController extends SimpleFXController implements Initiali
       for (int j = 0; j < Configuration.selectedGameDifficulty.nbrOfColumns; j++) {
         gameTiles[i][j] = new ToggleButton();
         gameTiles[i][j].setMinSize(36, 36);
-        // gameTiles[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         ToggleButtonEventHandler toggleButtonEventHandler = new ToggleButtonEventHandler(i, j, game);
         gameTiles[i][j].setOnMouseReleased(toggleButtonEventHandler);
-        gameTiles[i][j].setOnMouseEntered(toggleButtonEventHandler);
         // Disables keypresses on the ToggleButtons:
         gameTiles[i][j].setOnAction((event) -> {
           ToggleButton sourceButton = (ToggleButton) event.getSource();
