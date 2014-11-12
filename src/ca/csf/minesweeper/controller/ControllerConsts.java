@@ -7,8 +7,7 @@ import ca.csf.minesweeper.model.HighScore;
 
 final class ControllerConsts {
 
-	// Path to images
-	public static final String resourcesPath = "/resources/";
+	public static final String resourcesPath = "/resources/"; // Path to images
 	public static final String defaultPlayerName = "NoName";
 	public static final HighScore highScores = new HighScore();
 
