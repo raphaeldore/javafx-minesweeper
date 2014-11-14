@@ -11,5 +11,4 @@ This is the result of a school project. We had to build a minesweeper clone usin
 
 ### Screenshot ###
 
-Inline-style: 
 ![Minesweeper Screenshot](screenshot.png "Minesweeper screenshot")
