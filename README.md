@@ -8,3 +8,8 @@ This is the result of a school project. We had to build a minesweeper clone usin
 * Import the project in eclipse
 * Voilà.
 * You also need Java version 8, and JavaFX.
+
+### Screenshot ###
+
+Inline-style: 
+![Minesweeper Screenshot](screenshot.png "Minesweeper screenshot")
