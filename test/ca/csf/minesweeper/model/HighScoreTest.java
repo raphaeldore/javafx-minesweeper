@@ -16,7 +16,7 @@ import org.junit.Test;
 
 /*
  * Warning: When this class is run with infinitest, the HighScores.xml used during normal play is
- * overwrited! To solve this problem we have a special Run Configuration for the HighScoreTest class
+ * overwritten! To solve this problem we have a special Run Configuration for the HighScoreTest class
  * in the project root directory, "HighScoreTest.launch", which is used when running JUnit normally.
  * 
  * Note: We disabled infinitest for all the classes in our project, see the file infinitest.filters
